@@ -1,0 +1,24 @@
+{
+  "name": "greenfield",
+  "version": "1.0.0",
+  "description": "![VIEW](https://www.dropbox.com/home/Programming?preview=fido.PNG)",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PrestonWinstead/findingFido.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PrestonWinstead/findingFido/issues"
+  },
+  "homepage": "https://github.com/PrestonWinstead/findingFido#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
