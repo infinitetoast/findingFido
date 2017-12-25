@@ -6,7 +6,7 @@ const app = express();
 
 const port = process.env.PORT || 9000;
 
-app.use(express.static(__dirname + '/client'));
+app.use(express.static(__dirname + '/dist'));
 
 app.get('/', (req, res) => {
   res.redirect('/login');
