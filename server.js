@@ -50,11 +50,18 @@ app.post('/login', (req, res) => {
   });
 });
 
+app.post('/signup', (req, res) => {
+  res.send(req.body);
+});
+
 app.get('/signup', (req, res) => {
   res.sendFile(path.join(__dirname, '/client/signup1.html'));
 });
 
-app.post('/signup', (req, res) => {
+// app.post('/signup', (req, res) => {
+app.post('/personSignup', (req, res) => {
+  console.log(req.body);
+  res.send(req.body);
   db.createUser(name, email, password, address, extra, (err, response) => {
     if (err) {
       console.error(err);
@@ -71,7 +78,8 @@ app.get('/signup2', (req, res) => {
   res.sendFile(path.join(__dirname, '/client/signup2.html'));
 });
 
-app.post('/signup2', (req, res) => {
+// app.post('/signup2', (req, res) => {
+app.post('/petSignup', (req, res) => {
   // Pull info from req
   db.createPet(name, kind, characteristics, userId, (err, pet) => {
     if (err) {

@@ -6,7 +6,7 @@ import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module'
 
 import { AppComponent } from './app.component';
-import { AuthService } from './services/login.service';
+import { AuthService } from './services/auth.service';
 import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './signup/signup.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
