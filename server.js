@@ -11,7 +11,6 @@ const app = express();
 
 const port = process.env.PORT || 9000;
 
-<<<<<<< HEAD
 // app.use(express.static(__dirname, '/client'));
 
 app.use(express.static(`${__dirname}/dist`));
@@ -19,11 +18,6 @@ app.use(express.static(`${__dirname}/dist`));
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
-=======
-//app.use(express.static(__dirname + '/dist'));
-app.use(express.static(path.join(__dirname, 'dist')));
-app.use(express.static(path.join(__dirname, 'client/assets')));
->>>>>>> f09637dd4bd29c7f8fab269efde870a4326c8a01
 
 
 app.get('/', (req, res) => {
