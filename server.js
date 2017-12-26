@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 
 const path = require('path');
 
+const db = require('./models/findingFidoModels');
+
 const app = express();
 
 const port = process.env.PORT || 9000;
@@ -39,6 +41,9 @@ app.get('/signup', (req, res) => {
 });
 
 app.post('/signup', (req, res) => {
+  db.createUser('Preston', 'preston@me.com', 'thing', 'thing', 'thing', () => {
+    res.send('success');
+  });
   // Store the email and password in memory
   // If they have a pet, redirect them to signup 2
   // If no pet, redirect them to signup 3

@@ -42,7 +42,7 @@ const User = sequelize.define('user', {
   },
 });
 
-module.exports.createUser = (name, email, password, address, extra) => {
+module.exports.createUser = (name, email, password, address, extra, cb) => {
   User.sync({ force: true }).then(() => {
     return User.create({
       name: name,
@@ -51,7 +51,8 @@ module.exports.createUser = (name, email, password, address, extra) => {
       address: address,
       extra: extra,
       photo: null,
-    });
+    })
+      .then(() => cb());
   });
 };
 
@@ -148,3 +149,6 @@ module.exports.addPhoto = (url, userId) => {
   });
 };
 
+module.exports.getUsers = (cb) => {
+  User.findAll().then(users => cb(users));
+};
