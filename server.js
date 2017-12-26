@@ -28,16 +28,39 @@ app.get('/login', (req, res) => {
   res.sendFile(path.join(__dirname, '/client/login.html'));
 });
 
+app.post('/login', (req, res) => {
+  // Check the database for the user
+  // If the user doesn't exist, send them to the signup page
+  // If the user does exist, send a token and redirect them to the profile page
+});
+
 app.get('/signup', (req, res) => {
   res.sendFile(path.join(__dirname, '/client/signup1.html'));
+});
+
+app.post('/signup', (req, res) => {
+  // Store the email and password in memory
+  // If they have a pet, redirect them to signup 2
+  // If no pet, redirect them to signup 3
 });
 
 app.get('/signup2', (req, res) => {
   res.sendFile(path.join(__dirname, '/client/signup2.html'));
 });
 
+app.post('/signup2', (req, res) => {
+  // Store their information in the database
+  // Redirect them to signup 3
+});
+
 app.get('/signup3', (req, res) => {
   res.sendFile(path.join(__dirname, '/client/signup3.html'));
+});
+
+app.post('/signup3', (req, res) => {
+  // Store information in the database
+  // Send auth token
+  // Redirect to profile page
 });
 
 app.get('/profile', (req, res) => {
