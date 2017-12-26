@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginService } from '../services/login.service';
+import { AuthService } from '../services/login.service';
 
 
 @Component({
@@ -14,7 +14,7 @@ export class LoginComponent {
 
   constructor(
     private router: Router,
-    private loginService: LoginService
+    private authService: AuthService
   ) { }
 
   onSelect(): void {
@@ -23,7 +23,7 @@ export class LoginComponent {
       password: this.password
     }
     console.log(user);
-    this.loginService.postLogin(user)
+    this.authService.postLogin(user)
     .then(user => console.log('yep fired',user))
     this.router.navigate(['/dashboard']);
 

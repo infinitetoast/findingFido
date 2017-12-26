@@ -23,18 +23,19 @@ app.get('/', (req, res) => {
   // If the user is logged in
   // Send them their own profile
   // Otherwise
-  // Note on talkiing about this, as the front-end is built out of components and angular router on front end exist
+  // Note on talking about this, as the front-end is built out of components and angular router on front end exist
   res.redirect('/login');
 });
 
 app.get('/login', (req, res) => {
+  // Problem as our client side is bundled and served from distribution
   res.sendFile(path.join(__dirname, '/client/login.html'));
 });
 
 app.post('/login', (req, res) => {
   // Lili checking front-end send information from LoginComponent
   console.log(req.body); // {email: bla, password: bla}
-  res.send(req.body);
+  res.send(req.body); // check to see I get the data back
   // Pull email from request, assign it to 'email'
   // Pull password from request, assign it to 'password'
   db.getUser(email, (err, user) => {

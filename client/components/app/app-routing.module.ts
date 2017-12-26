@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
+import { SignUpComponent } from './signup/signup.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { PageNotFoundComponent } from './page-not-found'
@@ -11,6 +12,7 @@ import { PageNotFoundComponent } from './page-not-found'
 const appRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SignUpComponent },
   { path: 'schedule', component: ScheduleComponent },
   // {
   //   path: '',
