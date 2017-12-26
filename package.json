@@ -33,6 +33,7 @@
     "path": "^0.12.7",
     "pg": "^6.4.2",
     "pg-hstore": "^2.3.2",
+    "retry-as-promised": "^2.3.2",
     "sequelize": "^4.28.6"
   },
   "devDependencies": {

@@ -3,17 +3,16 @@ const path = require('path');
 
 const bodyParser = require('body-parser');
 
-const path = require('path');
-
 const db = require('./models/findingFidoModels');
 
 const app = express();
 
 const port = process.env.PORT || 9000;
 
-// app.use(express.static(__dirname, '/client'));
-
+// Need this to serve our bundled index.html
 app.use(express.static(`${__dirname}/dist`));
+// Need this to serve the logo picture
+app.use(express.static(`${__dirname}/client/assets`));
 
 app.use(bodyParser.json());
 
@@ -24,6 +23,7 @@ app.get('/', (req, res) => {
   // If the user is logged in
   // Send them their own profile
   // Otherwise
+  // Note on talkiing about this, as the front-end is built out of components and angular router on front end exist
   res.redirect('/login');
 });
 
@@ -32,6 +32,9 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
+  // Lili checking front-end send information from LoginComponent
+  console.log(req.body); // {email: bla, password: bla}
+  res.send(req.body);
   // Pull email from request, assign it to 'email'
   // Pull password from request, assign it to 'password'
   db.getUser(email, (err, user) => {
