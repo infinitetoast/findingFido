@@ -52,7 +52,8 @@ module.exports.createUser = (name, email, password, address, extra, cb) => {
       extra: extra,
       photo: null,
     })
-      .then(() => cb());
+      .then(user => cb(null, user))
+      .catch(err => cb(err));
   });
 };
 
@@ -71,14 +72,16 @@ const Pet = sequelize.define('pet', {
   },
 });
 
-module.exports.createPet = (name, kind, characteristics, userId) => {
+module.exports.createPet = (name, kind, characteristics, userId, cb) => {
   Pet.sync({ force: true }).then(() => {
     return Pet.create({
       name: name,
       kind: kind,
       characteristics: characteristics,
       id_User: userId,
-    });
+    })
+      .then(pet => cb(null, pet))
+      .catch(err => cb(err));
   });
 };
 
@@ -149,6 +152,8 @@ module.exports.addPhoto = (url, userId) => {
   });
 };
 
-module.exports.getUsers = (cb) => {
-  User.findAll().then(users => cb(users));
+module.exports.getUser = (email, cb) => {
+  User.findOne({ email: email })
+    .then(user => cb(null, user))
+    .catch(err => cb(err));
 };

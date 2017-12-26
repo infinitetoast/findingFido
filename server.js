@@ -31,9 +31,18 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-  // Check the database for the user
-  // If the user doesn't exist, send them to the signup page
-  // If the user does exist, send a token and redirect them to the profile page
+  // Pull email from request, assign it to 'email'
+  // Pull password from request, assign it to 'password'
+  db.getUser(email, (err, user) => {
+    if (err) {
+      console.error(err);
+      res.status(404).redirect('/signup');
+    } else {
+      // Check passwords. If match
+      // Send token
+      res.status(201).redirect('/profile');
+    }
+  });
 });
 
 app.get('/signup', (req, res) => {
@@ -41,12 +50,16 @@ app.get('/signup', (req, res) => {
 });
 
 app.post('/signup', (req, res) => {
-  db.createUser('Preston', 'preston@me.com', 'thing', 'thing', 'thing', () => {
-    res.send('success');
+  db.createUser(name, email, password, address, extra, (err, response) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Sorry, something went wrong');
+    } else {
+      // If they have a pet
+      res.status(201).redirect('/signup2');
+      // If they don't have a pet, redirect to signup 3
+    }
   });
-  // Store the email and password in memory
-  // If they have a pet, redirect them to signup 2
-  // If no pet, redirect them to signup 3
 });
 
 app.get('/signup2', (req, res) => {
@@ -54,8 +67,14 @@ app.get('/signup2', (req, res) => {
 });
 
 app.post('/signup2', (req, res) => {
-  // Store their information in the database
-  // Redirect them to signup 3
+  // Pull info from req
+  db.createPet(name, kind, characteristics, userId, (err, pet) => {
+    if (err) {
+      res.status(500).send('Sorry, there was an issue');
+    } else {
+      res.status(201).redirect('/signup3');
+    }
+  });
 });
 
 app.get('/signup3', (req, res) => {
@@ -63,6 +82,7 @@ app.get('/signup3', (req, res) => {
 });
 
 app.post('/signup3', (req, res) => {
+  // Update user with full information
   // Store information in the database
   // Send auth token
   // Redirect to profile page
