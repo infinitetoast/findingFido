@@ -22,49 +22,129 @@ sequelize
   });
 
 const User = sequelize.define('user', {
-  firstName: {
+  name: {
     type: Sequelize.STRING,
   },
-  lastName: {
+  email: {
+    type: Sequelize.STRING,
+  },
+  password: {
+    type: Sequelize.STRING,
+  },
+  photo: {
+    type: Sequelize.STRING,
+  },
+  address: {
+    type: Sequelize.STRING,
+  },
+  extra: {
     type: Sequelize.STRING,
   },
 });
 
-User.sync({ force: true }).then(() => {
-  return User.create({
-    firstName: 'John',
-    lastName: 'Hancock',
+module.exports.createUser = (name, email, password, address, extra) => {
+  User.sync({ force: true }).then(() => {
+    return User.create({
+      name: name,
+      email: email,
+      password: password,
+      address: address,
+      extra: extra,
+      photo: null,
+    });
   });
-});
+};
 
 const Pet = sequelize.define('pet', {
-  firstName: {
+  name: {
     type: Sequelize.STRING,
   },
-  lastName: {
+  kind: {
     type: Sequelize.STRING,
+  },
+  characteristics: {
+    type: Sequelize.STRING,
+  },
+  id_User: {
+    type: Sequelize.INTEGER,
   },
 });
 
-Pet.sync({ force: true }).then(() => {
-  return Pet.create({
-    firstName: 'John',
-    lastName: 'Hancock',
+module.exports.createPet = (name, kind, characteristics, userId) => {
+  Pet.sync({ force: true }).then(() => {
+    return Pet.create({
+      name: name,
+      kind: kind,
+      characteristics: characteristics,
+      id_User: userId,
+    });
   });
-});
+};
 
 const Message = sequelize.define('message', {
-  firstName: {
+  body: {
     type: Sequelize.STRING,
   },
-  lastName: {
-    type: Sequelize.STRING,
+  createdAt: {
+    type: Sequelize.DATE,
+  },
+  id_User: {
+    type: Sequelize.INTEGER,
   },
 });
 
-Message.sync({ force: true }).then(() => {
-  return Message.create({
-    firstName: 'John',
-    lastName: 'Hancock',
+module.exports.createMessage = (body, userId) => {
+  Message.sync({ force: true }).then(() => {
+    return Message.create({
+      body: body,
+      id_User: userId,
+      createdAt: new Date(),
+    });
   });
+};
+
+const Activity = sequelize.define('activity', {
+  body: {
+    type: Sequelize.STRING,
+  },
+  location: {
+    type: Sequelize.STRING,
+  },
+  time: {
+    type: Sequelize.DATE,
+  },
+  id_User: {
+    type: Sequelize.INTEGER,
+  },
 });
+
+module.exports.createActivity = (body, location, userId, time) => {
+  Activity.sync({ force: true }).then(() => {
+    return Activity.create({
+      body: body,
+      id_User: userId,
+      time: time,
+      location: location,
+    });
+  });
+};
+
+
+const Photo = sequelize.define('photo', {
+  url: {
+    type: Sequelize.STRING,
+  },
+  id_User: {
+    type: Sequelize.INTEGER,
+  },
+});
+
+module.exports.addPhoto = (url, userId) => {
+  Photo.sync({ force: true }).then(() => {
+    return Photo.create({
+      url: url,
+      id_User: userId,
+    });
+  });
+};
+
