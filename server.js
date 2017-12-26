@@ -8,9 +8,9 @@ const app = express();
 
 const port = process.env.PORT || 9000;
 
-app.use(express.static(__dirname, '/client'));
+// app.use(express.static(__dirname, '/client'));
 
-app.use(express.static(__dirname + '/dist'));
+app.use(express.static(`${__dirname}/dist`));
 
 app.use(bodyParser.json());
 
@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
   // If the user is logged in
-  // Send them their own profile
+    // Send them their own profile
   // Otherwise
   res.redirect('/login');
 });
