@@ -71,16 +71,49 @@ app.get('/profile', (req, res) => {
   // Send them the external profile page
 });
 
+app.put('/profile', (req, res) => {
+  // Send which part of the profile will be updated on headers
+  // Figure out what needs to be updated
+  // Update that user's database entry
+  // Redirect to profile get, so they can see it updated with the changes
+});
+
+app.delete('/profile', (req, res) => {
+  // Delete the user's profile
+  res.redirect('/signup');
+});
+
 app.get('/chat', (req, res) => {
   res.sendFile(path.join(__dirname, '/client/chat.html'));
+});
+
+app.post('/chat', (req, res) => {
+  // Store message in databse
+  // Send message to both users, using socket.io
 });
 
 app.get('/review', (req, res) => {
   res.sendFile(path.join(__dirname, '/client/review.html'));
 });
 
+app.post('/review', (req, res) => {
+  // Add review to database
+  // Send a thank you page
+  // Send them to the homepage
+});
+
 app.get('/search', (req, res) => {
+  // Should be able to handle searches client side without a post handler
   res.sendFile(path.join(__dirname, '/client/search.html'));
+});
+
+app.get('/signout', (req, res) => {
+  // Destory token
+  // Redirect to login page
+});
+
+app.get('/*', (req, res) => {
+  res.redirect('/profile');
 });
 
 app.listen(port, () => {
