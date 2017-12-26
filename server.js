@@ -1,8 +1,7 @@
 const express = require('express');
+const path = require('path');
 
 const bodyParser = require('body-parser');
-
-const path = require('path');
 
 const db = require('./models/findingFidoModels');
 
@@ -17,6 +16,9 @@ app.use(express.static(`${__dirname}/dist`));
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(express.static(__dirname + '/dist'));
+// app.use(express.static(path.join(__dirname, 'dist')));
+// app.use(express.static(path.join(__dirname, 'client/assets')));
 
 
 app.get('/', (req, res) => {
