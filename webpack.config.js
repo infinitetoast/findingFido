@@ -1,31 +1,39 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { ContextReplacementPlugin } = require('webpack');
+//const WebpackProvideGlobalPlugin = require('webpack-provide-global-plugin');
 
 module.exports = {
   entry: {
-    main: './client/main.ts'
+    main: './client/main.ts',
   },
   output: {
-    path: path.join(__dirname, "/dist/"),
-    filename: "[name].bundle.js",
+    path: path.join(__dirname, '/dist/'),
+    filename: '[name].bundle.js',
   },
   resolve: {
-    extensions: ['.js', '.ts', '.html']
+    extensions: ['.js', '.ts', '.html'],
   },
   devtool: 'inline-source-map',
   module: {
     loaders: [
       { test: /.ts$/, use: ['awesome-typescript-loader', 'angular2-template-loader'] },
-      { test: /.html$/, use: 'raw-loader' }
-    ]
+      { test: /.html$/, use: 'raw-loader' },
+      { test: /\.css$/, use: ['style-loader', 'css-loader'] },
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./client/index.html",
-      filename: "index.html",
+      template: './client/index.html',
+      filename: 'index.html',
       showErrors: true,
-      path: path.join(__dirname, "/dist/"),
-    })
-  ]
-}
+      path: path.join(__dirname, '/dist/'),
+    }),
+    // new WebpackProvideGlobalPlugin({
+    //   $: 'jquery',
+    //   jQuery: 'jquery',
+    //   'window.jQuery': 'jquery',
+    //   Popper: ['popper.js', 'default'],
+    // }),
+
+  ],
+};
