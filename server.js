@@ -9,15 +9,12 @@ const app = express();
 
 const port = process.env.PORT || 9000;
 
-// app.use(express.static(__dirname, '/client'));
-
 app.use(express.static(`${__dirname}/dist`));
 
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(express.static(__dirname + '/dist'));
-// app.use(express.static(path.join(__dirname, 'dist')));
+
 // app.use(express.static(path.join(__dirname, 'client/assets')));
 
 
@@ -33,8 +30,8 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-  // Pull email from request, assign it to 'email'
-  // Pull password from request, assign it to 'password'
+  const email = req.body.email;
+  const password = req.body.password;
   db.getUser(email, (err, user) => {
     if (err) {
       console.error(err);
@@ -52,6 +49,11 @@ app.get('/signup', (req, res) => {
 });
 
 app.post('/signup', (req, res) => {
+  const name = req.body.name;
+  const email = req.body.email;
+  const password = req.body.password;
+  const address = req.body.address;
+  const extra = req.body.extra;
   db.createUser(name, email, password, address, extra, (err, response) => {
     if (err) {
       console.error(err);
@@ -69,7 +71,10 @@ app.get('/signup2', (req, res) => {
 });
 
 app.post('/signup2', (req, res) => {
-  // Pull info from req
+  const name = req.body.name;
+  const kind = req.body.kind;
+  const characteristics = req.body.characteristics;
+  // Pull user id from info
   db.createPet(name, kind, characteristics, userId, (err, pet) => {
     if (err) {
       res.status(500).send('Sorry, there was an issue');
