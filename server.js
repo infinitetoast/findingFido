@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
   // If the user is logged in
-    // Send them their own profile
+  // Send them their own profile
   // Otherwise
   res.redirect('/login');
 });
