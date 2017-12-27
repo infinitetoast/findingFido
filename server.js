@@ -9,29 +9,34 @@ const app = express();
 
 const port = process.env.PORT || 9000;
 
+// Need this to serve our bundled index.html
 app.use(express.static(`${__dirname}/dist`));
+// Need this to serve the logo picture
+app.use(express.static(`${__dirname}/client/assets`));
 
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// app.use(express.static(path.join(__dirname, 'client/assets')));
-
-
 app.get('/', (req, res) => {
   // If the user is logged in
   // Send them their own profile
   // Otherwise
+  // Note on talking about this, as the front-end is built out of components and angular router on front end exist
   res.redirect('/login');
 });
 
 app.get('/login', (req, res) => {
+  // Problem as our client side is bundled and served from distribution
   res.sendFile(path.join(__dirname, '/client/login.html'));
 });
 
 app.post('/login', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
+  // Lili checking front-end send information from LoginComponent
+  // {email: bla, password: bla}
+  // res.send(req.body); // check to see I get the data back
   db.getUser(email, (err, user) => {
     if (err) {
       console.error(err);
@@ -43,6 +48,11 @@ app.post('/login', (req, res) => {
       // Otherwise, send that there was an error with the password
     }
   });
+});
+
+app.post('/signup', (req, res) => {
+  console.log(`signup${req.body}`);
+  res.send(req.body);
 });
 
 app.get('/signup', (req, res) => {
@@ -61,17 +71,17 @@ app.post('/signup', (req, res) => {
       res.status(500).send('Sorry, something went wrong');
     } else {
       // If they have a pet
-      res.status(201).redirect('/signup2');
+      res.status(201).redirect('/petSignup');
       // If they don't have a pet, redirect to signup 3
     }
   });
 });
 
-app.get('/signup2', (req, res) => {
-  res.sendFile(path.join(__dirname, '/client/signup2.html'));
+app.get('/petSignup', (req, res) => {
+  res.sendFile(path.join(__dirname, '/client/petSignup.html'));
 });
 
-app.post('/signup2', (req, res) => {
+app.post('/petSignup', (req, res) => {
   const name = req.body.name;
   const kind = req.body.kind;
   const characteristics = req.body.characteristics;
@@ -79,16 +89,16 @@ app.post('/signup2', (req, res) => {
     if (err) {
       res.status(500).send('Sorry, there was an issue');
     } else {
-      res.status(201).redirect('/signup3');
+      res.status(201).redirect('/personSignup');
     }
   });
 });
 
-app.get('/signup3', (req, res) => {
-  res.sendFile(path.join(__dirname, '/client/signup3.html'));
+app.get('/personSignup', (req, res) => {
+  res.sendFile(path.join(__dirname, '/client/personSignup.html'));
 });
 
-app.post('/signup3', (req, res) => {
+app.post('/personSignup', (req, res) => {
   // Update user with full information
   // Store information in the database
   // Send auth token
