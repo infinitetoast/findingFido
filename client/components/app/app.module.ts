@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module'
 
 import { AppComponent } from './app.component';
 import { AuthService } from './services/auth.service';
+import { PageService } from './services/page.service';
 import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './signup/signup.component';
 import { PersonComponent } from './person-signup/person-signup.component';
@@ -33,7 +34,7 @@ import { PageNotFoundComponent } from './page-not-found'
     HttpModule,
     AppRoutingModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, PageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
