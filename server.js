@@ -40,6 +40,7 @@ app.post('/login', (req, res) => {
       // Check passwords. If match
       // Send token
       res.status(201).redirect('/profile');
+      // Otherwise, send that there was an error with the password
     }
   });
 });
@@ -74,7 +75,6 @@ app.post('/signup2', (req, res) => {
   const name = req.body.name;
   const kind = req.body.kind;
   const characteristics = req.body.characteristics;
-  // Pull user id from info
   db.createPet(name, kind, characteristics, userId, (err, pet) => {
     if (err) {
       res.status(500).send('Sorry, there was an issue');
@@ -129,9 +129,14 @@ app.get('/review', (req, res) => {
 });
 
 app.post('/review', (req, res) => {
-  // Add review to database
-  // Send a thank you page
-  // Send them to the homepage
+  db.createReview(user, body, (err, user) => {
+    if (err) {
+      console.error(err);
+      res.status(404).send(err);
+    } else {
+      res.status(201).redirect('/profile');
+    }
+  });
 });
 
 app.get('/search', (req, res) => {
@@ -141,7 +146,7 @@ app.get('/search', (req, res) => {
 
 app.get('/signout', (req, res) => {
   // Destory token
-  // Redirect to login page
+  res.redirect('/login');
 });
 
 app.get('/*', (req, res) => {
