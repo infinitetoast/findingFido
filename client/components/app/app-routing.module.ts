@@ -5,6 +5,8 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './signup/signup.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { PersonComponent } from './person-signup/person-signup.component';
+import { PetComponent } from './pet-signup/pet-signup.component';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { PageNotFoundComponent } from './page-not-found'
 
@@ -13,6 +15,8 @@ const appRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent },
+  { path: 'person-signup', component: PersonComponent },
+  { path: 'pet-signup', component: PetComponent },
   { path: 'schedule', component: ScheduleComponent },
   // {
   //   path: '',

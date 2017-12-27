@@ -9,6 +9,8 @@ import { AppComponent } from './app.component';
 import { AuthService } from './services/auth.service';
 import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './signup/signup.component';
+import { PersonComponent } from './person-signup/person-signup.component';
+import { PetComponent } from './pet-signup/pet-signup.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { PageNotFoundComponent } from './page-not-found'
@@ -19,6 +21,8 @@ import { PageNotFoundComponent } from './page-not-found'
     AppComponent,
     LoginComponent,
     SignUpComponent,
+    PersonComponent,
+    PetComponent,
     DashboardComponent,
     ScheduleComponent,
     PageNotFoundComponent

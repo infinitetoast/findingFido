@@ -34,7 +34,8 @@ app.get('/login', (req, res) => {
 
 app.post('/login', (req, res) => {
   // Lili checking front-end send information from LoginComponent
-  console.log(req.body); // {email: bla, password: bla}
+  // {email: bla, password: bla}
+  console.log('login' + req.body); 
   res.send(req.body); // check to see I get the data back
   // Pull email from request, assign it to 'email'
   // Pull password from request, assign it to 'password'
@@ -51,6 +52,7 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/signup', (req, res) => {
+  console.log('signup' + req.body); 
   res.send(req.body);
 });
 
@@ -60,8 +62,13 @@ app.get('/signup', (req, res) => {
 
 // app.post('/signup', (req, res) => {
 app.post('/personSignup', (req, res) => {
-  console.log(req.body);
+  console.log('person' + req.body); 
   res.send(req.body);
+  // {
+  //   name: 'aurelie',
+  //     address: '2823 Ursulines Ave',
+  //       extra: 'i am a girl'
+  // }
   db.createUser(name, email, password, address, extra, (err, response) => {
     if (err) {
       console.error(err);
@@ -80,6 +87,8 @@ app.get('/signup2', (req, res) => {
 
 // app.post('/signup2', (req, res) => {
 app.post('/petSignup', (req, res) => {
+  console.log('pet' + req.body); 
+  res.send(req.body);
   // Pull info from req
   db.createPet(name, kind, characteristics, userId, (err, pet) => {
     if (err) {

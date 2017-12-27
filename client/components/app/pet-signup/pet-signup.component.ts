@@ -4,13 +4,15 @@ import { AuthService } from '../services/auth.service';
 
 
 @Component({
-  selector: 'login',
-  templateUrl: 'login.component.html',
-  //styleUrls: ['login.component.css']
+  selector: 'pet-signup',
+  templateUrl: 'pet-signup.component.html',
+  //styleUrls: ['pet-signup.component.css']
 })
-export class LoginComponent {
-  email: string;
-  password: string;
+export class PetComponent {
+  kind: string;
+  petName: string;
+  place: string;
+  petInfo: string;
 
   constructor(
     private router: Router,
@@ -18,12 +20,14 @@ export class LoginComponent {
   ) { }
 
   onSelect(): void {
-    const user = {
-      email: this.email,
-      password: this.password
+    const pet = {
+      kind: this.kind,
+      petName: this.petName,
+      place: this.place,
+      petInfo: this.petInfo,
     }
-    console.log(user);
-    this.authService.postLogin(user)
+    console.log(pet);
+    this.authService.postPetSignUp(pet)
     .then(user => console.log('yep fired',user))
     this.router.navigate(['/dashboard']);
 
