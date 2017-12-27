@@ -1,2 +1,4 @@
 node_modules
 package-lock.json
+config/cloudinary.api.js
+config/googlemaps.api.js
