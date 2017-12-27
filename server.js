@@ -7,6 +7,12 @@ const db = require('./models/findingFidoModels');
 
 const app = express();
 
+const jwt = require('express-jwt');
+
+const jwks = require('jwks-rsa');
+
+const cors = require('cors');
+
 const port = process.env.PORT || 9000;
 
 // Need this to serve our bundled index.html
@@ -18,6 +24,19 @@ app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(cors());
+
+const authCheck  = jwt({
+  secret: jwks.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: 'https://findo.auth0.com/.well-known/jwks.json',
+  }),
+  audience: 'http://localhost:9000',
+  issuer: 'https://findo.auth0.com/',
+  algorithms: ['RS256'],
+});
 
 app.get('/', (req, res) => {
   // If the user is logged in
