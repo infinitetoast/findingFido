@@ -8,7 +8,8 @@ const db = require('./models/findingFidoModels');
 
 const app = express();
 
-const port = process.env.PORT || 9000;
+// Check for environment variables, set port accordingly
+const port = process.env.NODE_ENV === 'development' ? 9000 : 80;
 
 // Need this to serve our bundled index.html
 app.use(express.static(`${__dirname}/dist`));
