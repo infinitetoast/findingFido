@@ -1,9 +1,16 @@
 import { Component } from '@angular/core';
+import token from '../../../../config/googlemaps.api'
+console.log(token);
+
 @Component({
   templateUrl: 'schedule.component.html',
-  //styleUrls: ['schedule.component.css']
+  styles: [ ]
 })
+  
 export class ScheduleComponent {
+  token: String;
+  constructor() { }
+
 
 }
 
