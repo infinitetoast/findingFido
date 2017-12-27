@@ -10,7 +10,11 @@ import { AuthService } from '../services/auth.service';
 })
 export class PersonComponent {
   name: string;
-  address: string;
+  address1: string;
+  address2: string;
+  city: string;
+  state: string;
+  zip: string;
   extra: string;
 
   constructor(
@@ -21,7 +25,11 @@ export class PersonComponent {
   onSelect(): void {
     const personInfo = {
       name: this.name,
-      address: this.address,
+      address1: this.address1,
+      address2: this.address2,
+      city: this.city,
+      state: this.state,
+      zip: this.zip,
       extra: this.extra
     }
     console.log(personInfo);
