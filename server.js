@@ -1,4 +1,5 @@
 const express = require('express');
+
 const path = require('path');
 
 const bodyParser = require('body-parser');
@@ -22,7 +23,8 @@ app.get('/', (req, res) => {
   // If the user is logged in
   // Send them their own profile
   // Otherwise
-  // Note on talking about this, as the front-end is built out of components and angular router on front end exist
+  // Note on talking about this, as the front-end is built out of components and angular
+  // router on front end exist
   res.redirect('/login');
 });
 
