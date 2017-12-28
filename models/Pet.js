@@ -36,3 +36,9 @@ module.exports.createPet = (name, kind, characteristics, userId, cb) => {
       .then(pet => cb(null, pet))
       .catch(err => cb(err)));
 };
+
+module.exports.getPet = (userId, cb) => {
+  Pet.findOne({ id_User: userId })
+    .then(pet => cb(null, pet))
+    .catch(err => cb(err));
+};
