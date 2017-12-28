@@ -34,12 +34,8 @@ module.exports.createActivity = (body, location, userId, time, cb) => {
       time,
       location,
     })
-      .then((result) => {
-        cb(null, result);
-      })
-      .catch((err) => {
-        cb(err);
-      }));
+      .then(result => cb(null, result))
+      .catch(err => cb(err)));
 };
 
 module.exports.getUserActivities = (userId, cb) => {

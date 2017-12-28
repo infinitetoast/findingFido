@@ -24,7 +24,7 @@ module.exports.addPhoto = (url, userId, cb) => {
     Photo.create({
       url,
       id_User: userId,
-    }))
-    .then(result => cb(null, result))
-    .catch(err => cb(err));
+    })
+      .then(result => cb(null, result))
+      .catch(err => cb(err)));
 };
