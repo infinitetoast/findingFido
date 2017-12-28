@@ -45,18 +45,7 @@ app.get('/api/deals', (req, res) => {
 app.get('/api/deals/private', authCheck, (req, res) => {
   res.json('hello');
 })
-// app.get('/', (req, res) => {
-//   // If the user is logged in
-//   // Send them their own profile
-//   // Otherwise
-//   // Note on talking about this, as the front-end is built out of components and angular router on front end exist
-//   res.redirect('/login');
-// });
 
-// app.get('/login', (req, res) => {
-//   // Problem as our client side is bundled and served from distribution
-//   res.sendFile(path.join(__dirname, '/client/login.html'));
-// });
 
 app.post('/login', (req, res) => {
   // Lili checking front-end send information from LoginComponent
@@ -82,12 +71,7 @@ app.post('/signup', (req, res) => {
   res.send(req.body);
 });
 
-// app.get('/signup', (req, res) => {
-//   res.sendFile(path.join(__dirname, '/client/signup1.html'));
-// });
-
-// app.post('/signup', (req, res) => {
-app.post('/personSignup', (req, res) => {
+app.post('/personSignup', authCheck, (req, res) => {
   console.log(`person${req.body}`);
   res.send(req.body);
   // { name: "amelie", address1: "2823 Ursulines Ave", city: "NEW ORLEANS", state: "LA", zip: "70119", extra: I am a girl }
@@ -103,15 +87,12 @@ app.post('/personSignup', (req, res) => {
   });
 });
 
-// app.get('/signup2', (req, res) => {
-//   res.sendFile(path.join(__dirname, '/client/signup2.html'));
-// });
-// testing the schedule
+
 app.post('/schedule', (req, res) => {
   res.send(req.body);
 });
 
-// app.post('/signup2', (req, res) => {
+
 app.post('/petSignup', (req, res) => {
   console.log(`pet${req.body}`);
   // { kind: "Dog", petName: "Doggy", place: "Central Park", petInfo: "super fun" }
@@ -126,21 +107,11 @@ app.post('/petSignup', (req, res) => {
   });
 });
 
-// app.get('/signup3', (req, res) => {
-//   res.sendFile(path.join(__dirname, '/client/signup3.html'));
-// });
-
-app.post('/signup3', (req, res) => {
-  // Update user with full information
-  // Store information in the database
-  // Send auth token
-  // Redirect to profile page
-});
 
 app.get('/profile', (req, res) => {
   // Requires auth
   // If the requested profile is that user's profile
-  res.sendFile(path.join(__dirname, '/client/components/app/person-signup/person-signup.component.html'));
+  // res.sendFile(path.join(__dirname, '/client/components/app/person-signup/person-signup.component.html'));
   // Otherwise
   // Send them the external profile page
 });
@@ -157,17 +128,11 @@ app.delete('/profile', (req, res) => {
   res.redirect('/signup');
 });
 
-app.get('/chat', (req, res) => {
-  res.sendFile(path.join(__dirname, '/client/chat.html'));
-});
+
 
 app.post('/chat', (req, res) => {
   // Store message in databse
   // Send message to both users, using socket.io
-});
-
-app.get('/review', (req, res) => {
-  res.sendFile(path.join(__dirname, '/client/review.html'));
 });
 
 app.post('/review', (req, res) => {

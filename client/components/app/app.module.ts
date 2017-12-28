@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module'
+import { AuthHttp, AuthConfig, AUTH_PROVIDERS, provideAuth } from 'angular2-jwt';
 
 import { AppComponent } from './app.component';
 import { EmailService } from './services/email.service';
@@ -43,9 +44,21 @@ import { CallbackComponent } from './callback.component';
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
-  providers: [AuthService, PageService, EmailService],
+  providers: [
+    AuthService, PageService, EmailService,
+    AuthHttp,
+    provideAuth({
+      headerName: 'Authorization',
+      headerPrefix: 'bearer',
+      tokenName: 'token',
+      tokenGetter: (() => localStorage.getItem('id_token')),
+      globalHeaders: [{ 'Content-Type': 'application/json' }],
+      noJwtError: true
+    })
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

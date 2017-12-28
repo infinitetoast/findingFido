@@ -7,8 +7,8 @@ import 'rxjs/add/operator/toPromise';
 export class PageService {
 
   private headers = new Headers({ 'Content-Type': 'application/json' });
-  private scheduleUrl = '/schedule';  
-  private locationsUrl = '/locations'
+  private scheduleUrl = 'http://localhost:9000/schedule';  
+  private locationsUrl = 'http://localhost:9000/locations'
 
   constructor(private http: Http) { }
 

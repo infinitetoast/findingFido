@@ -19,19 +19,19 @@ import { CallbackComponent } from './callback.component';
 
 
 const appRoutes: Routes = [
-  { path: 'dashboard', component: DashboardComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent },
-  { path: 'person-signup', component: PersonComponent },
+  { path: 'person-signup', component: PersonComponent, canActivate: [AuthGuard] },
   { path: 'pet-signup', component: PetComponent, canActivate: [AuthGuard] },
-  { path: 'schedule', component: ScheduleComponent },
+  { path: 'schedule', component: ScheduleComponent, canActivate: [AuthGuard] },
   { path: 'pet-dashboard', component: PetDashboardComponent, canActivate: [AuthGuard] },
   { path: 'review', component: ReviewComponent, canActivate: [AuthGuard] },
   { path: 'pet-boolean', component: PetBooleanComponent, canActivate: [AuthGuard] },
   { path: 'chat', component: ChatComponent, canActivate: [AuthGuard] },
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: '/login',
     pathMatch: 'full'
   },
   {

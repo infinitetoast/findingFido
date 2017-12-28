@@ -5,6 +5,8 @@ when the dependency injector is creating an instance of this class.*/
 
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
+import { AuthHttp } from 'angular2-jwt';
+
 // Note the Angular http.get returns an RxJS Observable.
 // Observables are a powerful way to manage asynchronous data flows.
 // We are converting the Observable to a Promise using the toPromise operator thru rxjs.
@@ -14,12 +16,15 @@ import 'rxjs/add/operator/toPromise';
 export class EmailService {
 
   private headers = new Headers({ 'Content-Type': 'application/json' });
-  private loginUrl = '/login';  
-  private signupUrl = '/signup';
-  private personUrl = '/personSignup';
-  private petUrl = '/petSignup';
+  private loginUrl = 'http://localhost:9000/login';  
+  private signupUrl = 'http://localhost:9000/signup';
+  private personUrl = 'http://localhost:9000/personSignup';
+  private petUrl = 'http://localhost:9000/petSignup';
 
-  constructor(private http: Http) { }
+  constructor(
+    private http: Http,
+    public authHttp: AuthHttp
+  ) { }
 
   postLogin(user: any): Promise<any> {
     return this.http
@@ -37,7 +42,7 @@ export class EmailService {
       .catch(this.handleError);
   }
   postPersonSignUp(user: any): Promise<any> {
-    return this.http
+    return this.authHttp
       .post(this.personUrl, JSON.stringify(user), { headers: this.headers })
       .toPromise()
       .then(res => res.json())

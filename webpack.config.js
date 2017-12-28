@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const WebpackProvideGlobalPlugin = require('webpack-provide-global-plugin');
+const webpack = require('webpack');
+
 
 module.exports = {
   entry: {
@@ -21,6 +22,12 @@ module.exports = {
       { test: /\.css$/, use: ['style-loader', 'css-loader'] },
     ],
   },
+  devServer: {
+    historyApiFallback: true,
+    hot: true, // Tell the dev-server we're using HMR
+    contentBase: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: './client/index.html',
@@ -28,12 +35,7 @@ module.exports = {
       showErrors: true,
       path: path.join(__dirname, '/dist/'),
     }),
-    // new WebpackProvideGlobalPlugin({
-    //   $: 'jquery',
-    //   jQuery: 'jquery',
-    //   'window.jQuery': 'jquery',
-    //   Popper: ['popper.js', 'default'],
-    // }),
+    new webpack.HotModuleReplacementPlugin(), // Enable HMR
 
   ],
 };
