@@ -149,9 +149,13 @@ app.delete('/profile', (req, res) => {
 app.post('/chat', (req, res) => {
   const { body, userId } = req.body;
   // Store message in databse
-  Message.createMessage(body, userId, (result) => {
+  Message.createMessage(body, userId, (err, result) => {
     // Send message to both users, using socket.io
-    res.send(result);
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.send(result);
+    }
   });
 });
 
@@ -206,9 +210,11 @@ app.post('/activities', (req, res) => {
 app.get('/petDashboard', (req, res) => {
   const { email } = req.body;
   // Gets user information based on email
-  User.getUser(email, (userInfo) => {
+  User.getUser(email, (err, userInfo) => {
+    if (err) console.error(err);
     // Gets pet information based on returned user id
-    Pet.getPet(userInfo.id, (petInfo) => {
+    Pet.getPet(userInfo.id, (error, petInfo) => {
+      if (error) console.error(error);
       // Puts them in object and sends to user
       const result = { userInfo, petInfo };
       res.status(200).send(result);
