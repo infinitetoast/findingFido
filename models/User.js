@@ -40,6 +40,7 @@ const User = sequelize.define('user', {
   },
 });
 
+// Creates a user with only the name and email filled out
 module.exports.initialCreateUser = (email, password, cb) => {
   User.sync().then(() =>
     User.create({
@@ -54,6 +55,7 @@ module.exports.initialCreateUser = (email, password, cb) => {
       .catch(err => cb(err)));
 };
 
+// Fills out the rest of the columns for a new user
 module.exports.finishUser = (userId, name, address, extra, cb) => {
   User.findOne({
     id: userId,
@@ -79,6 +81,7 @@ module.exports.getUser = (email, cb) => {
     .catch(err => cb(err));
 };
 
+// Only used in the development environment
 module.exports.getUsers = (cb) => {
   User.findAll()
     .then((users) => {
