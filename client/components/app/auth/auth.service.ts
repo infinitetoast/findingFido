@@ -3,7 +3,6 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import * as auth0 from 'auth0-js';
 import { AUTH_CONFIG } from './auth-config';
 import { Router } from '@angular/router';
-console.log({ AUTH_CONFIG });
 @Injectable()
 export class AuthService {
   // Create Auth0 web auth instance
@@ -26,6 +25,7 @@ export class AuthService {
     // If token is expired, log out to clear any data from localStorage
     if (this.authenticated) {
       this.userProfile = JSON.parse(localStorage.getItem('profile'));
+      console.log(this.userProfile)
       this.setLoggedIn(true);
     } else {
       this.logout();

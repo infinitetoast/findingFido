@@ -66,7 +66,7 @@ app.post('/login', (req, res) => {
   });
 });
 
-app.post('/signup', (req, res) => {
+app.post('/signup', authCheck, (req, res) => {
   console.log(`signup${req.body}`);
   res.send(req.body);
 });
