@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import { EmailService } from '../services/email.service';
 
 
 @Component({
@@ -16,7 +16,7 @@ export class PetComponent {
 
   constructor(
     private router: Router,
-    private authService: AuthService
+    private emailService: EmailService
   ) { }
 
   onSelect(): void {
@@ -27,7 +27,7 @@ export class PetComponent {
       petInfo: this.petInfo,
     }
     console.log(pet);
-    this.authService.postPetSignUp(pet)
+    this.emailService.postPetSignUp(pet)
     .then(user => console.log('yep fired',user))
     this.router.navigate(['/dashboard']);
 

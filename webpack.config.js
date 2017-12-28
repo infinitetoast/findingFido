@@ -1,6 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-//const WebpackProvideGlobalPlugin = require('webpack-provide-global-plugin');
+// const WebpackProvideGlobalPlugin = require('webpack-provide-global-plugin');
 
 module.exports = {
   entry: {

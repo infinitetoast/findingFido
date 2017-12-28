@@ -6,7 +6,8 @@ import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module'
 
 import { AppComponent } from './app.component';
-import { AuthService } from './services/auth.service';
+import { EmailService } from './services/email.service';
+import { AuthService } from './auth/auth.service';
 import { PageService } from './services/page.service';
 import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './signup/signup.component';
@@ -42,7 +43,7 @@ import { PageNotFoundComponent } from './page-not-found'
     HttpModule,
     AppRoutingModule
   ],
-  providers: [AuthService, PageService],
+  providers: [AuthService, PageService, EmailService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

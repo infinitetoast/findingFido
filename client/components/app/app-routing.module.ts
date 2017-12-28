@@ -1,4 +1,5 @@
-import { RouterModule, Routes } from '@angular/router';
+import { Routes, RouterModule, CanActivate } from '@angular/router';
+
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
@@ -12,20 +13,21 @@ import { PetDashboardComponent } from './pet-dashboard/pet-dashboard.component';
 import { ReviewComponent } from './review/review.component';
 import { PetBooleanComponent } from './pet-boolean/pet-boolean.component';
 import { ChatComponent } from './chat/chat.component';
-import { PageNotFoundComponent } from './page-not-found'
+import { PageNotFoundComponent } from './page-not-found';
+import { AuthGuard } from './auth/auth.gard';
 
 
 const appRoutes: Routes = [
-  { path: 'dashboard', component: DashboardComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent },
-  { path: 'person-signup', component: PersonComponent },
-  { path: 'pet-signup', component: PetComponent },
-  { path: 'schedule', component: ScheduleComponent },
-  { path: 'pet-dashboard', component: PetDashboardComponent },
-  { path: 'review', component: ReviewComponent },
-  { path: 'pet-boolean', component: PetBooleanComponent },
-  { path: 'chat', component: ChatComponent },
+  { path: 'person-signup', component: PersonComponent, canActivate: [AuthGuard] },
+  { path: 'pet-signup', component: PetComponent, canActivate: [AuthGuard] },
+  { path: 'schedule', component: ScheduleComponent, canActivate: [AuthGuard] },
+  { path: 'pet-dashboard', component: PetDashboardComponent, canActivate: [AuthGuard] },
+  { path: 'review', component: ReviewComponent, canActivate: [AuthGuard] },
+  { path: 'pet-boolean', component: PetBooleanComponent, canActivate: [AuthGuard] },
+  { path: 'chat', component: ChatComponent, canActivate: [AuthGuard] },
   // {
   //   path: '',
   //   redirectTo: '/',
@@ -42,6 +44,7 @@ const appRoutes: Routes = [
     )
 
   ],
+  providers: [AuthGuard],
   exports: [
     RouterModule]
 })

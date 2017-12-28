@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../auth/auth.service';
+import { EmailService } from '../services/email.service';
 
 
 @Component({
@@ -14,7 +15,8 @@ export class SignUpComponent {
 
   constructor(
     private router: Router,
-    private authService: AuthService
+    public authService: AuthService,
+    private emailService: EmailService
   ) { }
 
   onSelect(): void {
@@ -23,7 +25,7 @@ export class SignUpComponent {
       password: this.password
     }
     console.log(user);
-    this.authService.postSignUp(user)
+    this.emailService.postSignUp(user)
     .then(user => console.log('yep fired',user))
     this.router.navigate(['/dashboard']);
 
