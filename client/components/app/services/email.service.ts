@@ -35,7 +35,7 @@ export class EmailService {
   }
 
   postSignUp(user: any): Promise<any> {
-    return this.http
+    return this.authHttp
       .post(this.signupUrl, JSON.stringify(user), { headers: this.headers })
       .toPromise()
       .then(res => res.json())

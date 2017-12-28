@@ -67,12 +67,13 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/signup', authCheck, (req, res) => {
-  console.log(`signup${req.body}`);
+  console.log(req.headers);
   res.send(req.body);
 });
 
 app.post('/personSignup', authCheck, (req, res) => {
-  console.log(`person${req.body}`);
+  console.log(req.headers);
+  console.log(req.header)
   res.send(req.body);
   // { name: "amelie", address1: "2823 Ursulines Ave", city: "NEW ORLEANS", state: "LA", zip: "70119", extra: I am a girl }
   db.createUser(name, email, password, address, extra, (err, response) => {
