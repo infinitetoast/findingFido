@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import * as auth0 from 'auth0-js';
 import { AUTH_CONFIG } from './auth-config';
 import { Router } from '@angular/router';
-
+console.log({ AUTH_CONFIG });
 @Injectable()
 export class AuthService {
   // Create Auth0 web auth instance

@@ -9,7 +9,7 @@ import { AuthService } from './auth/auth.service';
 export class AppComponent {
   title: string = 'FindingFido';
   constructor(public authService: AuthService) { 
-    authService.handleAuth();
+    //authService.handleAuth();
   }
 
 
