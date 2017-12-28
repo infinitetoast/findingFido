@@ -42,3 +42,10 @@ module.exports.getPet = (userId, cb) => {
     .then(pet => cb(null, pet))
     .catch(err => cb(err));
 };
+
+module.exports.updatePet = (userId, updateKey, updateValue, cb) => {
+  Pet.findOne({ id_User: userId })
+    .then(pet => pet.updateAttributes({ updateKey: updateValue }))
+    .then(updated => cb(null, updated))
+    .catch(err => cb(err));
+};
