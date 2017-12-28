@@ -73,6 +73,10 @@ app.post('/signup', (req, res) => {
   });
 });
 
+app.post('/schedule', (req, res) => {
+  res.send(req.body);
+});
+
 app.post('/petSignup', (req, res) => {
   const userId = req.body.id; // Update this to change based on the current user, requires auth
   const name = req.body.name;
