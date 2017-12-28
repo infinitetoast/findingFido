@@ -30,6 +30,7 @@
 //   <body>
 //     <div id="map"></div>
 //       <script>
+        // Idea: Render this in the page within a component that has a "location" key
         const NOLA = {lat: 29.9699644, lng: -90.1139725 };
         function initMap() {
           // Create the map.
