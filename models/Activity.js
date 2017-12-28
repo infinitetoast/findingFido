@@ -25,13 +25,19 @@ const Activity = sequelize.define('activity', {
   },
 });
 
-module.exports.createActivity = (body, location, userId, time) => {
+module.exports.createActivity = (body, location, userId, time, cb) => {
   Activity.sync({ force: true }).then(() => {
     return Activity.create({
       body: body,
       id_User: userId,
       time: time,
       location: location,
-    });
+    })
+      .then((result) => {
+        cb(null, result);
+      })
+      .catch((err) => {
+        cb(err);
+      });
   });
 };

@@ -4,7 +4,17 @@ const path = require('path');
 
 const bodyParser = require('body-parser');
 
-const db = require('./models/findingFidoModels');
+const Message = require('./models/Message');
+
+const User = require('./models/User');
+
+const Pet = require('./models/Pet');
+
+const Photo = require('./models/Photo');
+
+const Activity = require('./models/Activity');
+
+const Review = require('./models/Review');
 
 const app = express();
 
@@ -20,27 +30,24 @@ app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => {
-  // If the user is logged in
-  // Send them their own profile
-  // Otherwise
-  // Note on talking about this, as the front-end is built out of components and angular
-  // router on front end exist
-  res.redirect('/login');
-});
 
-app.get('/login', (req, res) => {
-  // Problem as our client side is bundled and served from distribution
-  res.sendFile(path.join(__dirname, '/client/login.html'));
+/*******************************************************
+ Delete in production environment
+ *********************************************************/
+app.get('/users', (req, res) => {
+  User.getUsers((err, users) => {
+    if (err) {
+      console.error(err);
+    } else {
+      res.send(users);
+    }
+  });
 });
 
 app.post('/login', (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
-  // Lili checking front-end send information from LoginComponent
-  // {email: bla, password: bla}
-  // res.send(req.body); // check to see I get the data back
-  db.getUser(email, (err, user) => {
+  User.getUser(email, (err, user) => {
     if (err) {
       console.error(err);
       res.status(404).redirect('/signup');
@@ -54,66 +61,45 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/signup', (req, res) => {
-  console.log(`signup${req.body}`);
-  res.send(req.body);
-});
-
-app.get('/signup', (req, res) => {
-  res.sendFile(path.join(__dirname, '/client/signup1.html'));
-});
-
-app.post('/signup', (req, res) => {
-  const name = req.body.name;
   const email = req.body.email;
   const password = req.body.password;
-  const address = req.body.address;
-  const extra = req.body.extra;
-  db.createUser(name, email, password, address, extra, (err, response) => {
+  User.initialCreateUser(email, password, (err, response) => {
     if (err) {
       console.error(err);
       res.status(500).send('Sorry, something went wrong');
     } else {
-      // If they have a pet
-      res.status(201).redirect('/petSignup');
-      // If they don't have a pet, redirect to signup 3
+      res.send('success', response);
     }
   });
-});
-
-app.get('/petSignup', (req, res) => {
-  res.sendFile(path.join(__dirname, '/client/petSignup.html'));
 });
 
 app.post('/petSignup', (req, res) => {
+  const userId = req.body.id; // Update this to change based on the current user, requires auth
   const name = req.body.name;
   const kind = req.body.kind;
   const characteristics = req.body.characteristics;
-  db.createPet(name, kind, characteristics, userId, (err, pet) => {
+  Pet.createPet(name, kind, characteristics, userId, (err, pet) => {
     if (err) {
-      res.status(500).send('Sorry, there was an issue');
+      res.status(500).send(err);
     } else {
-      res.status(201).redirect('/personSignup');
+      res.status(201).send(pet);
     }
   });
 });
 
-app.get('/personSignup', (req, res) => {
-  res.sendFile(path.join(__dirname, '/client/personSignup.html'));
-});
-
 app.post('/personSignup', (req, res) => {
-  // Update user with full information
-  // Store information in the database
-  // Send auth token
-  // Redirect to profile page
-});
-
-app.get('/profile', (req, res) => {
-  // Requires auth
-  // If the requested profile is that user's profile
-  res.sendFile(path.join(__dirname, '/client/profile.html'));
-  // Otherwise
-  // Send them the external profile page
+  // const userId; // Pull out user id
+  const name = req.body.name;
+  const address = req.body.address;
+  const extra = req.body.extra;
+  User.finishUser(null, name, address, extra, (err, response) => {
+    if (err) {
+      res.send(err);
+    } else {
+      // Send token
+      res.send(response);
+    }
+  });
 });
 
 app.put('/profile', (req, res) => {
@@ -125,36 +111,61 @@ app.put('/profile', (req, res) => {
 
 app.delete('/profile', (req, res) => {
   // Delete the user's profile
-  res.redirect('/signup');
-});
-
-app.get('/chat', (req, res) => {
-  res.sendFile(path.join(__dirname, '/client/chat.html'));
+  res.status(202).send('Successfully deleted');
 });
 
 app.post('/chat', (req, res) => {
+  const body = 'hi';
+  const userId = 4;
+  Message.createMessage(body, userId, (result) => {
+    res.send(result);
+  });
   // Store message in databse
   // Send message to both users, using socket.io
 });
 
-app.get('/review', (req, res) => {
-  res.sendFile(path.join(__dirname, '/client/review.html'));
-});
-
 app.post('/review', (req, res) => {
-  db.createReview(user, body, (err, user) => {
+  const user = 4;
+  const body = 'cool';
+  Review.createReview(user, body, (err, review) => {
     if (err) {
       console.error(err);
       res.status(404).send(err);
     } else {
-      res.status(201).redirect('/profile');
+      res.status(201).send(review);
     }
   });
 });
 
-app.get('/search', (req, res) => {
-  // Should be able to handle searches client side without a post handler
-  res.sendFile(path.join(__dirname, '/client/search.html'));
+
+app.post('/search', (req, res) => {
+  // Search the database for people who are looking for someone at that time
+});
+
+app.get('/activities/*', (req, res) => {
+  // Pull user id out of request params
+  // Query database for that user's activities
+  // Respond with the activities
+});
+
+app.post('/activities', (req, res) => {
+  const userId = req.body.userId; // Update this based on user id with auth
+  const description = req.body.description;
+  const location = req.body.location;
+  const time = req.body.time;
+  Activity.createActivity(description, location, userId, time, (err, result) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(201).send(result);
+    }
+  });
+});
+
+app.get('/petDashboard', (req, res) => {
+  // Get information for user
+  // Get information for pet
+  // Send response with information
 });
 
 app.get('/signout', (req, res) => {
