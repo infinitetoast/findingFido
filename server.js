@@ -1,9 +1,13 @@
+// Packages
 const express = require('express');
-
-const path = require('path');
 
 const bodyParser = require('body-parser');
 
+const fileUpload = require('express-fileupload');
+
+const cloudinary = require('cloudinary');
+
+// Local files
 const Message = require('./models/Message');
 
 const User = require('./models/User');
@@ -30,6 +34,8 @@ app.use(express.static(`${__dirname}/client/assets`));
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(fileUpload());
 
 
 /*******************************************************
@@ -183,9 +189,34 @@ app.post('/activities', (req, res) => {
 
 // Sends information to fill out the individual dashboard
 app.get('/petDashboard', (req, res) => {
-  // Get information for user
-  // Get information for pet
-  // Send response with information
+  const { email } = req.body;
+  // Gets user information based on email
+  User.getUser(email, (userInfo) => {
+    // Gets pet information based on returned user id
+    Pet.getPet(userInfo.id, (petInfo) => {
+      // Puts them in object and sends to user
+      const result = { userInfo, petInfo };
+      res.status(200).send(result);
+    });
+  });
+});
+
+// Recieves a file upload, adds it to cloudinary, then adds to the database
+app.post('/photos', (req, res) => {
+  const newPhoto = req.files;
+  const { userId } = req.body; // Will need to update based on auth
+  // Uploads to cloudinary
+  cloudinary.uploader.upload(newPhoto, (result) => {
+    // Uploads returned url to our database
+    Photo.addPhoto(result.url, userId, (err, photo) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        // Sends back the new photo to the client side to be rendered
+        res.status(201).send(photo);
+      }
+    });
+  });
 });
 
 // Logs a user out, destroying their token
