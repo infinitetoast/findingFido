@@ -41,3 +41,9 @@ module.exports.createActivity = (body, location, userId, time, cb) => {
         cb(err);
       }));
 };
+
+module.exports.getUserActivities = (userId, cb) => {
+  Activity.find({ id_User: userId })
+    .then(activities => cb(null, activities))
+    .catch(err => cb(err));
+};

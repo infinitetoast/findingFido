@@ -37,7 +37,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(fileUpload());
 
-
 /*******************************************************
  Delete in production environment
  *********************************************************/
@@ -57,8 +56,6 @@ app.get('/users', (req, res) => {
 // Logs in user if they exist, sends them to signup if not
 app.post('/login', (req, res) => {
   const { email, password } = req.body;
-  // const email = req.body.email;
-  // const password = req.body.password;
   User.getUser(email, (err, user) => {
     if (err) {
       console.error(err);
@@ -74,7 +71,6 @@ app.post('/login', (req, res) => {
 
 // Takes in email and password and makes a user with only those two columns filled out
 app.post('/signup', (req, res) => {
-  // I think this is the proper way to do destructing. We'll find out if not
   const { email, password } = req.body;
   User.initialCreateUser(email, password, (err, response) => {
     if (err) {
@@ -109,9 +105,13 @@ app.post('/petSignup', (req, res) => {
 
 // Fills out the rest of the columns on a new user
 app.post('/personSignup', (req, res) => {
-  // const userId; // Pull out user id
-  const { name, address, extra } = req.body;
-  User.finishUser(null, name, address, extra, (err, response) => {
+  const {
+    name,
+    address,
+    extra,
+    userId,
+  } = req.body;
+  User.finishUser(userId, name, address, extra, (err, response) => {
     if (err) {
       res.send(err);
     } else {
@@ -123,26 +123,36 @@ app.post('/personSignup', (req, res) => {
 
 // Updates profile information
 app.put('/profile', (req, res) => {
-  // Send which part of the profile will be updated on headers
-  // Figure out what needs to be updated
-  // Update that user's database entry
-  // Redirect to profile get, so they can see it updated with the changes
+  const { updateKey, updateValue, userId } = req.headers;
+  User.updateUser(userId, updateKey, updateValue, (err, updated) => {
+    if (err) {
+      res.status(404).send(err);
+    } else {
+      res.status(201).send(updated);
+    }
+  });
 });
 
 // Deletes a profile
 app.delete('/profile', (req, res) => {
-  // Delete the user's profile
-  res.status(202).send('Successfully deleted');
+  const { userId } = req.body;
+  User.deleteUser(userId, (err, result) => {
+    if (err) {
+      res.status(404).send(err);
+    } else {
+      res.status(202).send(result);
+    }
+  });
 });
 
 // Saves chat messages to the database
 app.post('/chat', (req, res) => {
   const { body, userId } = req.body;
+  // Store message in databse
   Message.createMessage(body, userId, (result) => {
+    // Send message to both users, using socket.io
     res.send(result);
   });
-  // Store message in databse
-  // Send message to both users, using socket.io
 });
 
 // Saves reviews to the database
@@ -165,9 +175,14 @@ app.post('/search', (req, res) => {
 
 // Finds a sepecific user's activities for the profile page
 app.get('/activities/*', (req, res) => {
-  // Pull user id out of request params
-  // Query database for that user's activities
-  // Respond with the activities
+  const { userId } = req.body;
+  Activity.getUserActivities(userId, (err, activities) => {
+    if (err) {
+      res.status(404).send(err);
+    } else {
+      res.status(200).send(activities);
+    }
+  });
 });
 
 // Adds an activity to the database
