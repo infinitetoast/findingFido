@@ -26,18 +26,18 @@ const Activity = sequelize.define('activity', {
 });
 
 module.exports.createActivity = (body, location, userId, time, cb) => {
-  Activity.sync({ force: true }).then(() => {
-    return Activity.create({
-      body: body,
+  Activity.sync({ force: true }).then(() =>
+    Activity.create({
+      // Again, I think this is the right way to do object shorthand. We'll see
+      body,
       id_User: userId,
-      time: time,
-      location: location,
+      time,
+      location,
     })
       .then((result) => {
         cb(null, result);
       })
       .catch((err) => {
         cb(err);
-      });
-  });
+      }));
 };

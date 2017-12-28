@@ -41,29 +41,28 @@ const User = sequelize.define('user', {
 });
 
 module.exports.initialCreateUser = (email, password, cb) => {
-  User.sync().then(() => {
-    return User.create({
+  User.sync().then(() =>
+    User.create({
       name: null,
-      email: email,
-      password: password,
+      email,
+      password,
       address: null,
       extra: null,
       photo: null,
     })
       .then(user => cb(null, user))
-      .catch(err => cb(err));
-  });
+      .catch(err => cb(err)));
 };
 
-module.exports.finishUser = (userId, name, addess, extra, cb) => {
+module.exports.finishUser = (userId, name, address, extra, cb) => {
   User.findOne({
-    id: userId
+    id: userId,
   })
     .then((user) => {
       user.updateAttributes({
-        name: name,
-        address: address,
-        extra: extra,
+        name,
+        address,
+        extra,
       })
         .then((result) => {
           cb(result);
@@ -75,7 +74,7 @@ module.exports.finishUser = (userId, name, addess, extra, cb) => {
 };
 
 module.exports.getUser = (email, cb) => {
-  User.findOne({ email: email })
+  User.findOne({ email })
     .then(user => cb(null, user))
     .catch(err => cb(err));
 };

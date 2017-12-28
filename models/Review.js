@@ -20,9 +20,9 @@ const Review = sequelize.define('review', {
 });
 
 module.exports.createReview = (user, body, cb) => {
-  Review.sync().then(() => {
-    return Review.create({
-      body: body,
+  Review.sync().then(() =>
+    Review.create({
+      body,
       id_User: user,
     })
       .then((review) => {
@@ -30,6 +30,5 @@ module.exports.createReview = (user, body, cb) => {
       })
       .catch((err) => {
         cb(err);
-      });
-  });
+      }));
 };

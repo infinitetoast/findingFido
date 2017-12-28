@@ -23,9 +23,9 @@ const Message = sequelize.define('message', {
 });
 
 module.exports.createMessage = (body, userId, cb) => {
-  Message.sync().then(() => {
-    return Message.create({
-      body: body,
+  Message.sync().then(() =>
+    Message.create({
+      body,
       id_User: userId,
       createdAt: new Date(),
     })
@@ -34,6 +34,5 @@ module.exports.createMessage = (body, userId, cb) => {
       })
       .catch((err) => {
         cb(err);
-      });
-  });
+      }));
 };
