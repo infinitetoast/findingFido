@@ -19,6 +19,10 @@ export class LoginComponent {
     public authService: AuthService
   ) { }
 
+  login() {
+    this.authService.login();
+  }
+
   onSelect(): void {
     const user = {
       email: this.email,

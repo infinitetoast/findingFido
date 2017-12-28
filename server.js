@@ -38,18 +38,18 @@ const authCheck  = jwt({
   algorithms: ['RS256'],
 });
 
-app.get('/', (req, res) => {
-  // If the user is logged in
-  // Send them their own profile
-  // Otherwise
-  // Note on talking about this, as the front-end is built out of components and angular router on front end exist
-  res.redirect('/login');
-});
+// app.get('/', (req, res) => {
+//   // If the user is logged in
+//   // Send them their own profile
+//   // Otherwise
+//   // Note on talking about this, as the front-end is built out of components and angular router on front end exist
+//   res.redirect('/login');
+// });
 
-app.get('/login', (req, res) => {
-  // Problem as our client side is bundled and served from distribution
-  res.sendFile(path.join(__dirname, '/client/login.html'));
-});
+// app.get('/login', (req, res) => {
+//   // Problem as our client side is bundled and served from distribution
+//   res.sendFile(path.join(__dirname, '/client/login.html'));
+// });
 
 app.post('/login', (req, res) => {
   // Lili checking front-end send information from LoginComponent
@@ -75,9 +75,9 @@ app.post('/signup', (req, res) => {
   res.send(req.body);
 });
 
-app.get('/signup', (req, res) => {
-  res.sendFile(path.join(__dirname, '/client/signup1.html'));
-});
+// app.get('/signup', (req, res) => {
+//   res.sendFile(path.join(__dirname, '/client/signup1.html'));
+// });
 
 // app.post('/signup', (req, res) => {
 app.post('/personSignup', (req, res) => {
@@ -96,9 +96,9 @@ app.post('/personSignup', (req, res) => {
   });
 });
 
-app.get('/signup2', (req, res) => {
-  res.sendFile(path.join(__dirname, '/client/signup2.html'));
-});
+// app.get('/signup2', (req, res) => {
+//   res.sendFile(path.join(__dirname, '/client/signup2.html'));
+// });
 // testing the schedule
 app.post('/schedule', (req, res) => {
   res.send(req.body);
@@ -119,9 +119,9 @@ app.post('/petSignup', (req, res) => {
   });
 });
 
-app.get('/signup3', (req, res) => {
-  res.sendFile(path.join(__dirname, '/client/signup3.html'));
-});
+// app.get('/signup3', (req, res) => {
+//   res.sendFile(path.join(__dirname, '/client/signup3.html'));
+// });
 
 app.post('/signup3', (req, res) => {
   // Update user with full information
@@ -133,7 +133,7 @@ app.post('/signup3', (req, res) => {
 app.get('/profile', (req, res) => {
   // Requires auth
   // If the requested profile is that user's profile
-  res.sendFile(path.join(__dirname, '/client/profile.html'));
+  res.sendFile(path.join(__dirname, '/client/components/app/person-signup/person-signup.component.html'));
   // Otherwise
   // Send them the external profile page
 });
@@ -180,7 +180,7 @@ app.get('/signout', (req, res) => {
 });
 
 app.get('/*', (req, res) => {
-  res.redirect('/profile');
+  res.redirect('/');
 });
 
 app.listen(port, () => {

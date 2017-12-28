@@ -7,8 +7,8 @@ interface AuthConfig {
 }
 
 export const AUTH_CONFIG: AuthConfig = {
-  CLIENT_ID: '[FkcsFLCal4iwRdteOG4XUAlKOxXl0ojd]',
-  CLIENT_DOMAIN: '[findo.auth0.com]', 
+  CLIENT_ID: 'FkcsFLCal4iwRdteOG4XUAlKOxXl0ojd',
+  CLIENT_DOMAIN: 'findo.auth0.com', 
   AUDIENCE: 'http://localhost:9000',
   REDIRECT: 'http://localhost:9000/callback',
   SCOPE: 'openid profile email'

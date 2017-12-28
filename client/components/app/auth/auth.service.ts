@@ -52,7 +52,7 @@ export class AuthService {
       } else if (err) {
         console.error(`Error: ${err.error}`);
       }
-      this.router.navigate(['/']);
+      this.router.navigate(['/dashboard']);
     });
   }
 
