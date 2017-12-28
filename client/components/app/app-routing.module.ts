@@ -15,24 +15,29 @@ import { PetBooleanComponent } from './pet-boolean/pet-boolean.component';
 import { ChatComponent } from './chat/chat.component';
 import { PageNotFoundComponent } from './page-not-found';
 import { AuthGuard } from './auth/auth.gard';
+import { CallbackComponent } from './callback.component';
 
 
 const appRoutes: Routes = [
-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'dashboard', component: DashboardComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent },
-  { path: 'person-signup', component: PersonComponent, canActivate: [AuthGuard] },
+  { path: 'person-signup', component: PersonComponent },
   { path: 'pet-signup', component: PetComponent, canActivate: [AuthGuard] },
-  { path: 'schedule', component: ScheduleComponent, canActivate: [AuthGuard] },
+  { path: 'schedule', component: ScheduleComponent },
   { path: 'pet-dashboard', component: PetDashboardComponent, canActivate: [AuthGuard] },
   { path: 'review', component: ReviewComponent, canActivate: [AuthGuard] },
   { path: 'pet-boolean', component: PetBooleanComponent, canActivate: [AuthGuard] },
   { path: 'chat', component: ChatComponent, canActivate: [AuthGuard] },
-  // {
-  //   path: '',
-  //   redirectTo: '/',
-  //   pathMatch: 'full'
-  // },
+  {
+    path: '',
+    redirectTo: 'dashboard',
+    pathMatch: 'full'
+  },
+  {
+    path: 'callback',
+    component: CallbackComponent
+  }
   // { path: '**', component: PageNotFoundComponent }
 ];
 

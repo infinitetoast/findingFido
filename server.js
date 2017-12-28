@@ -37,7 +37,14 @@ const authCheck  = jwt({
   issuer: 'https://findo.auth0.com/',
   algorithms: ['RS256'],
 });
+app.get('/api/deals', (req, res) => {
+  res.json('hello');
+})
 
+// For the private route, we'll add this authCheck middleware
+app.get('/api/deals/private', authCheck, (req, res) => {
+  res.json('hello');
+})
 // app.get('/', (req, res) => {
 //   // If the user is logged in
 //   // Send them their own profile
@@ -180,7 +187,7 @@ app.get('/signout', (req, res) => {
 });
 
 app.get('/*', (req, res) => {
-  res.redirect('/');
+  res.redirect('/chat');
 });
 
 app.listen(port, () => {

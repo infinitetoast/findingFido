@@ -20,6 +20,7 @@ import { ReviewComponent } from './review/review.component';
 import { PetBooleanComponent } from './pet-boolean/pet-boolean.component';
 import { ChatComponent } from './chat/chat.component';
 import { PageNotFoundComponent } from './page-not-found'
+import { CallbackComponent } from './callback.component';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { PageNotFoundComponent } from './page-not-found'
     PetBooleanComponent,
     ReviewComponent,
     ChatComponent,
+    CallbackComponent,
     PageNotFoundComponent
   ],
   imports: [
