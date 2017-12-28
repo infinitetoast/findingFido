@@ -4,6 +4,6 @@
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import '../polyfills';
 import { AppModule } from './components/app/app.module';
-require("./index.css");
+//require("./index.css");
 
 platformBrowserDynamic().bootstrapModule(AppModule);

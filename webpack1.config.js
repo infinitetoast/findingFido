@@ -26,6 +26,9 @@ module.exports = {
       { test: /\.css$/, use: ['style-loader', 'css-loader'] },
     ],
   },
+  node: {
+    fs: "empty"
+  },
   plugins: [
     new HtmlWebpackPlugin({
       template: './client/index.html',
