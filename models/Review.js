@@ -1,9 +1,7 @@
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('finding_fido', 'PrestonWinstead', 'password', {
-  host: 'localhost',
+const sequelize = new Sequelize('postgres://bvjcwjye:YkiJ4pvf6lTtuJDyp8v23KqGQoeuasvL@baasu.db.elephantsql.com:5432/bvjcwjye', {
   dialect: 'postgres',
-
   pool: {
     max: 5,
     min: 0,
@@ -22,7 +20,7 @@ const Review = sequelize.define('review', {
 });
 
 module.exports.createReview = (user, body, cb) => {
-  Review.sync({ force: true }).then(() => {
+  Review.sync().then(() => {
     return Review.create({
       body: body,
       id_User: user,

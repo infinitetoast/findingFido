@@ -1,9 +1,7 @@
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('finding_fido', 'PrestonWinstead', 'password', {
-  host: 'localhost',
+const sequelize = new Sequelize('postgres://bvjcwjye:YkiJ4pvf6lTtuJDyp8v23KqGQoeuasvL@baasu.db.elephantsql.com:5432/bvjcwjye', {
   dialect: 'postgres',
-
   pool: {
     max: 5,
     min: 0,
@@ -28,7 +26,7 @@ const Pet = sequelize.define('pet', {
 });
 
 module.exports.createPet = (name, kind, characteristics, userId, cb) => {
-  Pet.sync({ force: true }).then(() => {
+  Pet.sync().then(() => {
     return Pet.create({
       name: name,
       kind: kind,

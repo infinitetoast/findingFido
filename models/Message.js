@@ -1,9 +1,7 @@
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('finding_fido', 'PrestonWinstead', 'password', {
-  host: 'localhost',
+const sequelize = new Sequelize('postgres://bvjcwjye:YkiJ4pvf6lTtuJDyp8v23KqGQoeuasvL@baasu.db.elephantsql.com:5432/bvjcwjye', {
   dialect: 'postgres',
-
   pool: {
     max: 5,
     min: 0,
@@ -24,12 +22,18 @@ const Message = sequelize.define('message', {
   },
 });
 
-module.exports.createMessage = (body, userId) => {
-  Message.sync({ force: true }).then(() => {
+module.exports.createMessage = (body, userId, cb) => {
+  Message.sync().then(() => {
     return Message.create({
       body: body,
       id_User: userId,
       createdAt: new Date(),
-    });
+    })
+      .then((result) => {
+        cb(result);
+      })
+      .catch((err) => {
+        cb(err);
+      });
   });
 };
