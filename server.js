@@ -80,6 +80,10 @@ app.post('/personSignup', (req, res) => {
 app.get('/signup2', (req, res) => {
   res.sendFile(path.join(__dirname, '/client/signup2.html'));
 });
+// testing the schedule
+app.post('/schedule', (req, res) => {
+  res.send(req.body);
+});
 
 // app.post('/signup2', (req, res) => {
 app.post('/petSignup', (req, res) => {

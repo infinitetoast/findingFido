@@ -8,6 +8,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { PersonComponent } from './person-signup/person-signup.component';
 import { PetComponent } from './pet-signup/pet-signup.component';
 import { ScheduleComponent } from './schedule/schedule.component';
+import { PetDashboardComponent } from './pet-dashboard/pet-dashboard.component';
+import { ReviewComponent } from './review/review.component';
+import { PetBooleanComponent } from './pet-boolean/pet-boolean.component';
+import { ChatComponent } from './chat/chat.component';
 import { PageNotFoundComponent } from './page-not-found'
 
 
@@ -18,6 +22,10 @@ const appRoutes: Routes = [
   { path: 'person-signup', component: PersonComponent },
   { path: 'pet-signup', component: PetComponent },
   { path: 'schedule', component: ScheduleComponent },
+  { path: 'pet-dashboard', component: PetDashboardComponent },
+  { path: 'review', component: ReviewComponent },
+  { path: 'pet-boolean', component: PetBooleanComponent },
+  { path: 'chat', component: ChatComponent },
   // {
   //   path: '',
   //   redirectTo: '/',
