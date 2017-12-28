@@ -43,10 +43,14 @@ app.get('/users', (req, res) => {
     }
   });
 });
+/*******************************************************
+  End of what to delete in production environment
+ *********************************************************/
 
 app.post('/login', (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
+  const { email, password } = req.body;
+  // const email = req.body.email;
+  // const password = req.body.password;
   User.getUser(email, (err, user) => {
     if (err) {
       console.error(err);
@@ -54,15 +58,15 @@ app.post('/login', (req, res) => {
     } else {
       // Check passwords. If match
       // Send token
-      res.status(201).redirect('/profile');
+      res.status(201).send('Successful login');
       // Otherwise, send that there was an error with the password
     }
   });
 });
 
 app.post('/signup', (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
+  // I think this is the proper way to do destructing. We'll find out if not
+  const { email, password } = req.body;
   User.initialCreateUser(email, password, (err, response) => {
     if (err) {
       console.error(err);
@@ -78,10 +82,12 @@ app.post('/schedule', (req, res) => {
 });
 
 app.post('/petSignup', (req, res) => {
-  const userId = req.body.id; // Update this to change based on the current user, requires auth
-  const name = req.body.name;
-  const kind = req.body.kind;
-  const characteristics = req.body.characteristics;
+  const {
+    userId, // May need to update userId
+    name,
+    kind,
+    characteristics,
+  } = req.body;
   Pet.createPet(name, kind, characteristics, userId, (err, pet) => {
     if (err) {
       res.status(500).send(err);
@@ -93,9 +99,7 @@ app.post('/petSignup', (req, res) => {
 
 app.post('/personSignup', (req, res) => {
   // const userId; // Pull out user id
-  const name = req.body.name;
-  const address = req.body.address;
-  const extra = req.body.extra;
+  const { name, address, extra } = req.body;
   User.finishUser(null, name, address, extra, (err, response) => {
     if (err) {
       res.send(err);
@@ -119,8 +123,7 @@ app.delete('/profile', (req, res) => {
 });
 
 app.post('/chat', (req, res) => {
-  const body = 'hi';
-  const userId = 4;
+  const { body, userId } = req.body;
   Message.createMessage(body, userId, (result) => {
     res.send(result);
   });
@@ -129,8 +132,7 @@ app.post('/chat', (req, res) => {
 });
 
 app.post('/review', (req, res) => {
-  const user = 4;
-  const body = 'cool';
+  const { user, body } = req.body;
   Review.createReview(user, body, (err, review) => {
     if (err) {
       console.error(err);
@@ -153,10 +155,12 @@ app.get('/activities/*', (req, res) => {
 });
 
 app.post('/activities', (req, res) => {
-  const userId = req.body.userId; // Update this based on user id with auth
-  const description = req.body.description;
-  const location = req.body.location;
-  const time = req.body.time;
+  const {
+    userId, // May need to update userId
+    description,
+    location,
+    time,
+  } = req.body;
   Activity.createActivity(description, location, userId, time, (err, result) => {
     if (err) {
       res.status(500).send(err);
