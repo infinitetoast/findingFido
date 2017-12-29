@@ -22,6 +22,11 @@ const Review = require('./models/Review');
 
 const app = express();
 
+const jwt = require('express-jwt');
+
+const jwks = require('jwks-rsa');
+
+const cors = require('cors');
 // Check for environment variables, set port accordingly
 const port = process.env.NODE_ENV === 'development' ? 9000 : 80;
 
@@ -36,6 +41,20 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(fileUpload());
+
+app.use(cors());
+
+const authCheck = jwt({
+  secret: jwks.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: 'https://findo.auth0.com/.well-known/jwks.json',
+  }),
+  audience: 'http://localhost:9000',
+  issuer: 'https://findo.auth0.com/',
+  algorithms: ['RS256'],
+});
 
 /*******************************************************
  Delete in production environment
@@ -53,48 +72,21 @@ app.get('/users', (req, res) => {
   End of what to delete in production environment
  *********************************************************/
 
-// Logs in user if they exist, sends them to signup if not
-app.post('/login', (req, res) => {
-  const { email, password } = req.body;
-  User.getUser(email, (err, user) => {
-    if (err) {
-      console.error(err);
-      res.status(404).redirect('/signup');
-    } else {
-      // Check passwords. If match
-      // Send token
-      res.status(201).send('Successful login');
-      // Otherwise, send that there was an error with the password
-    }
-  });
-});
-
-// Takes in email and password and makes a user with only those two columns filled out
-app.post('/signup', (req, res) => {
-  const { email, password } = req.body;
-  User.initialCreateUser(email, password, (err, response) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send('Sorry, something went wrong');
-    } else {
-      res.send('success', response);
-    }
-  });
-});
-
 app.post('/schedule', (req, res) => {
   res.send(req.body);
 });
 
 // Takes in information about the pet, puts it in a pet table with a link to the user
 app.post('/petSignup', (req, res) => {
+  // Update to find user by email
+  const userEmail = req.body.profile.email;
   const {
-    userId, // May need to update userId
-    name,
     kind,
+    name,
     characteristics,
+    place, // Update function to add this
   } = req.body;
-  Pet.createPet(name, kind, characteristics, userId, (err, pet) => {
+  Pet.createPet(name, kind, characteristics, place, userEmail, (err, pet) => {
     if (err) {
       res.status(500).send(err);
     } else {
@@ -105,11 +97,14 @@ app.post('/petSignup', (req, res) => {
 
 // Fills out the rest of the columns on a new user
 app.post('/personSignup', (req, res) => {
+  const userEmail = req.body.profile.email; // Update function to find by email
   const {
     name,
     address,
+    city, // Update function to add this
+    state, // Update function to add this
+    zip, // Update function to add this
     extra,
-    userId,
   } = req.body;
   User.finishUser(userId, name, address, extra, (err, response) => {
     if (err) {
@@ -177,23 +172,29 @@ app.post('/search', (req, res) => {
   // Search the database for people who are looking for someone at that time
 });
 
-// Finds a sepecific user's activities for the profile page
+// // Finds a sepecific user's activities for the dashboard component
+// app.get('/activities/email=*', (req, res) => {
+//   const { userId } = req.body;
+//   Activity.getUserActivities(userId, (err, activities) => {
+//     if (err) {
+//       res.status(404).send(err);
+//     } else {
+//       res.status(200).send(activities);
+//     }
+//   });
+// });
+
+// Write route to get activities at a certain time for the schedule component
+// Recieve time slot, send back all activities in that time slot
 app.get('/activities/*', (req, res) => {
-  const { userId } = req.body;
-  Activity.getUserActivities(userId, (err, activities) => {
-    if (err) {
-      res.status(404).send(err);
-    } else {
-      res.status(200).send(activities);
-    }
-  });
+
 });
 
-// Adds an activity to the database
+// Adds an activity to the database from the dashboard component
 app.post('/activities', (req, res) => {
+  // Update this one a lot
+  const userEmail = req.body.profile.email;
   const {
-    userId, // May need to update userId
-    description,
     location,
     time,
   } = req.body;
@@ -206,8 +207,9 @@ app.post('/activities', (req, res) => {
   });
 });
 
-// Sends information to fill out the individual dashboard
+// Sends information to fill out the individual dashboard person dashboard and pet dashboard
 app.get('/petDashboard', (req, res) => {
+  // Also get activities for that user
   const { email } = req.body;
   // Gets user information based on email
   User.getUser(email, (err, userInfo) => {
@@ -238,17 +240,6 @@ app.post('/photos', (req, res) => {
       }
     });
   });
-});
-
-// Logs a user out, destroying their token
-app.get('/signout', (req, res) => {
-  // Destory token
-  res.redirect('/login');
-});
-
-// Wildcard, redirects to the profile page
-app.get('/*', (req, res) => {
-  res.redirect('/profile');
 });
 
 // Open our connection
