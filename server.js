@@ -1,9 +1,13 @@
+// Packages
 const express = require('express');
-
-const path = require('path');
 
 const bodyParser = require('body-parser');
 
+const fileUpload = require('express-fileupload');
+
+const cloudinary = require('cloudinary');
+
+// Local files
 const Message = require('./models/Message');
 
 const User = require('./models/User');
@@ -18,6 +22,11 @@ const Review = require('./models/Review');
 
 const app = express();
 
+const jwt = require('express-jwt');
+
+const jwks = require('jwks-rsa');
+
+const cors = require('cors');
 // Check for environment variables, set port accordingly
 const port = process.env.NODE_ENV === 'development' ? 9000 : 80;
 
@@ -25,13 +34,27 @@ const port = process.env.NODE_ENV === 'development' ? 9000 : 80;
 app.use(express.static(`${__dirname}/dist`));
 
 // Need this to serve the logo picture
-app.use(express.static(`${__dirname}/src/assets`));
+app.use(express.static(`${__dirname}/client/assets`));
 
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(fileUpload());
+
 app.use(cors());
+
+const authCheck = jwt({
+  secret: jwks.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: 'https://findo.auth0.com/.well-known/jwks.json',
+  }),
+  audience: 'http://localhost:9000',
+  issuer: 'https://findo.auth0.com/',
+  algorithms: ['RS256'],
+});
 
 /*******************************************************
  Delete in production environment
@@ -50,26 +73,23 @@ app.get('/users', (req, res) => {
  *********************************************************/
 
 // Logs in user if they exist, sends them to signup if not
-app.post('/login', (req, res) => {
-  const { email, password } = req.body;
-  // const email = req.body.email;
-  // const password = req.body.password;
-  User.getUser(email, (err, user) => {
-    if (err) {
-      console.error(err);
-      res.status(404).redirect('/signup');
-    } else {
-      // Check passwords. If match
-      // Send token
-      res.status(201).send('Successful login');
-      // Otherwise, send that there was an error with the password
-    }
-  });
-});
+// app.post('/login', (req, res) => {
+//   const { email, password } = req.body;
+//   User.getUser(email, (err, user) => {
+//     if (err) {
+//       console.error(err);
+//       res.status(404).redirect('/signup');
+//     } else {
+//       // Check passwords. If match
+//       // Send token
+//       res.status(201).send('Successful login');
+//       // Otherwise, send that there was an error with the password
+//     }
+//   });
+// });
 
 // Takes in email and password and makes a user with only those two columns filled out
 app.post('/signup', (req, res) => {
-  // I think this is the proper way to do destructing. We'll find out if not
   const { email, password } = req.body;
   User.initialCreateUser(email, password, (err, response) => {
     if (err) {
@@ -81,17 +101,6 @@ app.post('/signup', (req, res) => {
   });
 });
 
-
-app.post('/schedule', authCheck, (req, res) => {
-  res.send(req.body);
-});
-
-
-app.post('/petSignup', authCheck, (req, res) => {
-  // { kind: "Dog", petName: "Doggy", place: "Central Park", petInfo: "super fun" }
-  res.send(req.body);
-  // Pull info from req
-  db.createPet(name, kind, characteristics, userId, (err, pet) => {
 app.post('/schedule', (req, res) => {
   res.send(req.body);
 });
@@ -113,18 +122,15 @@ app.post('/petSignup', (req, res) => {
   });
 });
 
-
-app.get('/profile', (req, res) => {
-  // Requires auth
-  // If the requested profile is that user's profile
-  // res.sendFile(path.join(__dirname, '/src/components/app/person-signup/person-signup.component.html'));
-  // Otherwise
-  // Send them the external profile page
 // Fills out the rest of the columns on a new user
 app.post('/personSignup', (req, res) => {
-  // const userId; // Pull out user id
-  const { name, address, extra } = req.body;
-  User.finishUser(null, name, address, extra, (err, response) => {
+  const {
+    name,
+    address,
+    extra,
+    userId,
+  } = req.body;
+  User.finishUser(userId, name, address, extra, (err, response) => {
     if (err) {
       res.send(err);
     } else {
@@ -136,41 +142,42 @@ app.post('/personSignup', (req, res) => {
 
 // Updates profile information
 app.put('/profile', (req, res) => {
-  // Send which part of the profile will be updated on headers
-  // Figure out what needs to be updated
-  // Update that user's database entry
-  // Redirect to profile get, so they can see it updated with the changes
+  const { updateKey, updateValue, userId } = req.headers;
+  User.updateUser(userId, updateKey, updateValue, (err, updated) => {
+    if (err) {
+      res.status(404).send(err);
+    } else {
+      res.status(201).send(updated);
+    }
+  });
 });
 
 // Deletes a profile
 app.delete('/profile', (req, res) => {
-  // Delete the user's profile
-  res.redirect('/signup');
-});
-
-
-  res.status(202).send('Successfully deleted');
+  const { userId } = req.body;
+  User.deleteUser(userId, (err, result) => {
+    if (err) {
+      res.status(404).send(err);
+    } else {
+      res.status(202).send(result);
+    }
+  });
 });
 
 // Saves chat messages to the database
 app.post('/chat', (req, res) => {
   const { body, userId } = req.body;
-  Message.createMessage(body, userId, (result) => {
-    res.send(result);
-  });
   // Store message in databse
-  // Send message to both users, using socket.io
+  Message.createMessage(body, userId, (err, result) => {
+    // Send message to both users, using socket.io
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.send(result);
+    }
+  });
 });
 
-app.post('/review', (req, res) => {
-  // Add review to database
-  // Send a thank you page
-  // Send them to the homepage
-});
-
-app.get('/search', (req, res) => {
-  // Should be able to handle searches src side without a post handler
-  res.sendFile(path.join(__dirname, '/src/search.html'));
 // Saves reviews to the database
 app.post('/review', (req, res) => {
   const { user, body } = req.body;
@@ -191,9 +198,14 @@ app.post('/search', (req, res) => {
 
 // Finds a sepecific user's activities for the profile page
 app.get('/activities/*', (req, res) => {
-  // Pull user id out of request params
-  // Query database for that user's activities
-  // Respond with the activities
+  const { userId } = req.body;
+  Activity.getUserActivities(userId, (err, activities) => {
+    if (err) {
+      res.status(404).send(err);
+    } else {
+      res.status(200).send(activities);
+    }
+  });
 });
 
 // Adds an activity to the database
@@ -215,9 +227,36 @@ app.post('/activities', (req, res) => {
 
 // Sends information to fill out the individual dashboard
 app.get('/petDashboard', (req, res) => {
-  // Get information for user
-  // Get information for pet
-  // Send response with information
+  const { email } = req.body;
+  // Gets user information based on email
+  User.getUser(email, (err, userInfo) => {
+    if (err) console.error(err);
+    // Gets pet information based on returned user id
+    Pet.getPet(userInfo.id, (error, petInfo) => {
+      if (error) console.error(error);
+      // Puts them in object and sends to user
+      const result = { userInfo, petInfo };
+      res.status(200).send(result);
+    });
+  });
+});
+
+// Recieves a file upload, adds it to cloudinary, then adds to the database
+app.post('/photos', (req, res) => {
+  const newPhoto = req.files;
+  const { userId } = req.body; // Will need to update based on auth
+  // Uploads to cloudinary
+  cloudinary.uploader.upload(newPhoto, (result) => {
+    // Uploads returned url to our database
+    Photo.addPhoto(result.url, userId, (err, photo) => {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        // Sends back the new photo to the client side to be rendered
+        res.status(201).send(photo);
+      }
+    });
+  });
 });
 
 // Logs a user out, destroying their token
@@ -227,9 +266,9 @@ app.get('/signout', (req, res) => {
 });
 
 // Wildcard, redirects to the profile page
-app.get('/*', (req, res) => {
-  res.redirect('/chat');
-});
+// app.get('/*', (req, res) => {
+//   res.redirect('/profile');
+// });
 
 // Open our connection
 app.listen(port, () => {
