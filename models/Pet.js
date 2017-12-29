@@ -20,19 +20,32 @@ const Pet = sequelize.define('pet', {
   characteristics: {
     type: Sequelize.STRING,
   },
-  id_User: {
-    type: Sequelize.INTEGER,
+  email_user: {
+    type: Sequelize.STRING,
   },
 });
 
-module.exports.createPet = (name, kind, characteristics, userId, cb) => {
+module.exports.createPet = (name, kind, characteristics, userEmail, cb) => {
   Pet.sync().then(() =>
     Pet.create({
       name,
       kind,
       characteristics,
-      id_User: userId,
+      email_user: userEmail,
     })
       .then(pet => cb(null, pet))
       .catch(err => cb(err)));
+};
+
+module.exports.getPet = (userEmail, cb) => {
+  Pet.findOne({ email_user: userEmail })
+    .then(pet => cb(null, pet))
+    .catch(err => cb(err));
+};
+
+module.exports.updatePet = (userEmail, updateKey, updateValue, cb) => {
+  Pet.findOne({ email_user: userEmail })
+    .then(pet => pet.updateAttributes({ updateKey: updateValue }))
+    .then(updated => cb(null, updated))
+    .catch(err => cb(err));
 };

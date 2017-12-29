@@ -14,21 +14,17 @@ const Review = sequelize.define('review', {
   body: {
     type: Sequelize.STRING,
   },
-  id_User: {
-    type: Sequelize.INTEGER,
+  email_user: {
+    type: Sequelize.STRING,
   },
 });
 
-module.exports.createReview = (user, body, cb) => {
+module.exports.createReview = (userEmail, body, cb) => {
   Review.sync().then(() =>
     Review.create({
       body,
-      id_User: user,
+      email_user: userEmail,
     })
-      .then((review) => {
-        cb(null, review);
-      })
-      .catch((err) => {
-        cb(err);
-      }));
+      .then(review => cb(null, review))
+      .catch(err => cb(err)));
 };
