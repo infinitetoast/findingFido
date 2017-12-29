@@ -156,8 +156,8 @@ app.post('/review', (req, res) => {
 
 // Write route to get activities at a certain time for the schedule component
 app.get('/activities/*', (req, res) => {
-  const { time } = req.headers;
-  Activity.getActivitiesByTime(time, (err, activities) => {
+  const { time, date } = req.headers;
+  Activity.getActivitiesByTime(time, date, (err, activities) => {
     if (err) {
       res.status(404).send(err);
     } else {
@@ -185,7 +185,7 @@ app.post('/activities', (req, res) => {
 });
 
 // Sends information to fill out the individual dashboard person dashboard and pet dashboard
-app.get('/petDashboard', (req, res) => {
+app.post('/petDashboard', (req, res) => {
   // Also get activities for that user
   const userEmail = req.body.profile.email;
   // Gets user information based on email
@@ -220,6 +220,29 @@ app.post('/photos', (req, res) => {
         res.status(201).send(photo);
       }
     });
+  });
+});
+
+// Gets user photos for their profile page
+app.get('/photos', (req, res) => {
+  const userEmail = req.headers.email;
+  Photo.findUserPhotos(userEmail, (err, photos) => {
+    if (err) {
+      res.status(404).send(photos);
+    } else {
+      res.status(200).send(photos);
+    }
+  });
+});
+
+app.get('/userProfile', (req, res) => {
+  const userEmail = req.headers.email;
+  User.getUser(userEmail, (err, user) => {
+    if (err) {
+      res.status(404).send(err);
+    } else {
+      res.status(200).send(user);
+    }
   });
 });
 

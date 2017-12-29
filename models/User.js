@@ -61,43 +61,6 @@ module.exports.createUser = (name, email, address, city, state, zip, extra, cb) 
     .catch(err => cb(err));
 };
 
-// Creates a user with only the name and email filled out
-// module.exports.initialCreateUser = (email, password, cb) => {
-//   User.sync().then(() =>
-//     User.create({
-//       name: null,
-//       email,
-//       password,
-//       address: null,
-//       extra: null,
-//       photo: null,
-//       city: null,
-//       state: null,
-//       zip: null,
-//     })
-//       .then(user => cb(null, user))
-//       .catch(err => cb(err)));
-// };
-
-// // Fills out the rest of the columns for a new user
-// module.exports.finishUser = (userEmail, name, address, city, state, zip, extra, cb) => {
-//   User.findOne({
-//     email: userEmail,
-//   })
-//     .then((user) => {
-//       user.updateAttributes({
-//         name,
-//         address,
-//         city,
-//         state,
-//         zip,
-//         extra,
-//       })
-//         .then(result => cb(null, result))
-//         .catch(err => cb(err));
-//     });
-// };
-
 module.exports.getUser = (email, cb) => {
   User.findOne({ email })
     .then(user => cb(null, user))
