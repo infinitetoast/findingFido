@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import * as auth0 from 'auth0-js';
 import { AUTH_CONFIG } from './auth-config';
 import { Router } from '@angular/router';
+
 @Injectable()
 export class AuthService {
   // Create Auth0 web auth instance
@@ -20,11 +21,12 @@ export class AuthService {
   loggedIn: boolean;
   loggedIn$ = new BehaviorSubject<boolean>(this.loggedIn);
 
-  constructor(private router: Router) {
+  constructor(public router: Router) {
     // If authenticated, set local profile property and update login status subject
     // If token is expired, log out to clear any data from localStorage
     if (this.authenticated) {
       this.userProfile = JSON.parse(localStorage.getItem('profile'));
+      console.log('userProfile')
       console.log(this.userProfile)
       this.setLoggedIn(true);
     } else {
@@ -38,22 +40,23 @@ export class AuthService {
     this.loggedIn = value;
   }
 
-  login() {
+  public login(): void {
     // Auth0 authorize request
     this.auth0.authorize();
   }
 
-  handleAuth() {
+  handleAuth(): void {
     // When Auth0 hash parsed, get profile
     this.auth0.parseHash(window.location.hash, (err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
         this.getProfile(authResult);
+        console.log('authResult')
         console.log(authResult)
+        this.router.navigate(['/person-signup']);
       } else if (err) {
         console.error(`Error: ${err.error}`);
       }
-      this.router.navigate(['/person-signup']);
     });
   }
 
@@ -75,7 +78,7 @@ export class AuthService {
     this.setLoggedIn(true);
   }
 
-  logout() {
+  public logout() {
     // Remove tokens and profile and update login status subject
     localStorage.removeItem('token');
     localStorage.removeItem('id_token');
@@ -83,6 +86,7 @@ export class AuthService {
     localStorage.removeItem('expires_at');
     this.userProfile = undefined;
     this.setLoggedIn(false);
+
 
   }
 

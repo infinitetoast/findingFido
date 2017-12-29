@@ -11,7 +11,6 @@ import { EmailService } from './services/email.service';
 import { AuthService } from './auth/auth.service';
 import { PageService } from './services/page.service';
 import { LoginComponent } from './login/login.component';
-import { SignUpComponent } from './signup/signup.component';
 import { PersonComponent } from './person-signup/person-signup.component';
 import { PetComponent } from './pet-signup/pet-signup.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -29,7 +28,6 @@ import { CallbackComponent } from './callback.component';
   declarations: [
     AppComponent,
     LoginComponent,
-    SignUpComponent,
     PersonComponent,
     PetComponent,
     DashboardComponent,

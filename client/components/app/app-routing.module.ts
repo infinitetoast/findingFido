@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { SignUpComponent } from './signup/signup.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PersonComponent } from './person-signup/person-signup.component';
 import { PetComponent } from './pet-signup/pet-signup.component';
@@ -22,7 +21,6 @@ import { CallbackComponent } from './callback.component';
 const appRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
-  { path: 'signup', component: SignUpComponent },
   { path: 'person-signup', component: PersonComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'pet-signup', component: PetComponent, canActivate: [AuthGuard] },

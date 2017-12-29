@@ -11,7 +11,7 @@
     </div>
     <pre class="full-profile">{{ profile | json }}</pre>
   </div>
-  <button class="btn btn-primary btn-margin" *ngIf="auth.authenticated" (click)="auth.logout()">
+  <button class="btn btn-primary btn-margin" *ngIf="authService.authenticated" (click)="authService.logout()">
     Log Out
   </button>
 </div>

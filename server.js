@@ -57,7 +57,7 @@ app.post('/login', (req, res) => {
 
 app.post('/personSignup', authCheck, (req, res) => {
   console.log(req.headers);
-  res.send(req.headers);
+  res.send(req.body);
   db.createUser(name, email, password, address, extra, (err, response) => {
     if (err) {
       console.error(err);
