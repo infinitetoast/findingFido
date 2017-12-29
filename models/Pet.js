@@ -25,12 +25,13 @@ const Pet = sequelize.define('pet', {
   },
 });
 
-module.exports.createPet = (name, kind, characteristics, userEmail, cb) => {
+module.exports.createPet = (name, kind, characteristics, place, userEmail, cb) => {
   Pet.sync().then(() =>
     Pet.create({
       name,
       kind,
       characteristics,
+      place,
       email_user: userEmail,
     })
       .then(pet => cb(null, pet))

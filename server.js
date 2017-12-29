@@ -74,13 +74,12 @@ app.get('/users', (req, res) => {
 
 // Takes in information about the pet, puts it in a pet table with a link to the user
 app.post('/petSignup', (req, res) => {
-  // Update to find user by email
   const userEmail = req.body.profile.email;
   const {
     kind,
     name,
     characteristics,
-    place, // Update function to add this
+    place,
   } = req.body;
   Pet.createPet(name, kind, characteristics, place, userEmail, (err, pet) => {
     if (err) {
@@ -93,20 +92,19 @@ app.post('/petSignup', (req, res) => {
 
 // Fills out the rest of the columns on a new user
 app.post('/personSignup', (req, res) => {
-  const userEmail = req.body.profile.email; // Update function to find by email
+  const userEmail = req.body.profile.email;
   const {
     name,
     address,
-    city, // Update function to add this
-    state, // Update function to add this
-    zip, // Update function to add this
+    city,
+    state,
+    zip,
     extra,
   } = req.body;
-  User.finishUser(userId, name, address, extra, (err, response) => {
+  User.finishUser(userEmail, name, address, city, state, zip, extra, (err, response) => {
     if (err) {
       res.send(err);
     } else {
-      // Send token
       res.send(response);
     }
   });
@@ -114,8 +112,9 @@ app.post('/personSignup', (req, res) => {
 
 // Updates profile information
 app.put('/profile', (req, res) => {
-  const { updateKey, updateValue, userId } = req.headers;
-  User.updateUser(userId, updateKey, updateValue, (err, updated) => {
+  const userEmail = req.body.profile.email;
+  const { updateKey, updateValue } = req.headers;
+  User.updateUser(userEmail, updateKey, updateValue, (err, updated) => {
     if (err) {
       res.status(404).send(err);
     } else {
@@ -126,8 +125,8 @@ app.put('/profile', (req, res) => {
 
 // Deletes a profile
 app.delete('/profile', (req, res) => {
-  const { userId } = req.body;
-  User.deleteUser(userId, (err, result) => {
+  const userEmail = req.body.profile.email;
+  User.deleteUser(userEmail, (err, result) => {
     if (err) {
       res.status(404).send(err);
     } else {
@@ -138,9 +137,10 @@ app.delete('/profile', (req, res) => {
 
 // Saves chat messages to the database
 app.post('/chat', (req, res) => {
-  const { body, userId } = req.body;
+  const userEmail = req.body.profile.email;
+  const { text } = req.body;
   // Store message in databse
-  Message.createMessage(body, userId, (err, result) => {
+  Message.createMessage(text, userEmail, (err, result) => {
     // Send message to both users, using socket.io
     if (err) {
       res.status(500).send(err);
@@ -152,8 +152,9 @@ app.post('/chat', (req, res) => {
 
 // Saves reviews to the database
 app.post('/review', (req, res) => {
-  const { user, body } = req.body;
-  Review.createReview(user, body, (err, review) => {
+  const userEmail = req.body.profile.email;
+  const { text } = req.body;
+  Review.createReview(userEmail, text, (err, review) => {
     if (err) {
       console.error(err);
       res.status(404).send(err);
@@ -163,27 +164,16 @@ app.post('/review', (req, res) => {
   });
 });
 
-// Searches for people who are looking to meet someone at the same time
-app.post('/search', (req, res) => {
-  // Search the database for people who are looking for someone at that time
-});
-
-// // Finds a sepecific user's activities for the dashboard component
-// app.get('/activities/email=*', (req, res) => {
-//   const { userId } = req.body;
-//   Activity.getUserActivities(userId, (err, activities) => {
-//     if (err) {
-//       res.status(404).send(err);
-//     } else {
-//       res.status(200).send(activities);
-//     }
-//   });
-// });
-
 // Write route to get activities at a certain time for the schedule component
-// Recieve time slot, send back all activities in that time slot
 app.get('/activities/*', (req, res) => {
-
+  const { time } = req.headers;
+  Activity.getActivitiesByTime(time, (err, activities) => {
+    if (err) {
+      res.status(404).send(err);
+    } else {
+      res.status(200).send(activities);
+    }
+  });
 });
 
 // Adds an activity to the database from the dashboard component
@@ -194,7 +184,7 @@ app.post('/activities', (req, res) => {
     location,
     time,
   } = req.body;
-  Activity.createActivity(description, location, userId, time, (err, result) => {
+  Activity.createActivity(userEmail, location, time, (err, result) => {
     if (err) {
       res.status(500).send(err);
     } else {
@@ -206,16 +196,20 @@ app.post('/activities', (req, res) => {
 // Sends information to fill out the individual dashboard person dashboard and pet dashboard
 app.get('/petDashboard', (req, res) => {
   // Also get activities for that user
-  const { email } = req.body;
+  const userEmail = req.body.profile.email;
   // Gets user information based on email
-  User.getUser(email, (err, userInfo) => {
+  User.getUser(userEmail, (err, userInfo) => {
     if (err) console.error(err);
     // Gets pet information based on returned user id
-    Pet.getPet(userInfo.id, (error, petInfo) => {
+    Pet.getPet(userEmail, (error, petInfo) => {
       if (error) console.error(error);
-      // Puts them in object and sends to user
-      const result = { userInfo, petInfo };
-      res.status(200).send(result);
+      // Gets activities for that user
+      Activity.getUserActivities(userEmail, (er, activities) => {
+        // Puts them in object and sends to user
+        if (er) console.error(er);
+        const result = { userInfo, petInfo, activities };
+        res.status(200).send(result);
+      });
     });
   });
 });
@@ -223,11 +217,11 @@ app.get('/petDashboard', (req, res) => {
 // Recieves a file upload, adds it to cloudinary, then adds to the database
 app.post('/photos', (req, res) => {
   const newPhoto = req.files;
-  const { userId } = req.body; // Will need to update based on auth
+  const userEmail = req.body.profile.email;
   // Uploads to cloudinary
   cloudinary.uploader.upload(newPhoto, (result) => {
     // Uploads returned url to our database
-    Photo.addPhoto(result.url, userId, (err, photo) => {
+    Photo.addPhoto(result.url, userEmail, (err, photo) => {
       if (err) {
         res.status(500).send(err);
       } else {
