@@ -10,8 +10,6 @@ import { AuthService } from '../auth/auth.service';
   //styleUrls: ['login.component.css']
 })
 export class LoginComponent {
-  email: string;
-  password: string;
 
   constructor(
     private router: Router,
@@ -23,17 +21,6 @@ export class LoginComponent {
     this.authService.login();
   }
 
-  onSelect(): void {
-    const user = {
-      email: this.email,
-      password: this.password
-    }
-    console.log(user);
-    this.emailService.postLogin(user)
-    .then(user => console.log('yep fired',user))
-    this.router.navigate(['/dashboard']);
-
-  }
 }
 
 

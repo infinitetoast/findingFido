@@ -17,7 +17,6 @@ export class EmailService {
 
   private headers = new Headers({ 'Content-Type': 'application/json' });
   private loginUrl = 'http://localhost:9000/login';  
-  private signupUrl = 'http://localhost:9000/signup';
   private personUrl = 'http://localhost:9000/personSignup';
   private petUrl = 'http://localhost:9000/petSignup';
 
@@ -34,13 +33,6 @@ export class EmailService {
       .catch(this.handleError);
   }
 
-  postSignUp(user: any): Promise<any> {
-    return this.authHttp
-      .post(this.signupUrl, JSON.stringify(user), { headers: this.headers })
-      .toPromise()
-      .then(res => res.json())
-      .catch(this.handleError);
-  }
   postPersonSignUp(user: any): Promise<any> {
     return this.authHttp
       .post(this.personUrl, JSON.stringify(user), { headers: this.headers })

@@ -29,7 +29,7 @@ export class PetComponent {
     console.log(pet);
     this.emailService.postPetSignUp(pet)
     .then(user => console.log('yep fired',user))
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/person-signup']);
 
   }
 }

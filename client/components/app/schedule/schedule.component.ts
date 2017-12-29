@@ -32,7 +32,7 @@ export class ScheduleComponent {
     console.log(schedule);
     this.pageService.postSchedule(schedule)
       .then(schedule => console.log('yep fired', schedule))
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/pet-dashboard']);
 
   }
 
