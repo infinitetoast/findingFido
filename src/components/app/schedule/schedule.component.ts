@@ -44,7 +44,6 @@ export class ScheduleComponent {
     this.pageService.postSchedule(schedule)
       .then(schedule => console.log('yep fired', schedule))
     this.router.navigate(['/pet-dashboard']);
-
   }
 
 }

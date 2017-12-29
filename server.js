@@ -29,7 +29,7 @@ const Review = require('./models/Review');
 const app = express();
 
 // Check for environment variables, set port accordingly
-const port = process.env.NODE_ENV === 'development' ? 9000 : 80;
+const port = process.env.NODE_ENV === 'development' ? 7000 : 80;
 
 // Need this to serve our bundled index.html
 app.use(express.static(`${__dirname}/dist`));
@@ -235,6 +235,7 @@ app.get('/photos', (req, res) => {
   });
 });
 
+// Gets the information to load another user's profile
 app.get('/userProfile', (req, res) => {
   const userEmail = req.headers.email;
   User.getUser(userEmail, (err, user) => {
