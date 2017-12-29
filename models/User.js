@@ -35,6 +35,15 @@ const User = sequelize.define('user', {
   address: {
     type: Sequelize.STRING,
   },
+  city: {
+    type: Sequelize.STRING,
+  },
+  stat: {
+    type: Sequelize.STRING,
+  },
+  zip: {
+    type: Sequelize.INTEGER,
+  },
   extra: {
     type: Sequelize.STRING,
   },
@@ -50,13 +59,16 @@ module.exports.initialCreateUser = (email, password, cb) => {
       address: null,
       extra: null,
       photo: null,
+      city: null,
+      state: null,
+      zip: null,
     })
       .then(user => cb(null, user))
       .catch(err => cb(err)));
 };
 
 // Fills out the rest of the columns for a new user
-module.exports.finishUser = (userEmail, name, address, extra, cb) => {
+module.exports.finishUser = (userEmail, name, address, city, state, zip, extra, cb) => {
   User.findOne({
     email: userEmail,
   })
@@ -64,6 +76,9 @@ module.exports.finishUser = (userEmail, name, address, extra, cb) => {
       user.updateAttributes({
         name,
         address,
+        city,
+        state,
+        zip,
         extra,
       })
         .then(result => cb(null, result))

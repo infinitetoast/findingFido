@@ -11,9 +11,6 @@ const sequelize = new Sequelize('postgres://bvjcwjye:YkiJ4pvf6lTtuJDyp8v23KqGQoe
 });
 
 const Activity = sequelize.define('activity', {
-  body: {
-    type: Sequelize.STRING,
-  },
   location: {
     type: Sequelize.STRING,
   },
@@ -25,11 +22,10 @@ const Activity = sequelize.define('activity', {
   },
 });
 
-module.exports.createActivity = (body, location, userEmail, time, cb) => {
+module.exports.createActivity = (userEmail, location, time, cb) => {
   Activity.sync({ force: true }).then(() =>
     Activity.create({
       // Again, I think this is the right way to do object shorthand. We'll see
-      body,
       email_user: userEmail,
       time,
       location,
@@ -40,6 +36,12 @@ module.exports.createActivity = (body, location, userEmail, time, cb) => {
 
 module.exports.getUserActivities = (userEmail, cb) => {
   Activity.find({ email_user: userEmail })
+    .then(activities => cb(null, activities))
+    .catch(err => cb(err));
+};
+
+module.exports.getActivitiesByTime = (time, cb) => {
+  Activity.findAll({ time })
     .then(activities => cb(null, activities))
     .catch(err => cb(err));
 };
