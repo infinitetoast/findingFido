@@ -48,7 +48,8 @@ export class AuthService {
     this.auth0.parseHash(window.location.hash, (err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
-        this._getProfile(authResult);
+        this.getProfile(authResult);
+        console.log(authResult)
       } else if (err) {
         console.error(`Error: ${err.error}`);
       }
@@ -56,7 +57,7 @@ export class AuthService {
     });
   }
 
-  private _getProfile(authResult) {
+  public getProfile(authResult) {
     // Use access token to retrieve user's profile and set session
     this.auth0.client.userInfo(authResult.accessToken, (err, profile) => {
       this._setSession(authResult, profile);
@@ -82,6 +83,7 @@ export class AuthService {
     localStorage.removeItem('expires_at');
     this.userProfile = undefined;
     this.setLoggedIn(false);
+
   }
 
   get authenticated(): boolean {

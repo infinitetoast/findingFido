@@ -17,6 +17,7 @@ import { PetComponent } from './pet-signup/pet-signup.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { PetDashboardComponent } from './pet-dashboard/pet-dashboard.component';
+import { ProfileComponent } from './profile/profile.component';
 import { ReviewComponent } from './review/review.component';
 import { PetBooleanComponent } from './pet-boolean/pet-boolean.component';
 import { ChatComponent } from './chat/chat.component';
@@ -35,6 +36,7 @@ import { CallbackComponent } from './callback.component';
     ScheduleComponent,
     PetDashboardComponent,
     PetBooleanComponent,
+    ProfileComponent,
     ReviewComponent,
     ChatComponent,
     CallbackComponent,

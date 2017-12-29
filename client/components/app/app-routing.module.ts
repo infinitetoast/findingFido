@@ -15,6 +15,7 @@ import { PetBooleanComponent } from './pet-boolean/pet-boolean.component';
 import { ChatComponent } from './chat/chat.component';
 import { PageNotFoundComponent } from './page-not-found';
 import { AuthGuard } from './auth/auth.gard';
+import { ProfileComponent } from './profile/profile.component';
 import { CallbackComponent } from './callback.component';
 
 
@@ -23,6 +24,7 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent },
   { path: 'person-signup', component: PersonComponent, canActivate: [AuthGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'pet-signup', component: PetComponent, canActivate: [AuthGuard] },
   { path: 'schedule', component: ScheduleComponent, canActivate: [AuthGuard] },
   { path: 'pet-dashboard', component: PetDashboardComponent, canActivate: [AuthGuard] },
