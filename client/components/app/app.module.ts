@@ -53,7 +53,7 @@ import { CallbackComponent } from './callback.component';
       headerName: 'Authorization',
       headerPrefix: 'bearer',
       tokenName: 'token',
-      tokenGetter: (() => localStorage.getItem('token')),
+      tokenGetter: (() => localStorage.getItem('access_token')),
       globalHeaders: [{ 'Content-Type': 'application/json' }],
       noJwtError: true
     })

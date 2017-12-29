@@ -17,83 +17,62 @@ export class AuthService {
   });
   userProfile: any;
 
-  // Create a stream of logged in status to communicate throughout app
-  loggedIn: boolean;
-  loggedIn$ = new BehaviorSubject<boolean>(this.loggedIn);
-
-  constructor(public router: Router) {
-    // If authenticated, set local profile property and update login status subject
-    // If token is expired, log out to clear any data from localStorage
-    if (this.authenticated) {
-      this.userProfile = JSON.parse(localStorage.getItem('profile'));
-      console.log('userProfile')
-      console.log(this.userProfile)
-      this.setLoggedIn(true);
-    } else {
-      this.logout();
-    }
-  }
-
-  setLoggedIn(value: boolean) {
-    // Update login status subject
-    this.loggedIn$.next(value);
-    this.loggedIn = value;
-  }
+  constructor(public router: Router) { }
 
   public login(): void {
-    // Auth0 authorize request
     this.auth0.authorize();
   }
 
-  handleAuth(): void {
-    // When Auth0 hash parsed, get profile
-    this.auth0.parseHash(window.location.hash, (err, authResult) => {
+  public handleAuthentication(): void {
+    this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
-        window.location.hash = '';
-        this.getProfile(authResult);
-        console.log('authResult')
-        console.log(authResult)
+        this.setSession(authResult);
         this.router.navigate(['/person-signup']);
       } else if (err) {
-        console.error(`Error: ${err.error}`);
+        this.router.navigate(['/login']);
+        console.log(err);
+        alert(`Error: ${err.error}. Check the console for further details.`);
       }
     });
   }
 
-  public getProfile(authResult) {
-    // Use access token to retrieve user's profile and set session
-    this.auth0.client.userInfo(authResult.accessToken, (err, profile) => {
-      this._setSession(authResult, profile);
+  public getProfile(cb): void {
+    const accessToken = localStorage.getItem('access_token');
+    if (!accessToken) {
+      throw new Error('Access token must exist to fetch profile');
+    }
+
+    const self = this;
+    this.auth0.client.userInfo(accessToken, (err, profile) => {
+      if (profile) {
+        self.userProfile = profile;
+      }
+      cb(err, profile);
     });
   }
 
-  private _setSession(authResult, profile) {
-    const expTime = authResult.expiresIn * 1000 + Date.now();
-    // Save session data and update login status subject
-    localStorage.setItem('token', authResult.accessToken);
+  private setSession(authResult): void {
+    // Set the time that the access token will expire at
+    const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
+    localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
-    localStorage.setItem('profile', JSON.stringify(profile));
-    localStorage.setItem('expires_at', JSON.stringify(expTime));
-    this.userProfile = profile;
-    this.setLoggedIn(true);
+    localStorage.setItem('expires_at', expiresAt);
   }
 
-  public logout() {
-    // Remove tokens and profile and update login status subject
-    localStorage.removeItem('token');
+  public logout(): void {
+    // Remove tokens and expiry time from localStorage
+    localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
-    localStorage.removeItem('profile');
     localStorage.removeItem('expires_at');
-    this.userProfile = undefined;
-    this.setLoggedIn(false);
-
-
+    this.userProfile = undefined;;
+    // Go back to the home route
+    this.router.navigate(['/login']);
   }
 
-  get authenticated(): boolean {
-    // Check if current date is greater than expiration
+  public isAuthenticated(): boolean {
+    // Check whether the current time is past the
+    // access token's expiry time
     const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
-    return Date.now() < expiresAt;
+    return new Date().getTime() < expiresAt;
   }
-
 }
