@@ -22,7 +22,6 @@ export class ScheduleComponent {
     console.log(time);
     this.pageService.getActivities(time)
       .then(activities => console.log('yep fired', activities))
-    this.router.navigate(['/pet-dashboard']);
 
   }
 

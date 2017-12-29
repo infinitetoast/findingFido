@@ -58,7 +58,7 @@ export class PageService {
     return this.authHttp
       .get(`${this.activitiesUrl}/${time}`, { headers: this.headers })
       .toPromise()
-      .then(res => res.json())
+      .then(res => res)
       .catch(this.handleError);
   }
 

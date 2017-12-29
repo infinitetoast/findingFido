@@ -10,8 +10,11 @@ import { PageService } from '../services/page.service';
   //styleUrls: ['review.component.css']
 })
 export class ReviewComponent implements OnInit{
-  name: string;
   profile: any;
+  punctuality: any;
+  comments: any;
+  overall: any;
+  friendliness: any;
 
 
   constructor(
@@ -32,12 +35,21 @@ export class ReviewComponent implements OnInit{
 
   onSelect(): void {
     const review = {
-      
+      profile: this.profile,
+      punctuality: this.punctuality,
+      comments: this.comments,
+      overall: this.overall,
+      friendliness: this.friendliness,
     }
+    console.log(review);
+    this.pageService.postReview(review)
+      .then(review => console.log('yep fired', review))
     this.router.navigate(['/dashboard']);
 
   }
 }
+
+
 
 
 

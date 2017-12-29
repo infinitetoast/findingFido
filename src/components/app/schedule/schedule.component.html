@@ -39,14 +39,13 @@
   <form>
     <div class="form-group">
       <label for="pet-kind">When do you want to play with a pet?</label>
-      <select class="form-control" id="schedule" [(ngModel)]="time" name="time">
-        <option>8am</option>
-        <option>9am</option>
-        <option>10am</option>
-        <option>11am</option>
-        <option>1pm</option>
-        <option>2pm</option>
-      </select>
+      <div class="form-group row">
+        <label for="example-datetime-local-input">Date and time</label>
+        <div class="col-10">
+          <input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="example-datetime-local-input" [(ngModel)]="time"
+            name="time">
+        </div>
+      </div>
     </div>
     <button type="submit" class="btn btn-primary" (click)="onSelect()">Go!</button>
   </form>
@@ -56,4 +55,3 @@
 <iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBfz7Y7C-7emBWPSEi925MBpeXLRcL-Jzw
     &q=Bean+Gallery,NewOrleans+LA" allowfullscreen>
 </iframe>
-

@@ -57,25 +57,6 @@ const authCheck = jwt({
   algorithms: ['RS256'],
 });
 
-<<<<<<< HEAD
-/*******************************************************
- Delete in production environment
- ******************************************************** */
-app.get('/users', (req, res) => {
-  User.getUsers((err, users) => {
-    if (err) {
-      console.error(err);
-    } else {
-      res.send(users);
-    }
-  });
-});
-/** *****************************************************
-  End of what to delete in production environment
- *********************************************************/
-
-=======
->>>>>>> a0efc5a5ac353572e8646fbcd8f7b92fef54dd29
 // Takes in information about the pet, puts it in a pet table with a link to the user
 app.post('/petSignup', (req, res) => {
   const userEmail = req.body.profile.email;
@@ -96,12 +77,7 @@ app.post('/petSignup', (req, res) => {
 
 // Creates a new user
 app.post('/personSignup', (req, res) => {
-<<<<<<< HEAD
-  // res.send(req.body);
-  const userEmail = req.body.profile.email;
-=======
   const { email } = req.body.profile;
->>>>>>> a0efc5a5ac353572e8646fbcd8f7b92fef54dd29
   const {
     name,
     address,
@@ -179,7 +155,8 @@ app.post('/review', (req, res) => {
 });
 
 // Write route to get activities at a certain time for the schedule component
-app.get('/activities/*', (req, res) => {
+app.get('/activities/:date', (req, res) => {
+  console.log(req.params.date);//this works this gives 2018-01-01T11:00
   const { time } = req.headers;
   Activity.getActivitiesByTime(time, (err, activities) => {
     if (err) {

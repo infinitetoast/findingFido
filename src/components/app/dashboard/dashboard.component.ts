@@ -12,7 +12,8 @@ import { PageService } from '../services/page.service';
 export class DashboardComponent implements OnInit {
   pet: boolean;
   personNeeded: boolean;
-  time: string;
+  time: Date;
+  date: Date;
   location: string;
   activities: any;
   profile: any;
@@ -44,6 +45,7 @@ export class DashboardComponent implements OnInit {
     this.personNeeded = true;
     const activities = {
       time: this.time,
+      date: this.date,
       location: this.location,
       profile: this.profile,
     }
