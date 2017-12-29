@@ -27,7 +27,7 @@ export class EmailService {
   ) { }
 
   postLogin(user: any): Promise<any> {
-    return this.http
+    return this.authHttp
       .post(this.loginUrl, JSON.stringify(user), { headers: this.headers })
       .toPromise()
       .then(res => res.json())
@@ -49,7 +49,7 @@ export class EmailService {
       .catch(this.handleError);
   }
   postPetSignUp(user: any): Promise<any> {
-    return this.http
+    return this.authHttp
       .post(this.petUrl, JSON.stringify(user), { headers: this.headers })
       .toPromise()
       .then(res => res.json())

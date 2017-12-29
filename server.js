@@ -37,21 +37,10 @@ const authCheck  = jwt({
   issuer: 'https://findo.auth0.com/',
   algorithms: ['RS256'],
 });
-app.get('/api/deals', (req, res) => {
-  res.json('hello');
-})
-
-// For the private route, we'll add this authCheck middleware
-app.get('/api/deals/private', authCheck, (req, res) => {
-  res.json('hello');
-})
-
 
 app.post('/login', (req, res) => {
-  // Lili checking front-end send information from LoginComponent
-  // {email: bla, password: bla}
-  console.log(`login${req.body}`);
-  res.send(req.body); // check to see I get the data back
+
+  res.send(req.headers); // check to see I get the data back
   // Pull email from request, assign it to 'email'
   // Pull password from request, assign it to 'password'
   db.getUser(email, (err, user) => {
@@ -66,16 +55,9 @@ app.post('/login', (req, res) => {
   });
 });
 
-app.post('/signup', authCheck, (req, res) => {
-  console.log(req.headers);
-  res.send(req.body);
-});
-
 app.post('/personSignup', authCheck, (req, res) => {
   console.log(req.headers);
-  console.log(req.header)
-  res.send(req.body);
-  // { name: "amelie", address1: "2823 Ursulines Ave", city: "NEW ORLEANS", state: "LA", zip: "70119", extra: I am a girl }
+  res.send(req.headers);
   db.createUser(name, email, password, address, extra, (err, response) => {
     if (err) {
       console.error(err);
@@ -94,8 +76,8 @@ app.post('/schedule', (req, res) => {
 });
 
 
-app.post('/petSignup', (req, res) => {
-  console.log(`pet${req.body}`);
+app.post('/petSignup', authCheck, (req, res) => {
+  console.log(req.headers);
   // { kind: "Dog", petName: "Doggy", place: "Central Park", petInfo: "super fun" }
   res.send(req.body);
   // Pull info from req

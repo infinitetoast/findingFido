@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
+import { AuthHttp } from 'angular2-jwt';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -10,10 +11,13 @@ export class PageService {
   private scheduleUrl = 'http://localhost:9000/schedule';  
   private locationsUrl = 'http://localhost:9000/locations'
 
-  constructor(private http: Http) { }
+  constructor(
+    private http: Http,
+    public authHttp: AuthHttp
+  ) { }
 
   postSchedule(schedule: any): Promise<any> {
-    return this.http
+    return this.authHttp
       .post(this.scheduleUrl, JSON.stringify(schedule), { headers: this.headers })
       .toPromise()
       .then(res => res.json())
@@ -21,7 +25,7 @@ export class PageService {
   }
 
   getLocations(): Promise<any> {
-    return this.http.get(this.locationsUrl)
+    return this.authHttp.get(this.locationsUrl)
       .toPromise()
       .then(response => response.json())
       .catch(this.handleError);
