@@ -155,9 +155,10 @@ app.post('/review', (req, res) => {
 });
 
 // Write route to get activities at a certain time for the schedule component
-app.get('/activities/*', (req, res) => {
-  const { time, date } = req.headers;
-  Activity.getActivitiesByTime(time, date, (err, activities) => {
+app.get('/activities/:date', (req, res) => {
+  console.log(req.params.date); // this works this gives 2018-01-01T11:00
+  const { time } = req.headers;
+  Activity.getActivitiesByTime(time, (err, activities) => {
     if (err) {
       res.status(404).send(err);
     } else {

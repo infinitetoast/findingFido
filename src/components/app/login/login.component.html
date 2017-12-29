@@ -5,27 +5,7 @@
 
   <div class="col-md-4">
     <div class='jumbotron'>
-      <img src="assets/logo.png" alt="Logo" id='signup-logo' width="300px" height="200px">
-      <form>
-        <div class="form-group">
-          <label for="email" class="signup-email">Email address</label>
-          <input type="email" class="form-control signup-email-box" id="email" aria-describedby="emailHelp" placeholder="Email" [(ngModel)]="email"
-            name="email">
-          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-        </div>
-        <div class="form-group">
-          <label for="password1" class="signup-password">Password</label>
-          <input type="password" class="form-control signup-password-box" id="password" placeholder="Password" [(ngModel)]="password" name="password">
-        </div>
-        <button type="submit" class="btn btn-primary" (click)="login()">Login / SignUp</button>
-      </form>
-    </div>
-    <div class="mission">
-      <h3>What we do</h3>
-      <p>The creators of this website love pets, but understand the reality that some pet owners can't spend a lot of time with their
-        furry friends. We also know that some animal lovers are unable to get a pet of their own. So we created this website to
-        connect pets to people and make sure that every animal gets plenty of love. Sign up and give it a try!
-      </p>
+      <img src="assets/logo.png" alt="Logo" id='logo' width="300px" height="200px">
+      <button type="submit" class="btn btn-primary btn-lg" (click)="login()">Login / SignUp</button>
     </div>
   </div>
-</div>

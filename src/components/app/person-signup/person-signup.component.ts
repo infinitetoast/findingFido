@@ -11,8 +11,7 @@ import { AuthService } from './../auth/auth.service';
 })
 export class PersonComponent implements OnInit {
   name: string;
-  address1: string;
-  address2: string;
+  address: string;
   city: string;
   state: string;
   zip: string;
@@ -38,8 +37,7 @@ export class PersonComponent implements OnInit {
   onSelect(): void {
     const personInfo = {
       name: this.name,
-      address1: this.address1,
-      address2: this.address2,
+      address: this.address,
       city: this.city,
       state: this.state,
       zip: this.zip,

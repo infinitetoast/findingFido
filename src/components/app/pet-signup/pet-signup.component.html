@@ -20,7 +20,7 @@
       </div>
       <div class="form-group">
         <label for="name">What is their name?</label>
-        <input type="pet-name" class="form-control" id="pet-name" placeholder="Enter your pet's name" [(ngModel)]="petName" name="petName">
+        <input type="pet-name" class="form-control" id="pet-name" placeholder="Enter your pet's name" [(ngModel)]="name" name="name">
       </div>
       <div class="form-group">
         <label for="place">What is their favorite place?</label>
@@ -28,7 +28,7 @@
       </div>
       <div class="form-group">
         <label for="extra">What is your pet like</label>
-        <textarea class="form-control" id="pet-info" rows="3" [(ngModel)]="petInfo" name="petInfo"></textarea>
+        <textarea class="form-control" id="pet-info" rows="3" [(ngModel)]="characteristics" name="characteristics"></textarea>
       </div>
       <button type="submit" class="btn btn-primary done-pet-button" (click)="onSelect()">I'm done!</button>
     </form>

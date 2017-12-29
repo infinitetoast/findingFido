@@ -11,9 +11,9 @@ import { EmailService } from '../services/email.service';
 })
 export class PetComponent implements OnInit{
   kind: string;
-  petName: string;
+  name: string;
   place: string;
-  petInfo: string;
+  characteristics: string;
   profile: any;
 
   constructor(
@@ -35,9 +35,9 @@ export class PetComponent implements OnInit{
   onSelect(): void {
     const pet = {
       kind: this.kind,
-      petName: this.petName,
+      name: this.name,
       place: this.place,
-      petInfo: this.petInfo,
+      characteristics: this.characteristics,
       profile: this.profile,
     }
     console.log(pet);
