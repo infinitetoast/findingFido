@@ -11,7 +11,16 @@ const sequelize = new Sequelize('postgres://bvjcwjye:YkiJ4pvf6lTtuJDyp8v23KqGQoe
 });
 
 const Review = sequelize.define('review', {
-  body: {
+  punctuality: {
+    type: Sequelize.INTEGER,
+  },
+  friendliness: {
+    type: Sequelize.INTEGER,
+  },
+  overall: {
+    type: Sequelize.INTEGER,
+  },
+  comments: {
     type: Sequelize.STRING,
   },
   email_user: {
@@ -19,10 +28,13 @@ const Review = sequelize.define('review', {
   },
 });
 
-module.exports.createReview = (userEmail, body, cb) => {
+module.exports.createReview = (userEmail, punctuality, friendliness, overall, comments, cb) => {
   Review.sync().then(() =>
     Review.create({
-      body,
+      punctuality,
+      friendliness,
+      overall,
+      comments,
       email_user: userEmail,
     })
       .then(review => cb(null, review))

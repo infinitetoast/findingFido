@@ -25,7 +25,6 @@ const Activity = sequelize.define('activity', {
 module.exports.createActivity = (userEmail, location, time, cb) => {
   Activity.sync({ force: true }).then(() =>
     Activity.create({
-      // Again, I think this is the right way to do object shorthand. We'll see
       email_user: userEmail,
       time,
       location,

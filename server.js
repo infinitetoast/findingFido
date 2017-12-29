@@ -27,6 +27,7 @@ const jwt = require('express-jwt');
 const jwks = require('jwks-rsa');
 
 const cors = require('cors');
+
 // Check for environment variables, set port accordingly
 const port = process.env.NODE_ENV === 'development' ? 9000 : 80;
 
@@ -55,22 +56,6 @@ const authCheck = jwt({
   issuer: 'https://findo.auth0.com/',
   algorithms: ['RS256'],
 });
-
-/*******************************************************
- Delete in production environment
- *********************************************************/
-app.get('/users', (req, res) => {
-  User.getUsers((err, users) => {
-    if (err) {
-      console.error(err);
-    } else {
-      res.send(users);
-    }
-  });
-});
-/*******************************************************
-  End of what to delete in production environment
- *********************************************************/
 
 // Takes in information about the pet, puts it in a pet table with a link to the user
 app.post('/petSignup', (req, res) => {
@@ -153,8 +138,8 @@ app.post('/chat', (req, res) => {
 // Saves reviews to the database
 app.post('/review', (req, res) => {
   const userEmail = req.body.profile.email;
-  const { text } = req.body;
-  Review.createReview(userEmail, text, (err, review) => {
+  const { punctuality, friendliness, overall, comments } = req.body;
+  Review.createReview(userEmail, punctuality, friendliness, overall, comments, (err, review) => {
     if (err) {
       console.error(err);
       res.status(404).send(err);
