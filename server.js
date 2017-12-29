@@ -1,4 +1,4 @@
-// Packages
+// Npm packages
 const express = require('express');
 
 const bodyParser = require('body-parser');
@@ -6,6 +6,12 @@ const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
 
 const cloudinary = require('cloudinary');
+
+const jwt = require('express-jwt');
+
+const jwks = require('jwks-rsa');
+
+const cors = require('cors');
 
 // Local files
 const Message = require('./models/Message');
@@ -22,11 +28,6 @@ const Review = require('./models/Review');
 
 const app = express();
 
-const jwt = require('express-jwt');
-
-const jwks = require('jwks-rsa');
-
-const cors = require('cors');
 // Check for environment variables, set port accordingly
 const port = process.env.NODE_ENV === 'development' ? 9000 : 80;
 
@@ -56,6 +57,7 @@ const authCheck = jwt({
   algorithms: ['RS256'],
 });
 
+<<<<<<< HEAD
 /*******************************************************
  Delete in production environment
  ******************************************************** */
@@ -72,6 +74,8 @@ app.get('/users', (req, res) => {
   End of what to delete in production environment
  *********************************************************/
 
+=======
+>>>>>>> a0efc5a5ac353572e8646fbcd8f7b92fef54dd29
 // Takes in information about the pet, puts it in a pet table with a link to the user
 app.post('/petSignup', (req, res) => {
   const userEmail = req.body.profile.email;
@@ -90,10 +94,14 @@ app.post('/petSignup', (req, res) => {
   });
 });
 
-// Fills out the rest of the columns on a new user
+// Creates a new user
 app.post('/personSignup', (req, res) => {
+<<<<<<< HEAD
   // res.send(req.body);
   const userEmail = req.body.profile.email;
+=======
+  const { email } = req.body.profile;
+>>>>>>> a0efc5a5ac353572e8646fbcd8f7b92fef54dd29
   const {
     name,
     address,
@@ -102,11 +110,11 @@ app.post('/personSignup', (req, res) => {
     zip,
     extra,
   } = req.body;
-  User.finishUser(userEmail, name, address, city, state, zip, extra, (err, response) => {
+  User.createUser(name, email, address, city, state, zip, extra, (err, response) => {
     if (err) {
-      res.send(err);
+      res.status(500).send(err);
     } else {
-      res.send(response);
+      res.status(201).send(response);
     }
   });
 });
@@ -154,8 +162,13 @@ app.post('/chat', (req, res) => {
 // Saves reviews to the database
 app.post('/review', (req, res) => {
   const userEmail = req.body.profile.email;
-  const { text } = req.body;
-  Review.createReview(userEmail, text, (err, review) => {
+  const {
+    punctuality,
+    friendliness,
+    overall,
+    comments,
+  } = req.body;
+  Review.createReview(userEmail, punctuality, friendliness, overall, comments, (err, review) => {
     if (err) {
       console.error(err);
       res.status(404).send(err);
@@ -184,8 +197,9 @@ app.post('/activities', (req, res) => {
   const {
     location,
     time,
+    date,
   } = req.body;
-  Activity.createActivity(userEmail, location, time, (err, result) => {
+  Activity.createActivity(userEmail, location, time, date, (err, result) => {
     if (err) {
       res.status(500).send(err);
     } else {
