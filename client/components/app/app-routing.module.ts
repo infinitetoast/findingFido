@@ -8,6 +8,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { PersonComponent } from './person-signup/person-signup.component';
 import { PetComponent } from './pet-signup/pet-signup.component';
 import { ScheduleComponent } from './schedule/schedule.component';
+import { PersonBooleanComponent } from './person-boolean/person-boolean.component';
 import { PetDashboardComponent } from './pet-dashboard/pet-dashboard.component';
 import { ReviewComponent } from './review/review.component';
 import { PetBooleanComponent } from './pet-boolean/pet-boolean.component';
@@ -28,6 +29,7 @@ const appRoutes: Routes = [
   { path: 'pet-dashboard', component: PetDashboardComponent, canActivate: [AuthGuard] },
   { path: 'review', component: ReviewComponent, canActivate: [AuthGuard] },
   { path: 'pet-boolean', component: PetBooleanComponent, canActivate: [AuthGuard] },
+  { path: 'person-boolean', component: PersonBooleanComponent, canActivate: [AuthGuard] },
   { path: 'chat', component: ChatComponent, canActivate: [AuthGuard] },
   {
     path: '',

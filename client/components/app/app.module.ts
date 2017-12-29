@@ -14,6 +14,7 @@ import { LoginComponent } from './login/login.component';
 import { PersonComponent } from './person-signup/person-signup.component';
 import { PetComponent } from './pet-signup/pet-signup.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { PersonBooleanComponent } from './person-boolean/person-boolean.component';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { PetDashboardComponent } from './pet-dashboard/pet-dashboard.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -29,6 +30,7 @@ import { CallbackComponent } from './callback.component';
     AppComponent,
     LoginComponent,
     PersonComponent,
+    PersonBooleanComponent,
     PetComponent,
     DashboardComponent,
     ScheduleComponent,

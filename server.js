@@ -38,9 +38,9 @@ const authCheck  = jwt({
   algorithms: ['RS256'],
 });
 
-app.post('/login', (req, res) => {
+app.post('/login', authCheck, (req, res) => {
 
-  res.send(req.headers); // check to see I get the data back
+  res.send(req.body); // check to see I get the data back
   // Pull email from request, assign it to 'email'
   // Pull password from request, assign it to 'password'
   db.getUser(email, (err, user) => {
@@ -56,7 +56,6 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/personSignup', authCheck, (req, res) => {
-  console.log(req.headers);
   res.send(req.body);
   db.createUser(name, email, password, address, extra, (err, response) => {
     if (err) {
@@ -71,13 +70,12 @@ app.post('/personSignup', authCheck, (req, res) => {
 });
 
 
-app.post('/schedule', (req, res) => {
+app.post('/schedule', authCheck, (req, res) => {
   res.send(req.body);
 });
 
 
 app.post('/petSignup', authCheck, (req, res) => {
-  console.log(req.headers);
   // { kind: "Dog", petName: "Doggy", place: "Central Park", petInfo: "super fun" }
   res.send(req.body);
   // Pull info from req

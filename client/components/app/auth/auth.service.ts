@@ -27,7 +27,7 @@ export class AuthService {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
-        this.router.navigate(['/pet-boolean']);
+        this.router.navigate(['/person-boolean']);
       } else if (err) {
         this.router.navigate(['/login']);
         console.log(err);

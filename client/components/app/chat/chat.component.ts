@@ -1,9 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from './../auth/auth.service';
+import { Router } from '@angular/router';
+
+
 @Component({
   templateUrl: 'chat.component.html',
   //styleUrls: ['chat.component.css']
 })
-export class ChatComponent { }
+export class ChatComponent { 
+  constructor(
+    private router: Router,
+    public authService: AuthService,
+  ) { }
+}
 
 
 
