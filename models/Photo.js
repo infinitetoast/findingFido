@@ -14,16 +14,16 @@ const Photo = sequelize.define('photo', {
   url: {
     type: Sequelize.STRING,
   },
-  id_User: {
-    type: Sequelize.INTEGER,
+  email_user: {
+    type: Sequelize.STRING,
   },
 });
 
-module.exports.addPhoto = (url, userId, cb) => {
+module.exports.addPhoto = (url, userEmail, cb) => {
   Photo.sync({ force: true }).then(() =>
     Photo.create({
       url,
-      id_User: userId,
+      email_user: userEmail,
     })
       .then(result => cb(null, result))
       .catch(err => cb(err)));

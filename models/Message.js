@@ -17,16 +17,16 @@ const Message = sequelize.define('message', {
   createdAt: {
     type: Sequelize.DATE,
   },
-  id_User: {
-    type: Sequelize.INTEGER,
+  email_user: {
+    type: Sequelize.STRING,
   },
 });
 
-module.exports.createMessage = (body, userId, cb) => {
+module.exports.createMessage = (body, userEmail, cb) => {
   Message.sync().then(() =>
     Message.create({
       body,
-      id_User: userId,
+      email_user: userEmail,
       createdAt: new Date(),
     })
       .then(result => cb(null, result))

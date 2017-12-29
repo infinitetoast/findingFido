@@ -56,9 +56,9 @@ module.exports.initialCreateUser = (email, password, cb) => {
 };
 
 // Fills out the rest of the columns for a new user
-module.exports.finishUser = (userId, name, address, extra, cb) => {
+module.exports.finishUser = (userEmail, name, address, extra, cb) => {
   User.findOne({
-    id: userId,
+    email: userEmail,
   })
     .then((user) => {
       user.updateAttributes({
@@ -77,8 +77,8 @@ module.exports.getUser = (email, cb) => {
     .catch(err => cb(err));
 };
 
-module.exports.updateUser = (userId, updateKey, updateValue, cb) => {
-  User.findOne({ id: userId })
+module.exports.updateUser = (userEmail, updateKey, updateValue, cb) => {
+  User.findOne({ email: userEmail })
     .then((user) => {
       user.updateAttributes({
         updateKey: updateValue,
@@ -88,8 +88,8 @@ module.exports.updateUser = (userId, updateKey, updateValue, cb) => {
     });
 };
 
-module.exports.deleteUser = (userId, cb) => {
-  User.findOne({ id: userId })
+module.exports.deleteUser = (userEmail, cb) => {
+  User.findOne({ email: userEmail })
     .then(user => user.destroy())
     .then(() => cb(null, 'Success'))
     .catch(err => cb(err));
