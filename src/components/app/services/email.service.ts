@@ -16,7 +16,7 @@ import 'rxjs/add/operator/toPromise';
 export class EmailService {
 
   private headers = new Headers({ 'Content-Type': 'application/json' });
-  private loginUrl = 'http://localhost:9000/login';  
+  private profileUrl = 'http://localhost:9000/profile';  
   private personUrl = 'http://localhost:9000/personSignup';
   private petUrl = 'http://localhost:9000/petSignup';
 
@@ -25,13 +25,6 @@ export class EmailService {
     public authHttp: AuthHttp
   ) { }
 
-  postLogin(user: any): Promise<any> {
-    return this.authHttp
-      .post(this.loginUrl, JSON.stringify(user), { headers: this.headers })
-      .toPromise()
-      .then(res => res.json())
-      .catch(this.handleError);
-  }
 
   postPersonSignUp(user: any): Promise<any> {
     return this.authHttp
@@ -40,9 +33,23 @@ export class EmailService {
       .then(res => res.json())
       .catch(this.handleError);
   }
-  postPetSignUp(user: any): Promise<any> {
+  postPetSignUp(pet: any): Promise<any> {
     return this.authHttp
-      .post(this.petUrl, JSON.stringify(user), { headers: this.headers })
+      .post(this.petUrl, JSON.stringify(pet), { headers: this.headers })
+      .toPromise()
+      .then(res => res.json())
+      .catch(this.handleError);
+  }
+  putProfile(profile: any): Promise<any> {
+    return this.authHttp
+      .put(this.profileUrl, JSON.stringify(profile), { headers: this.headers })
+      .toPromise()
+      .then(res => res.json())
+      .catch(this.handleError);
+  }
+  deleteProfile(profile: any): Promise<any> {
+    return this.authHttp
+      .delete(this.profileUrl, JSON.stringify(profile))
       .toPromise()
       .then(res => res.json())
       .catch(this.handleError);
