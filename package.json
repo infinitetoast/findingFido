@@ -40,7 +40,8 @@
     "pg": "^6.4.2",
     "pg-hstore": "^2.3.2",
     "retry-as-promised": "^2.3.2",
-    "sequelize": "^4.28.6"
+    "sequelize": "^4.28.6",
+    "socket.io": "^2.0.4"
   },
   "devDependencies": {
     "bootstrap": "^4.0.0-beta.2",

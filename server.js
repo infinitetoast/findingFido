@@ -18,7 +18,7 @@ const port = process.env.PORT || 9000;
 // Need this to serve our bundled index.html
 app.use(express.static(`${__dirname}/dist`));
 // Need this to serve the logo picture
-app.use(express.static(`${__dirname}/client/assets`));
+app.use(express.static(`${__dirname}/src/assets`));
 
 app.use(bodyParser.json());
 
@@ -92,7 +92,7 @@ app.post('/petSignup', authCheck, (req, res) => {
 app.get('/profile', (req, res) => {
   // Requires auth
   // If the requested profile is that user's profile
-  // res.sendFile(path.join(__dirname, '/client/components/app/person-signup/person-signup.component.html'));
+  // res.sendFile(path.join(__dirname, '/src/components/app/person-signup/person-signup.component.html'));
   // Otherwise
   // Send them the external profile page
 });
@@ -123,8 +123,8 @@ app.post('/review', (req, res) => {
 });
 
 app.get('/search', (req, res) => {
-  // Should be able to handle searches client side without a post handler
-  res.sendFile(path.join(__dirname, '/client/search.html'));
+  // Should be able to handle searches src side without a post handler
+  res.sendFile(path.join(__dirname, '/src/search.html'));
 });
 
 app.get('/signout', (req, res) => {
