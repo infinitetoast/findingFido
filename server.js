@@ -92,7 +92,7 @@ app.post('/petSignup', (req, res) => {
 
 // Fills out the rest of the columns on a new user
 app.post('/personSignup', (req, res) => {
-  const userEmail = req.body.profile.email;
+  const { email } = req.body.profile;
   const {
     name,
     address,
@@ -101,11 +101,11 @@ app.post('/personSignup', (req, res) => {
     zip,
     extra,
   } = req.body;
-  User.finishUser(userEmail, name, address, city, state, zip, extra, (err, response) => {
+  User.createUser(name, email, address, city, state, zip, extra, (err, response) => {
     if (err) {
-      res.send(err);
+      res.status(500).send(err);
     } else {
-      res.send(response);
+      res.status(201).send(response);
     }
   });
 });
