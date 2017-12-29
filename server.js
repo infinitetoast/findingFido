@@ -72,10 +72,6 @@ app.get('/users', (req, res) => {
   End of what to delete in production environment
  *********************************************************/
 
-app.post('/schedule', (req, res) => {
-  res.send(req.body);
-});
-
 // Takes in information about the pet, puts it in a pet table with a link to the user
 app.post('/petSignup', (req, res) => {
   // Update to find user by email

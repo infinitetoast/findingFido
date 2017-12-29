@@ -31,7 +31,7 @@
 //     <div id="map"></div>
 //       <script>
         // Idea: Render this in the page within a component that has a "location" key
-        const NOLA = {lat: 29.9699644, lng: -90.1139725 };
+        const NOLA = { lat: 29.9699644, lng: -90.1139725 };
         function initMap() {
           // Create the map.
           const map = new google.maps.Map(document.getElementById('map'), {
@@ -51,7 +51,7 @@
           center: NOLA,
           radius: 500,
         });
-      };   
+      };
 //     </script>
 //     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoTNJqnyPGnW1OLfIN_0-Wopw8X3jcoOo&callback=initMap">
 //     </script>
