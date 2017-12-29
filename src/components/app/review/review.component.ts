@@ -9,8 +9,9 @@ import { PageService } from '../services/page.service';
   templateUrl: 'review.component.html',
   //styleUrls: ['review.component.css']
 })
-export class ReviewComponent {
+export class ReviewComponent implements OnInit{
   name: string;
+  profile: any;
 
 
   constructor(
@@ -19,7 +20,20 @@ export class ReviewComponent {
     private pageService: PageService
   ) { }
 
+  ngOnInit() {
+    if (this.authService.userProfile) {
+      this.profile = this.authService.userProfile;
+    } else {
+      this.authService.getProfile((err, profile) => {
+        this.profile = profile;
+      });
+    }
+  }
+
   onSelect(): void {
+    const review = {
+      
+    }
     this.router.navigate(['/dashboard']);
 
   }

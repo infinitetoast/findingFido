@@ -12,9 +12,9 @@ import { PageService } from '../services/page.service';
 export class DashboardComponent implements OnInit {
   pet: boolean;
   personNeeded: boolean;
-  schedule: string;
-  pickup: string;
-  walker: any;
+  time: string;
+  location: string;
+  activities: any;
   profile: any;
 
 
@@ -42,12 +42,14 @@ export class DashboardComponent implements OnInit {
   }
   onSelect(): void {
     this.personNeeded = true;
-    const walker = {
-      schedule: this.schedule,
-      place: this.pickup,
+    const activities = {
+      time: this.time,
+      location: this.location,
       profile: this.profile,
     }
-    console.log(walker);
+    console.log(activities);
+    this.pageService.postActivities(activities)
+      .then(activities => console.log('yep fired', activities))
   }
 
 

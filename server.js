@@ -58,7 +58,7 @@ const authCheck = jwt({
 
 /*******************************************************
  Delete in production environment
- *********************************************************/
+ ******************************************************** */
 app.get('/users', (req, res) => {
   User.getUsers((err, users) => {
     if (err) {
@@ -68,7 +68,7 @@ app.get('/users', (req, res) => {
     }
   });
 });
-/*******************************************************
+/** *****************************************************
   End of what to delete in production environment
  *********************************************************/
 
@@ -92,6 +92,7 @@ app.post('/petSignup', (req, res) => {
 
 // Fills out the rest of the columns on a new user
 app.post('/personSignup', (req, res) => {
+  // res.send(req.body);
   const userEmail = req.body.profile.email;
   const {
     name,
@@ -194,7 +195,7 @@ app.post('/activities', (req, res) => {
 });
 
 // Sends information to fill out the individual dashboard person dashboard and pet dashboard
-app.get('/petDashboard', (req, res) => {
+app.post('/petDashboard', (req, res) => {
   // Also get activities for that user
   const userEmail = req.body.profile.email;
   // Gets user information based on email

@@ -8,17 +8,40 @@ import 'rxjs/add/operator/toPromise';
 export class PageService {
 
   private headers = new Headers({ 'Content-Type': 'application/json' });
-  private scheduleUrl = 'http://localhost:9000/schedule';  
+  private reviewUrl = 'http://localhost:9000/review';  
   private locationsUrl = 'http://localhost:9000/locations'
+  private chatUrl = 'http://localhost:9000/chat'
+  private activitiesUrl = 'http://localhost:9000/activities'
 
   constructor(
     private http: Http,
     public authHttp: AuthHttp
   ) { }
 
-  postSchedule(schedule: any): Promise<any> {
+  postReview(review: any): Promise<any> {
     return this.authHttp
-      .post(this.scheduleUrl, JSON.stringify(schedule), { headers: this.headers })
+      .post(this.reviewUrl, JSON.stringify(review), { headers: this.headers })
+      .toPromise()
+      .then(res => res.json())
+      .catch(this.handleError);
+  }
+  postChat(chat: any): Promise<any> {
+    return this.authHttp
+      .post(this.chatUrl, JSON.stringify(chat), { headers: this.headers })
+      .toPromise()
+      .then(res => res.json())
+      .catch(this.handleError);
+  }
+  postActivities(activities: any): Promise<any> {
+    return this.authHttp
+      .post(this.activitiesUrl, JSON.stringify(activities), { headers: this.headers })
+      .toPromise()
+      .then(res => res.json())
+      .catch(this.handleError);
+  }
+  getActivities(time: any): Promise<any> {
+    return this.authHttp
+      .get(`${this.activitiesUrl}/${time}`, { headers: this.headers })
       .toPromise()
       .then(res => res.json())
       .catch(this.handleError);
