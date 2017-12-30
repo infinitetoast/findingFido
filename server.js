@@ -214,21 +214,11 @@ app.get('/dashboard/:email', (req, res) => {
 
 // Recieves a file upload, adds it to cloudinary, then adds to the database
 app.post('/photos', (req, res) => {
-  const newPhoto = req.files;
-  console.log(newPhoto);
-  const userEmail = req.body.profile.email;
+  const newPhoto = req.files['uploads[]'].data.toString('utf-8');
+  // const userEmail = req.body.profile.email;
   // Uploads to cloudinary
   cloudinary.uploader.upload(newPhoto, (result) => {
-    // Uploads returned url to our database
-    Photo.addPhoto(result.url, userEmail, (err, photo) => {
-      if (err) {
-        res.status(500).send(err);
-      } else {
-        // Sends back the new photo to the client side to be rendered
-        console.log('photo', photo);
-        res.status(201).send(photo);
-      }
-    });
+    console.log(result);
   });
 });
 
