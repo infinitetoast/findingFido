@@ -18,6 +18,7 @@ export class DashboardComponent implements OnInit {
   activities: any;
   profile: any;
   comingactivities: any;
+  files: FileList;
 
 
   constructor(
@@ -61,13 +62,22 @@ export class DashboardComponent implements OnInit {
       .then(activities => console.log('yep fired', activities))
   }
 
+  onChange(files: FileList) {
+    this.files = files;
+    console.log(this.files.length);
+  }
 
- }
+  onSend(): void {
+    if (this.files.length > 0) {
+      let file: File = this.files[0];
+      let formData: FormData = new FormData();
+      formData.append('userpic', file, file.name);
+      console.log(file);
+      console.log(formData);
+      this.pageService.postPhoto(file, formData)
+        .then(file => console.log('yep fired', file))
 
+    }
+  }
+} 
 
-
-
-// Every Angular application requires at least one component called a root component.
-// All other components will reside in this primary root component.
-// An application may only have one root component.
-//app.component.ts is the standard file name for root components.

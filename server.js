@@ -214,21 +214,21 @@ app.get('/dashboard/:email', (req, res) => {
 
 // Recieves a file upload, adds it to cloudinary, then adds to the database
 app.post('/photos', (req, res) => {
-  console.log(req.body);
-  const newPhoto = req.files;
-  const userEmail = req.body.profile.email;
-  // Uploads to cloudinary
-  cloudinary.uploader.upload(newPhoto, (result) => {
-    // Uploads returned url to our database
-    Photo.addPhoto(result.url, userEmail, (err, photo) => {
-      if (err) {
-        res.status(500).send(err);
-      } else {
-        // Sends back the new photo to the client side to be rendered
-        res.status(201).send(photo);
-      }
-    });
-  });
+  res.send(req.files);
+  // const newPhoto = req.files;
+  // const userEmail = req.body.profile.email;
+  // // Uploads to cloudinary
+  // cloudinary.uploader.upload(newPhoto, (result) => {
+  //   // Uploads returned url to our database
+  //   Photo.addPhoto(result.url, userEmail, (err, photo) => {
+  //     if (err) {
+  //       res.status(500).send(err);
+  //     } else {
+  //       // Sends back the new photo to the client side to be rendered
+  //       res.status(201).send(photo);
+  //     }
+  //   });
+  // });
 });
 
 // Gets user photos for their profile page
@@ -245,7 +245,7 @@ app.get('/photos', (req, res) => {
 
 // Gets the lat/long location for the map
 app.post('/map', (req, res) => {
-  res.send(req.body.location);
+  res.send('hello');
 //   const { location } = req.body;
 //   axios({
 //     url: `https://maps.googleapis.com/maps/api/geocode/json?address=${location},+New+Orleans,+LA&key=${key.token}`,

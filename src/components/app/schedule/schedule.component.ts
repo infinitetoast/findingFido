@@ -15,6 +15,8 @@ export class ScheduleComponent {
   userProfile: any;
   petProfile: any;
   activity: any;
+  gps: any;
+  finalGPS: any;
 
   constructor(
     private router: Router,
@@ -44,6 +46,8 @@ export class ScheduleComponent {
     console.log(location);
     this.pageService.postMap(activity)
       .then(gps => {
+        this.gps = JSON.stringify(gps);
+        //this.finalGPS = JSON.parse(gps);
         console.log(gps)
       });
   }

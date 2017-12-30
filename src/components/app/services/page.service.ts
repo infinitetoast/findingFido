@@ -8,6 +8,8 @@ import 'rxjs/add/operator/toPromise';
 export class PageService {
 
   private headers = new Headers({ 'Content-Type': 'application/json' });
+  private photoHeaders = new Headers({ 'Content-Type': 'multipart/form-data', 'Accept': 'application/json' });
+
   private reviewUrl = 'http://localhost:9000/review';  
   private chatUrl = 'http://localhost:9000/chat'
   private activitiesUrl = 'http://localhost:9000/activities'
@@ -35,9 +37,13 @@ export class PageService {
       .then(res => res.json())
       .catch(this.handleError);
   }
-  postPhotos(photos: any): Promise<any> {
+  postPhoto(photo: any, formData: FormData): Promise<any> {
+    console.log("firrred");
+    console.log(photo);
+    console.log(formData);
     return this.authHttp
-      .post(this.photosUrl, JSON.stringify(photos), { headers: this.headers })
+      //.post(this.photosUrl, JSON.stringify(photo), { headers: this.headers })
+      .post(this.photosUrl, formData, { headers: this.photoHeaders })
       .toPromise()
       .then(res => res.json())
       .catch(this.handleError);
