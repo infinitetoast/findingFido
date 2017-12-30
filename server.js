@@ -214,6 +214,7 @@ app.get('/dashboard/:email', (req, res) => {
 
 // Recieves a file upload, adds it to cloudinary, then adds to the database
 app.post('/photos', (req, res) => {
+  console.log(req.body);
   const newPhoto = req.files;
   const userEmail = req.body.profile.email;
   // Uploads to cloudinary
@@ -244,18 +245,10 @@ app.get('/photos', (req, res) => {
 
 // Gets the lat/long location for the map
 app.post('/map', (req, res) => {
-  res.send('hit the map route');
-//   const { location } = req.body;
-//   axios({
-//     url: `https://maps.googleapis.com/maps/api/geocode/json?address=${location},+New+Orleans,+LA&key=${key.token}`,
-//     type: 'GET',
-//     dataType: 'JSONP',
-//     headers: {
-//       'Access-Control-Allow-Origin': 'true',
-//     },
-//   })
-//     .then(response => res.status(200).send(response));
-  // 'https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyBfz7Y7C-7emBWPSEi925MBpeXLRcL-Jzw'
+  const { location } = req.body;
+  axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${location},+New+Orleans,+LA&key=${key.token}`)
+    .then(response => res.status(200).send(response));
+  // 'https://maps.googleapis.com/maps/api/geocode/json?address=BlueMoon,+New+Orleans,+LA&key=AIzaSyBfz7Y7C-7emBWPSEi925MBpeXLRcL-Jzw'
 });
 
 // Open our connection

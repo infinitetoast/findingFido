@@ -14,6 +14,7 @@ export class ScheduleComponent {
   activities: any;
   userProfile: any;
   petProfile: any;
+  activity: any;
 
   constructor(
     private router: Router,
@@ -38,9 +39,10 @@ export class ScheduleComponent {
         console.log(this.petProfile);
       })
   }
-  onHover(): void {
-    // console.log(activity.location);
-    this.pageService.getMap('argument')
+  onHover(activity): void {
+    let location = activity.location;
+    console.log(location);
+    this.pageService.postMap(activity)
       .then(gps => {
         console.log(gps)
       });
