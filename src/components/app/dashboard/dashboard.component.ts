@@ -116,7 +116,7 @@ export class DashboardComponent implements OnInit {
   //     console.log(JSON.stringify(file));
   //     this.pageService.postPhoto(file, formData)
   //     .then(res=>console.log('fired', res))
- }
+ //}
 
 
 

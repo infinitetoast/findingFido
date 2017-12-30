@@ -219,7 +219,9 @@ app.get('/dashboard/:email', (req, res) => {
 
 // Recieves a file upload, adds it to cloudinary, then adds to the database
 app.post('/photos', (req, res) => {
+  console.log(req.body);
   const newPhoto = req.files['uploads[]'].data.toString('base64');
+  console.log(newPhoto)
   const type = req.files['uploads[]'].mimetype;
 
   // Uploads to cloudinary
