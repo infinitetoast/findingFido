@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
   
 export class ScheduleComponent {
   time: string;
+  activities: any;
 
   constructor(
     private router: Router,
@@ -21,7 +22,11 @@ export class ScheduleComponent {
     const time = this.time;
     console.log(time);
     this.pageService.getActivities(time)
-      .then(activities => console.log('yep fired', activities))
+      .then(activities => {
+        //console.log('yep fired', activities);
+        this.activities = activities;
+        console.log(this.activities)
+      })
 
   }
 

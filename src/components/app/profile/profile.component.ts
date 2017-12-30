@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './../auth/auth.service';
+import { PageService } from '../services/page.service';
 
 @Component({
   selector: 'app-profile',
@@ -10,7 +11,10 @@ export class ProfileComponent implements OnInit {
 
   profile: any;
 
-  constructor(public authService: AuthService) { }
+  constructor(
+    public authService: AuthService,
+    private pageService: PageService
+  ) { }
 
   ngOnInit() {
     if (this.authService.userProfile) {
@@ -18,6 +22,8 @@ export class ProfileComponent implements OnInit {
     } else {
       this.authService.getProfile((err, profile) => {
         this.profile = profile;
+        this.pageService.getDashboard(this.profile.email)
+          .then(information => console.log('yep fired', information))
       });
     }
   }

@@ -26,11 +26,7 @@ const Activity = sequelize.define('activity', {
 });
 
 module.exports.createActivity = (userEmail, location, time, date, cb) => {
-<<<<<<< HEAD
-  Activity.sync({ force: false }).then(() =>
-=======
   Activity.sync().then(() =>
->>>>>>> 20ef10b36e3ed524d3b668c73b5df0ca2ac5d119
     Activity.create({
       email_user: userEmail,
       time,
@@ -47,8 +43,8 @@ module.exports.getUserActivities = (userEmail, cb) => {
     .catch(err => cb(err));
 };
 
-module.exports.getActivitiesByTime = (time, date, cb) => {
-  Activity.findAll({ time, date })
+module.exports.getActivitiesByTime = (time, cb) => {
+  Activity.findAll({ where: { time } })
     .then(activities => cb(null, activities))
     .catch(err => cb(err));
 };

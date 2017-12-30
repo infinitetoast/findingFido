@@ -69,3 +69,20 @@ body {
 .person-done-button {
   float: right;
 }
+/* Lili adding style */
+#schedule {
+  color: white;
+  font-weight: bold;
+  font-size: medium 
+}
+#schedule-box {
+  background-color: rgb(64, 32, 73);
+  width: 300px;
+  border: 10px solid rgb(226, 229, 233);
+  padding: 25px;
+  margin: 25px;
+}
+
+#schedule-box:hover {
+  background-color: rgb(201, 137, 10);
+}
