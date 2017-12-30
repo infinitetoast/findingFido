@@ -41,13 +41,9 @@
         alt="profile-pet" style="width:100px;height:100px;">
     </div>
     <p></p>
-    <form>
-      <div class="form-group">
-        <label for="exampleFormControlFile1">Upload Pictures</label>
-        <span class="glyphicon glyphicon-folder-open"></span>
-        <input type="file" class="form-control-file" id="exampleFormControlFile1">
-
-      </div>
+    <form ref='uploadForm' id='uploadForm' action='http://localhost:9000/photos' method='post' encType="multipart/form-data">
+      <input type="file" name="picture" />
+      <input type='submit' value='Upload!' />
     </form>
   </div>
   <div class="col-sm-8">
