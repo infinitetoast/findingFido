@@ -39,13 +39,13 @@ module.exports.createPet = (name, kind, characteristics, place, userEmail, cb) =
 };
 
 module.exports.getPet = (userEmail, cb) => {
-  Pet.findOne({ email_user: userEmail })
+  Pet.findOne({ where: { email_user: userEmail } })
     .then(pet => cb(null, pet))
     .catch(err => cb(err));
 };
 
 module.exports.updatePet = (userEmail, updateKey, updateValue, cb) => {
-  Pet.findOne({ email_user: userEmail })
+  Pet.findOne({ where: { email_user: userEmail } })
     .then(pet => pet.updateAttributes({ updateKey: updateValue }))
     .then(updated => cb(null, updated))
     .catch(err => cb(err));

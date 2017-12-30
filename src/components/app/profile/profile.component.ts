@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './../auth/auth.service';
+import { PageService } from '../services/page.service';
+import { EmailService } from '../services/email.service';
 
 @Component({
   selector: 'app-profile',
@@ -9,8 +11,15 @@ import { AuthService } from './../auth/auth.service';
 export class ProfileComponent implements OnInit {
 
   profile: any;
+  userInfo: any;
+  petInfo: any;
+  activities: any;
 
-  constructor(public authService: AuthService) { }
+  constructor(
+    public authService: AuthService,
+    private pageService: PageService,
+    private emailService: EmailService
+  ) { }
 
   ngOnInit() {
     if (this.authService.userProfile) {
@@ -18,8 +27,25 @@ export class ProfileComponent implements OnInit {
     } else {
       this.authService.getProfile((err, profile) => {
         this.profile = profile;
+        console.log(profile.email)
+        this.pageService.getDashboard(profile.email)
+          .then(information => {
+            this.userInfo = information.userInfo;
+            this.petInfo = information.petInfo;
+            this.activities = information.activities;
+            console.log('yep fired', information)
+          })
       });
     }
+  }
+
+  onDelete(): void {
+    this.emailService.deleteProfile(this.profile)
+      .then(res => console.log('yep fired', res))
+  }
+  onUpdate(): void {
+    this.emailService.putProfile(this.profile)
+      .then(res => console.log('yep fired', res))
   }
 
 }

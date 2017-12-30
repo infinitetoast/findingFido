@@ -17,6 +17,7 @@ export class DashboardComponent implements OnInit {
   location: string;
   activities: any;
   profile: any;
+  comingactivities: any;
 
 
   constructor(
@@ -31,6 +32,12 @@ export class DashboardComponent implements OnInit {
     } else {
       this.authService.getProfile((err, profile) => {
         this.profile = profile;
+        console.log(profile.email)
+        this.pageService.getDashboard(profile.email)
+          .then(information => {
+            this.comingactivities = information.activities;
+            console.log('yep fired', information)
+          })
       });
     }
   }
