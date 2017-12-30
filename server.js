@@ -245,10 +245,10 @@ app.get('/photos', (req, res) => {
 
 // Gets the lat/long location for the map
 app.post('/map', (req, res) => {
-  const { location } = req.body;
+  const location = req.body.location;
   axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${location},+New+Orleans,+LA&key=${key.token}`)
-    .then(response => res.status(200).send(response));
-  // 'https://maps.googleapis.com/maps/api/geocode/json?address=BlueMoon,+New+Orleans,+LA&key=AIzaSyBfz7Y7C-7emBWPSEi925MBpeXLRcL-Jzw'
+    .then(response => res.status(200).send(response.data.results[0].geometry.location))
+    .catch(err => res.status(500).send(err));
 });
 
 // Open our connection

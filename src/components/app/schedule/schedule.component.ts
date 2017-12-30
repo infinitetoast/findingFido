@@ -40,8 +40,7 @@ export class ScheduleComponent {
       })
   }
   onHover(activity): void {
-    let location = activity.location;
-    console.log(location);
+    // let location = activity.location;
     this.pageService.postMap(activity)
       .then(gps => {
         console.log(gps)
