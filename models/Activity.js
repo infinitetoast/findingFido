@@ -26,7 +26,7 @@ const Activity = sequelize.define('activity', {
 });
 
 module.exports.createActivity = (userEmail, location, time, date, cb) => {
-  Activity.sync({ force: true }).then(() =>
+  Activity.sync().then(() =>
     Activity.create({
       email_user: userEmail,
       time,

@@ -29,7 +29,7 @@ const Review = require('./models/Review');
 const app = express();
 
 // Check for environment variables, set port accordingly
-const port = process.env.NODE_ENV === 'development' ? 7000 : 80;
+const port = process.env.NODE_ENV === 'development' ? 9000 : 80;
 
 // Need this to serve our bundled index.html
 app.use(express.static(`${__dirname}/dist`));
@@ -45,6 +45,7 @@ app.use(fileUpload());
 
 app.use(cors());
 
+
 const authCheck = jwt({
   secret: jwks.expressJwtSecret({
     cache: true,
@@ -56,6 +57,7 @@ const authCheck = jwt({
   issuer: 'https://findo.auth0.com/',
   algorithms: ['RS256'],
 });
+
 
 // Takes in information about the pet, puts it in a pet table with a link to the user
 app.post('/petSignup', (req, res) => {
