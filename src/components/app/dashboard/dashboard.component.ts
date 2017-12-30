@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from './../auth/auth.service';
 import { Router } from '@angular/router';
 import { PageService } from '../services/page.service';
+import { FormGroup  } from '@angular/forms';
 
 
 
@@ -65,19 +66,29 @@ export class DashboardComponent implements OnInit {
   onChange(files: FileList) {
     this.files = files;
     console.log(this.files.length);
-  }
-
-  onSend(): void {
     if (this.files.length > 0) {
       let file: File = this.files[0];
       let formData: FormData = new FormData();
-      formData.append('userpic', file, file.name);
+      //formData.append('userpic', 'chris');
+      formData.append('pic', file, file.name);
       console.log(file);
-      console.log(formData);
       this.pageService.postPhoto(file, formData)
-        .then(file => console.log('yep fired', file))
-
+        .then(res => console.log('fired', res))
     }
-  }
+  }  
+
+  // onSend(): void {
+  //   if (this.files.length > 0) {
+  //     let file: File = this.files[0];
+  //     let formData: FormData = new FormData();
+  //     //formData.append('userpic', 'chris');
+  //     formData.append('userpic', file, file.name);
+  //     console.log(file);
+  //     console.log(JSON.stringify(file));
+  //     this.pageService.postPhoto(file, formData)
+  //     .then(res=>console.log('fired', res))
+
+  //   }
+  // }
 } 
 

@@ -41,10 +41,12 @@
         alt="profile-pet" style="width:100px;height:100px;">
     </div>
     <p></p>
-    <div>
-      <input type="file" #file (change)="onChange(file.files)" multiple />
+    <form>
+      <div class="form-group">
+      <input id='pic' type="file" #file (change)="onChange(file.files)" multiple />
       <input type='submit' value='Upload!' (click)="onSend()"/>
     </div>
+    </form>
   </div>
   <div class="col-sm-8">
     <div class="panel-body" *ngIf='comingactivities'>

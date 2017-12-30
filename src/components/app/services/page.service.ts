@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
-
+import 'rxjs/add/operator/map';
+import 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class PageService {
 
   private headers = new Headers({ 'Content-Type': 'application/json' });
-  private photoHeaders = new Headers({ 'Content-Type': 'multipart/form-data', 'Accept': 'application/json' });
+  private photoHeaders = new Headers({'Accept': 'application/json' });
 
   private reviewUrl = 'http://localhost:9000/review';  
   private chatUrl = 'http://localhost:9000/chat'
@@ -38,9 +40,7 @@ export class PageService {
       .catch(this.handleError);
   }
   postPhoto(photo: any, formData: FormData): Promise<any> {
-    console.log("firrred");
     console.log(photo);
-    console.log(formData);
     return this.authHttp
       //.post(this.photosUrl, JSON.stringify(photo), { headers: this.headers })
       .post(this.photosUrl, formData, { headers: this.photoHeaders })
@@ -48,6 +48,18 @@ export class PageService {
       .then(res => res.json())
       .catch(this.handleError);
   }
+  // postPhoto(photo: any, formData: FormData) {
+  //   console.log(photo);
+  //   return this.http
+  //     //.post(this.photosUrl, JSON.stringify(photo), { headers: this.headers })
+  //     .post(this.photosUrl, formData, { headers: this.photoHeaders })
+  //     .map(res => res.json())
+  //     .catch(error => Observable.throw(error))
+  //     .subscribe(
+  //     data => console.log('success'),
+  //     error => console.log(error)
+  //     )
+  // }
   getPhotos(photos: any): Promise<any> {
     return this.authHttp
       .get(this.photosUrl, { headers: this.headers })

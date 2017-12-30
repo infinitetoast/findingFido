@@ -20,3 +20,27 @@ fileChange(event) {
             )
     }
 }
+
+@Component({
+  selector: 'my-app',
+  template: `
+    <div>
+      <input name="file" type="file" (change)="onChange($event)"/>
+    </div>
+  `,
+  providers: [UploadService]
+})
+export class AppComponent {
+  file: File;
+  onChange(event: EventTarget) {
+    let eventObj: MSInputMethodContext = <MSInputMethodContext> event;
+        let target: HTMLInputElement = <HTMLInputElement> eventObj.target;
+        let files: FileList = target.files;
+        this.file = files[0];
+        console.log(this.file);
+    }
+
+   doAnythingWithFile() {
+        }
+
+        }
