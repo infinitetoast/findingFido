@@ -38,7 +38,7 @@ module.exports.createActivity = (userEmail, location, time, date, cb) => {
 };
 
 module.exports.getUserActivities = (userEmail, cb) => {
-  Activity.find({ email_user: userEmail })
+  Activity.findAll({ where: { email_user: userEmail } })
     .then(activities => cb(null, activities))
     .catch(err => cb(err));
 };

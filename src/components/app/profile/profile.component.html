@@ -1,7 +1,11 @@
-<div class="panel panel-default profile-area">
+<div class="panel panel-default profile-area" id='profile'>
   <div class="panel-heading">
     <h3>Profile</h3>
+    <button class="btn btn-outline-danger my-2 my-sm-0" *ngIf="authService.isAuthenticated" (click)="authService.logout()">
+      Log Out
+    </button>
   </div>
+
   <div class="panel-body">
     <img src="{{profile?.picture}}" class="avatar" alt="avatar">
     <div>
@@ -11,7 +15,32 @@
     </div>
     <pre class="full-profile">{{ profile | json }}</pre>
   </div>
-  <button class="btn btn-outline-danger my-2 my-sm-0" *ngIf="authService.isAuthenticated" (click)="authService.logout()">
-    Log Out
-  </button>
+
+  <div class="panel-body" *ngIf='userInfo'>
+    <h3>User Information</h3>
+    <p>Name: {{userInfo.name}}</p>
+    <p>Email: {{userInfo.email}}</p>
+    <p>Address: {{userInfo.address}}</p>
+    <p>City: {{userInfo.city}}</p>
+    <p>State: {{userInfo.state}}</p>
+    <p>Extra: {{userInfo.extra}}</p>
+  </div>
+
+  <div class="panel-body" *ngIf='petInfo'>
+    <h3>Pet Information</h3>
+    <p>Pet's Name: {{petInfo.name}}</p>
+    <p>Kind: {{petInfo.kind}}</p>
+    <p>Characteristics: {{petInfo.characteristics}}</p>
+  </div>
+
+  <div class="panel-body" *ngIf='activities'>
+    <h3>Activities</h3>
+    <ul *ngFor="let activity of activities">
+      <div style='padding-bottom:10px; padding-top:10px'>
+        <p>Location: {{activity.location}}</p>
+        <p>Time: {{activity.time}}</p>
+        <p>Email of the person: {{activity.email_user}}</p>
+      </div>
+    </ul>
+  </div>
 </div>

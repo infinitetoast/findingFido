@@ -190,6 +190,7 @@ app.post('/activities', (req, res) => {
 app.get('/dashboard/:email', (req, res) => {
   // Also get activities for that user
   const userEmail = req.params.email;
+  console.log(userEmail)
   // const userEmail = req.body.profile.email;
   // Gets user information based on email
   User.getUser(userEmail, (err, userInfo) => {

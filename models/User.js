@@ -62,13 +62,13 @@ module.exports.createUser = (name, email, address, city, state, zip, extra, cb) 
 };
 
 module.exports.getUser = (email, cb) => {
-  User.findOne({ email })
+  User.findOne({ where: { email } })
     .then(user => cb(null, user))
     .catch(err => cb(err));
 };
 
 module.exports.updateUser = (userEmail, updateKey, updateValue, cb) => {
-  User.findOne({ email: userEmail })
+  User.findOne({ where: { email: userEmail } })
     .then((user) => {
       user.updateAttributes({
         updateKey: updateValue,
@@ -79,7 +79,7 @@ module.exports.updateUser = (userEmail, updateKey, updateValue, cb) => {
 };
 
 module.exports.deleteUser = (userEmail, cb) => {
-  User.findOne({ email: userEmail })
+  User.findOne({ where: { email: userEmail } })
     .then(user => user.destroy())
     .then(() => cb(null, 'Success'))
     .catch(err => cb(err));

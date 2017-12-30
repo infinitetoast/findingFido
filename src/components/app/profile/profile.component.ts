@@ -10,6 +10,9 @@ import { PageService } from '../services/page.service';
 export class ProfileComponent implements OnInit {
 
   profile: any;
+  userInfo: any;
+  petInfo: any;
+  activities: any;
 
   constructor(
     public authService: AuthService,
@@ -22,8 +25,14 @@ export class ProfileComponent implements OnInit {
     } else {
       this.authService.getProfile((err, profile) => {
         this.profile = profile;
-        this.pageService.getDashboard(this.profile.email)
-          .then(information => console.log('yep fired', information))
+        console.log(profile.email)
+        this.pageService.getDashboard(profile.email)
+          .then(information => {
+            this.userInfo = information.userInfo;
+            this.petInfo = information.petInfo;
+            this.activities = information.activities;
+            console.log('yep fired', information)
+          })
       });
     }
   }

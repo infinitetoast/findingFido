@@ -70,9 +70,13 @@ body {
   float: right;
 }
 /* Lili adding style */
-#schedule {
+#schedule #profile {
   color: white;
   font-weight: bold;
+  font-size: medium 
+}
+ #profile {
+  color: white;
   font-size: medium 
 }
 #schedule-box {
