@@ -158,8 +158,7 @@ app.post('/review', (req, res) => {
 
 // Write route to get activities at a certain time for the schedule component
 app.get('/activities/:date', (req, res) => {
-  console.log(req.params.date); // this works this gives 2018-01-01T11:00
-  const { time } = req.headers;
+  const time = req.params.date;
   Activity.getActivitiesByTime(time, (err, activities) => {
     if (err) {
       res.status(404).send(err);
@@ -188,9 +187,10 @@ app.post('/activities', (req, res) => {
 });
 
 // Sends information to fill out the individual dashboard person dashboard and pet dashboard
-app.post('/petDashboard', (req, res) => {
+app.get('/dashboard/:email', (req, res) => {
   // Also get activities for that user
-  const userEmail = req.body.profile.email;
+  const userEmail = req.params.email;
+  // const userEmail = req.body.profile.email;
   // Gets user information based on email
   User.getUser(userEmail, (err, userInfo) => {
     if (err) console.error(err);
@@ -237,18 +237,18 @@ app.get('/photos', (req, res) => {
     }
   });
 });
-
+// Not needed using the petdashboard with the requested email of the other user
 // Gets the information to load another user's profile
-app.get('/userProfile', (req, res) => {
-  const userEmail = req.headers.email;
-  User.getUser(userEmail, (err, user) => {
-    if (err) {
-      res.status(404).send(err);
-    } else {
-      res.status(200).send(user);
-    }
-  });
-});
+// app.get('/userProfile', (req, res) => {
+//   const userEmail = req.headers.email;
+//   User.getUser(userEmail, (err, user) => {
+//     if (err) {
+//       res.status(404).send(err);
+//     } else {
+//       res.status(200).send(user);
+//     }
+//   });
+// });
 
 // Open our connection
 app.listen(port, () => {

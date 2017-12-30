@@ -11,8 +11,9 @@ export class PageService {
   private reviewUrl = 'http://localhost:9000/review';  
   private chatUrl = 'http://localhost:9000/chat'
   private activitiesUrl = 'http://localhost:9000/activities'
-  private dashboardUrl = 'http://localhost:9000/petDashboard'
+  private dashboardUrl = 'http://localhost:9000/dashboard'
   private photosUrl = 'http://localhost:9000/photos'
+  private userProfileUrl = 'http://localhost:9000/userProfile'
 
   constructor(
     private http: Http,
@@ -40,9 +41,30 @@ export class PageService {
       .then(res => res.json())
       .catch(this.handleError);
   }
+  getPhotos(photos: any): Promise<any> {
+    return this.authHttp
+      .get(this.photosUrl, { headers: this.headers })
+      .toPromise()
+      .then(res => res.json())
+      .catch(this.handleError);
+  }
+  getUserProfile(userProfile: any): Promise<any> {
+    return this.authHttp
+      .get(this.userProfileUrl, { headers: this.headers })
+      .toPromise()
+      .then(res => res.json())
+      .catch(this.handleError);
+  }
   postDashboard(dashboard: any): Promise<any> {
     return this.authHttp
       .post(this.dashboardUrl, JSON.stringify(dashboard), { headers: this.headers })
+      .toPromise()
+      .then(res => res.json())
+      .catch(this.handleError);
+  }
+  getDashboard(email: any): Promise<any> {
+    return this.authHttp
+      .get(`${this.dashboardUrl}/${email}`, { headers: this.headers })
       .toPromise()
       .then(res => res.json())
       .catch(this.handleError);
@@ -58,7 +80,7 @@ export class PageService {
     return this.authHttp
       .get(`${this.activitiesUrl}/${time}`, { headers: this.headers })
       .toPromise()
-      .then(res => res)
+      .then(res => res.json())
       .catch(this.handleError);
   }
 

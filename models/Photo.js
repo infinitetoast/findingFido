@@ -30,7 +30,7 @@ module.exports.addPhoto = (url, userEmail, cb) => {
 };
 
 module.exports.findUserPhotos = (userEmail, cb) => {
-  Photo.findAll({ email_user: userEmail })
+  Photo.findAll({ where: { email_user: userEmail } })
     .then(photos => cb(null, photos))
     .catch(err => cb(err));
 };
