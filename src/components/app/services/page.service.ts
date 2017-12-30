@@ -84,7 +84,6 @@ export class PageService {
       .then(res => res.json())
       .catch(this.handleError);
   }
-
   getMap(location: any): Promise<any> {
     return this.http
       .post(this.mapUrl, JSON.stringify(location), { headers: this.headers })

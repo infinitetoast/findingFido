@@ -38,9 +38,9 @@ export class ScheduleComponent {
         console.log(this.petProfile);
       })
   }
-  onHover(activity): void {
-    console.log(activity.location);
-    this.pageService.getMap(activity.location)
+  onHover(): void {
+    // console.log(activity.location);
+    this.pageService.getMap('argument')
       .then(gps => {
         console.log(gps)
       });
