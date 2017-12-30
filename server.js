@@ -13,6 +13,8 @@ const jwks = require('jwks-rsa');
 
 const cors = require('cors');
 
+const axios = require('axios');
+
 // Local files
 const Message = require('./models/Message');
 
@@ -25,6 +27,8 @@ const Photo = require('./models/Photo');
 const Activity = require('./models/Activity');
 
 const Review = require('./models/Review');
+
+const key = require('./config/googlemaps.api');
 
 const app = express();
 
@@ -249,6 +253,20 @@ app.get('/photos', (req, res) => {
 //     }
 //   });
 // });
+
+app.post('/map', (req, res) => {
+  const { location } = req.body;
+  axios({
+    url: `https://maps.googleapis.com/maps/api/geocode/json?address=${location},+New+Orleans,+LA&key=${key.token}`,
+    type: 'GET',
+    dataType: 'JSONP',
+    headers: {
+      'Access-Control-Allow-Origin': 'true',
+    },
+  })
+    .then(response => res.status(200).send(response));
+  // 'https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=YOUR_API_KEY'
+});
 
 // Open our connection
 app.listen(port, () => {
