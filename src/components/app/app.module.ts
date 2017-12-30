@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { AgmCoreModule } from '@agm/core';
 import { AppRoutingModule } from './app-routing.module'
 import { AuthHttp, AuthConfig, AUTH_PROVIDERS, provideAuth } from 'angular2-jwt';
 
@@ -47,6 +48,9 @@ import { CallbackComponent } from './callback.component';
     FormsModule,
     HttpModule,
     AppRoutingModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBfz7Y7C-7emBWPSEi925MBpeXLRcL-Jzw'
+    })
   ],
   providers: [
     AuthService, PageService, EmailService,

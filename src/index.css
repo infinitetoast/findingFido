@@ -106,3 +106,11 @@ body {
 #schedule-box:hover {
   background-color: rgb(201, 137, 10);
 }
+
+#example-datetime-local-input {
+  width: 17em;
+}
+
+.schedule {
+  margin-left: 20px;
+}

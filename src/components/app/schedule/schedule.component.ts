@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from './../auth/auth.service';
 import { PageService } from '../services/page.service';
 import { Router } from '@angular/router';
+import { AgmCoreModule } from '@agm/core';
 
 
 @Component({
@@ -15,6 +16,8 @@ export class ScheduleComponent {
   userProfile: any;
   petProfile: any;
   activity: any;
+  lat: number = 51.678418;
+  lng: number = 7.809007;
 
   constructor(
     private router: Router,
@@ -46,7 +49,6 @@ export class ScheduleComponent {
         console.log(gps)
       });
   }
-
 }
 
 

@@ -41,10 +41,8 @@
         alt="profile-pet" style="width:100px;height:100px;">
     </div>
     <p></p>
-    <form ref='uploadForm' id='uploadForm' action='http://localhost:9000/photos' method='post' encType="multipart/form-data">
-      <input type="file" name="picture" />
-      <input type='submit' value='Upload!' />
-    </form>
+    <input type="file" (change)="fileChangeEvent($event)" placeholder="Upload file..." />
+    <button type="button" (click)="upload()">Upload</button>
   </div>
   <div class="col-sm-8">
     <div class="panel-body" *ngIf='comingactivities'>
