@@ -14,6 +14,7 @@ export class PageService {
   private dashboardUrl = 'http://localhost:9000/dashboard'
   private photosUrl = 'http://localhost:9000/photos'
   private userProfileUrl = 'http://localhost:9000/userProfile'
+  private mapUrl = 'http://localhost:9000/map'
 
   constructor(
     private http: Http,
@@ -84,6 +85,13 @@ export class PageService {
       .catch(this.handleError);
   }
 
+  getMap(location: any): Promise<any> {
+    return this.http
+      .post(this.mapUrl, JSON.stringify(location), { headers: this.headers })
+      .toPromise()
+      .then(res => res.json())
+      .catch(this.handleError);
+  }
 
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); 

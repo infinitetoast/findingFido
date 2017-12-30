@@ -22,12 +22,9 @@ export class ScheduleComponent {
 
   onSelect(): void {
     const time = this.time;
-    console.log(time);
     this.pageService.getActivities(time)
       .then(activities => {
-        //console.log('yep fired', activities);
         this.activities = activities;
-        console.log(this.activities)
       })
   }
   onSelectActivity(activity): void {
@@ -40,6 +37,13 @@ export class ScheduleComponent {
         console.log(this.userProfile);
         console.log(this.petProfile);
       })
+  }
+  onHover(activity): void {
+    console.log(activity.location);
+    this.pageService.getMap(activity.location)
+      .then(gps => {
+        console.log(gps)
+      });
   }
 
 }
