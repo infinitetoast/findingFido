@@ -86,7 +86,7 @@ export class PageService {
   }
 
   getMap(location: any): Promise<any> {
-    return this.authHttp
+    return this.http
       .post(this.mapUrl, JSON.stringify(location), { headers: this.headers })
       .toPromise()
       .then(res => res.json())
