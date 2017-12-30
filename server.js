@@ -214,6 +214,7 @@ app.get('/dashboard/:email', (req, res) => {
 
 // Recieves a file upload, adds it to cloudinary, then adds to the database
 app.post('/photos', (req, res) => {
+  console.log(req.body);
   const newPhoto = req.files;
   const userEmail = req.body.profile.email;
   // Uploads to cloudinary
@@ -244,7 +245,7 @@ app.get('/photos', (req, res) => {
 
 // Gets the lat/long location for the map
 app.post('/map', (req, res) => {
-  res.send('hit the map route');
+  res.send(req.body.location);
 //   const { location } = req.body;
 //   axios({
 //     url: `https://maps.googleapis.com/maps/api/geocode/json?address=${location},+New+Orleans,+LA&key=${key.token}`,
