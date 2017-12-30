@@ -49,6 +49,11 @@ app.use(fileUpload());
 
 app.use(cors());
 
+cloudinary.config({
+  cloud_name: 'derywsrky',
+  api_key: '565997469431136',
+  api_secret: 'yt5Ju4qeEEev7mzNrryVIGNHb9c',
+});
 
 const authCheck = jwt({
   secret: jwks.expressJwtSecret({
@@ -214,11 +219,16 @@ app.get('/dashboard/:email', (req, res) => {
 
 // Recieves a file upload, adds it to cloudinary, then adds to the database
 app.post('/photos', (req, res) => {
-  const newPhoto = req.files['uploads[]'].data.toString('utf-8');
-  // const userEmail = req.body.profile.email;
+  console.log(req.files);
+  const newPhoto = req.files['uploads[]'].data.toString('base64');
   // Uploads to cloudinary
-  cloudinary.uploader.upload(newPhoto, (result) => {
-    console.log(result);
+  cloudinary.v2.uploader.upload(`data:image/png;base64,${newPhoto}`, (err, result) => {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log(result);
+    }
+    res.status(201).send(result);
   });
 });
 

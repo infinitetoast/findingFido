@@ -21,7 +21,6 @@ export class PetDashboardComponent {
 
   onSelect(): void {
     this.router.navigate(['/chat']);
-
   }
 }
 
