@@ -20,6 +20,7 @@ export class DashboardComponent implements OnInit {
   profile: any;
   comingactivities: any;
   files: FileList;
+  filesToUpload: Array<File>;
 
 
   constructor(
@@ -34,14 +35,13 @@ export class DashboardComponent implements OnInit {
     } else {
       this.authService.getProfile((err, profile) => {
         this.profile = profile;
-        console.log(profile.email)
         this.pageService.getDashboard(profile.email)
           .then(information => {
             this.comingactivities = information.activities;
-            console.log('yep fired', information)
           })
       });
     }
+    this.filesToUpload = [];
   }
 
   onSelectFriend(): void {
@@ -58,24 +58,53 @@ export class DashboardComponent implements OnInit {
       location: this.location,
       profile: this.profile,
     }
-    console.log(activities);
     this.pageService.postActivities(activities)
-      .then(activities => console.log('yep fired', activities))
+      .then(activities => console.log(''))
+  }
+  upload() {
+    this.makeFileRequest("http://localhost:9000/photos", [], this.filesToUpload).then((result) => {
+      console.log(result);
+    }, (error) => {
+      console.log(error);
+    });
+  }
+  fileChangeEvent(fileInput: any) {
+    this.filesToUpload = <Array<File>>fileInput.target.files;
+  }
+  makeFileRequest(url: string, params: Array<string>, files: Array<File>) {
+    return new Promise((resolve, reject) => {
+      var formData: any = new FormData();
+      var xhr = new XMLHttpRequest();
+      for (var i = 0; i < files.length; i++) {
+        formData.append("uploads[]", files[i], files[i].name);
+      }
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+          if (xhr.status == 200) {
+            resolve(JSON.parse(xhr.response));
+          } else {
+            reject(xhr.response);
+          }
+        }
+      }
+      xhr.open("POST", url, true);
+      xhr.send(formData);
+    });
   }
 
-  onChange(files: FileList) {
-    this.files = files;
-    console.log(this.files.length);
-    if (this.files.length > 0) {
-      let file: File = this.files[0];
-      let formData: FormData = new FormData();
-      //formData.append('userpic', 'chris');
-      formData.append('pic', file, file.name);
-      console.log(file);
-      this.pageService.postPhoto(file, formData)
-        .then(res => console.log('fired', res))
-    }
-  }  
+  // onChange(files: FileList) {
+  //   this.files = files;
+  //   console.log(this.files.length);
+  //   if (this.files.length > 0) {
+  //     let file: File = this.files[0];
+  //     let formData: FormData = new FormData();
+  //     //formData.append('userpic', 'chris');
+  //     formData.append('pic', file, file.name);
+  //     console.log(file);
+  //     this.pageService.postPhoto(file, formData)
+  //       .then(res => console.log('fired', res))
+  //   }
+  // }  
 
   // onSend(): void {
   //   if (this.files.length > 0) {
@@ -87,6 +116,9 @@ export class DashboardComponent implements OnInit {
   //     console.log(JSON.stringify(file));
   //     this.pageService.postPhoto(file, formData)
   //     .then(res=>console.log('fired', res))
+ }
+
+
 
   //   }
   // }

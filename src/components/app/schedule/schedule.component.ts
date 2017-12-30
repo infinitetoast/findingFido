@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from './../auth/auth.service';
 import { PageService } from '../services/page.service';
 import { Router } from '@angular/router';
+import { AgmCoreModule } from '@agm/core';
 
 
 @Component({
@@ -15,8 +16,8 @@ export class ScheduleComponent {
   userProfile: any;
   petProfile: any;
   activity: any;
-  gps: any;
-  finalGPS: any;
+  lat: number = 51.678418;
+  lng: number = 7.809007;
 
   constructor(
     private router: Router,
@@ -42,16 +43,16 @@ export class ScheduleComponent {
       })
   }
   onHover(activity): void {
-    let location = activity.location;
-    console.log(location);
     this.pageService.postMap(activity)
       .then(gps => {
-        this.gps = JSON.stringify(gps);
-        //this.finalGPS = JSON.parse(gps);
-        console.log(gps)
+        this.lat = gps.lat;
+        this.lng = gps.lng;
       });
   }
-
+  buildGoogleSrc(): string {
+    return `https://www.google.com/maps/embed/v1/place?key=AIzaSyBfz7Y7C-7emBWPSEi925MBpeXLRcL-Jzw&${this.lat},${this.lng}` 
+  }
 }
 
+"https://www.google.com/maps/embed/v1/place?key=AIzaSyBfz7Y7C-7emBWPSEi925MBpeXLRcL-Jzw&q=Bean+Gallery,NewOrleans+LA" 
 

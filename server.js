@@ -49,6 +49,11 @@ app.use(fileUpload());
 
 app.use(cors());
 
+cloudinary.config({
+  cloud_name: 'derywsrky',
+  api_key: '565997469431136',
+  api_secret: 'yt5Ju4qeEEev7mzNrryVIGNHb9c',
+});
 
 const authCheck = jwt({
   secret: jwks.expressJwtSecret({
@@ -214,22 +219,23 @@ app.get('/dashboard/:email', (req, res) => {
 
 // Recieves a file upload, adds it to cloudinary, then adds to the database
 app.post('/photos', (req, res) => {
-  console.log(req.body)
-  res.send(req.files);
-  // const newPhoto = req.files;
-  // const userEmail = req.body.profile.email;
-  // // Uploads to cloudinary
-  // cloudinary.uploader.upload(newPhoto, (result) => {
-  //   // Uploads returned url to our database
-  //   Photo.addPhoto(result.url, userEmail, (err, photo) => {
-  //     if (err) {
-  //       res.status(500).send(err);
-  //     } else {
-  //       // Sends back the new photo to the client side to be rendered
-  //       res.status(201).send(photo);
-  //     }
-  //   });
-  // });
+  const newPhoto = req.files['uploads[]'].data.toString('base64');
+  const type = req.files['uploads[]'].mimetype;
+
+  // Uploads to cloudinary
+  cloudinary.v2.uploader.upload(`data:${type};base64,${newPhoto}`, (err, photo) => {
+    if (err) {
+      res.status(400).send(err);
+    } else {
+      Photo.addPhoto(photo.url, 'prestonwinstead@me.com', (error, response) => {
+        if (error) {
+          res.status(500).send(error);
+        } else {
+          res.status(201).send(response);
+        }
+      });
+    }
+  });
 });
 
 // Gets user photos for their profile page
@@ -246,18 +252,10 @@ app.get('/photos', (req, res) => {
 
 // Gets the lat/long location for the map
 app.post('/map', (req, res) => {
-  res.send('hello');
-//   const { location } = req.body;
-//   axios({
-//     url: `https://maps.googleapis.com/maps/api/geocode/json?address=${location},+New+Orleans,+LA&key=${key.token}`,
-//     type: 'GET',
-//     dataType: 'JSONP',
-//     headers: {
-//       'Access-Control-Allow-Origin': 'true',
-//     },
-//   })
-//     .then(response => res.status(200).send(response));
-  // 'https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyBfz7Y7C-7emBWPSEi925MBpeXLRcL-Jzw'
+  const { location } = req.body;
+  axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${location},+New+Orleans,+LA&key=${key.token}`)
+    .then(response => res.status(200).send(response.data.results[0].geometry.location))
+    .catch(err => res.status(500).send(err));
 });
 
 // Open our connection

@@ -34,39 +34,39 @@
   </div>
 </nav>
 
-
-<div id='schedule'>
-  <div class="col-md-6">
+<div id='schedule' class="row">
+  <div class="col-md-6 schedule">
     <form>
       <div class="form-group">
         <label for="pet-kind">When do you want to play with a pet?</label>
         <div class="form-group row">
           <label for="example-datetime-local-input">Date and time</label>
           <div class="col-10">
-            <input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="example-datetime-local-input" [(ngModel)]="time"
-              name="time">
+            <input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="example-datetime-local-input" [(ngModel)]="time" name="time">
+            <button type="submit" class="btn btn-primary activity-submit" (click)="onSelect()">Go!</button>
           </div>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary" (click)="onSelect()">Go!</button>
     </form>
   </div>
   <div class='row'>
-  <div *ngIf='activities'>
-    <ul *ngFor="let activity of activities">
-      <div id='schedule-box' (click)="onSelectActivity(activity)" (mouseenter)="onHover(activity)">
-        <p>Location: {{activity.location}}</p>
-        <p>Time: {{activity.time}}</p>
-        <p>Email of the person: {{activity.email_user}}</p>
-      </div>
-    </ul>
+    <div *ngIf='activities'>
+      <ul *ngFor="let activity of activities">
+        <div id='schedule-box' (click)="onSelectActivity(activity)" (mouseenter)="onHover(activity)">
+          <p>Location: {{activity.location}}</p>
+          <p>Time: {{activity.time}}</p>
+          <p>Email of the person: {{activity.email_user}}</p>
+        </div>
+      </ul>
+    </div>
+    <div *ngIf='petProfile'>
+        <div id='schedule-box'>
+          <p>Name: {{petProfile.name}}</p>
+          <p>Kind: {{petProfile.kind}}</p>
+          <p>Pet characteristics: {{petProfile.characteristics}}</p>
+        </div>
+    </div>
   </div>
-  <div *ngIf='petProfile'>
-      <div id='schedule-box'>
-        <p>Name: {{petProfile.name}}</p>
-        <p>Kind: {{petProfile.kind}}</p>
-        <p>Pet characteristics: {{petProfile.characteristics}}</p>
-      </div>
-  </div>
-  </div>
+  <iframe width="500" height="500" frameborder="0" style="border:0" src={{buildGoogleSrc()}} allowfullscreen>
+  </iframe>
 </div>
