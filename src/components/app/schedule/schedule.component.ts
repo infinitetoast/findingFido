@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
 export class ScheduleComponent {
   time: string;
   activities: any;
+  userProfile: any;
+  petProfile: any;
 
   constructor(
     private router: Router,
@@ -27,7 +29,17 @@ export class ScheduleComponent {
         this.activities = activities;
         console.log(this.activities)
       })
-
+  }
+  onSelectActivity(activity): void {
+    const email = activity.email_user;
+    console.log(email);
+    this.pageService.getDashboard(email)
+      .then(information => {
+        this.userProfile = information.userInfo;
+        this.petProfile = information.petInfo;
+        console.log(this.userProfile);
+        console.log(this.petProfile);
+      })
   }
 
 }
