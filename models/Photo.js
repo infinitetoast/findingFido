@@ -28,3 +28,9 @@ module.exports.addPhoto = (url, userEmail, cb) => {
       .then(result => cb(null, result))
       .catch(err => cb(err)));
 };
+
+module.exports.findUserPhotos = (userEmail, cb) => {
+  Photo.findAll({ email_user: userEmail })
+    .then(photos => cb(null, photos))
+    .catch(err => cb(err));
+};

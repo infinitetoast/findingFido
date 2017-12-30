@@ -1,10 +1,71 @@
-#welcome {
-  color: rgb(101, 35, 158);
+body {
+  background-color: #4d4365;
 }
 
-#logo{
-  padding-left: 30px;
-  padding-top: 0px;
-  padding-bottom: 30px;
+#welcome {
+  color: white;
+  padding-left: 20px;
+}
 
+#signup-logo {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.jumbotron {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+}
+
+.signup-button {
+  margin-top: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.signup-email-box,
+.signup-password-box {
+  text-align: center;
+}
+
+.signup-email {
+  padding-top: 10px;
+}
+
+.mission {
+  text-align: center;
+  color: white;
+}
+
+.new-member {
+  text-align: center;
+  color: white;
+  margin-top: 3em;
+}
+
+.pet-boolean {
+  text-align: center;
+  color: white;
+  margin-top: 3em;
+}
+
+.pet-signup {
+  color: white;
+  margin-top: 1em;
+}
+
+.done-pet-button {
+  float: right;
+}
+
+.person-signup {
+  color: white;
+}
+
+.person-done-button {
+  float: right;
 }

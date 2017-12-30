@@ -45,6 +45,7 @@ app.use(fileUpload());
 
 app.use(cors());
 
+
 const authCheck = jwt({
   secret: jwks.expressJwtSecret({
     cache: true,
@@ -56,6 +57,7 @@ const authCheck = jwt({
   issuer: 'https://findo.auth0.com/',
   algorithms: ['RS256'],
 });
+
 
 // Takes in information about the pet, puts it in a pet table with a link to the user
 app.post('/petSignup', (req, res) => {
@@ -156,7 +158,7 @@ app.post('/review', (req, res) => {
 
 // Write route to get activities at a certain time for the schedule component
 app.get('/activities/:date', (req, res) => {
-  console.log(req.params.date);//this works this gives 2018-01-01T11:00
+  console.log(req.params.date); // this works this gives 2018-01-01T11:00
   const { time } = req.headers;
   Activity.getActivitiesByTime(time, (err, activities) => {
     if (err) {
@@ -221,6 +223,30 @@ app.post('/photos', (req, res) => {
         res.status(201).send(photo);
       }
     });
+  });
+});
+
+// Gets user photos for their profile page
+app.get('/photos', (req, res) => {
+  const userEmail = req.headers.email;
+  Photo.findUserPhotos(userEmail, (err, photos) => {
+    if (err) {
+      res.status(404).send(photos);
+    } else {
+      res.status(200).send(photos);
+    }
+  });
+});
+
+// Gets the information to load another user's profile
+app.get('/userProfile', (req, res) => {
+  const userEmail = req.headers.email;
+  User.getUser(userEmail, (err, user) => {
+    if (err) {
+      res.status(404).send(err);
+    } else {
+      res.status(200).send(user);
+    }
   });
 });
 

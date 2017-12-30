@@ -1,7 +1,7 @@
 <div>
-  <img src="assets/logo.png" alt="Logo" id='logo' width="300px" height="200px">
-
-  <div class="col-md-6">
+  
+  <div class="col-md-6 person-signup">
+    <img src="assets/logo.png" alt="Logo" id='logo' width="300px" height="200px">
     <form>
       <div class="form-group">
         <label for="name">What is your name?</label>
@@ -30,7 +30,7 @@
         <label for="extra">Tell us a bit about yourself!</label>
         <textarea class="form-control" id="extra" rows="3" [(ngModel)]="extra" name="extra"></textarea>
       </div>
-      <button type="submit" class="btn btn-primary" (click)="onSelect()">I'm done!</button>
+      <button type="submit" class="btn btn-primary person-done-button" (click)="onSelect()">I'm done!</button>
     </form>
   </div>
 </div>
