@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './../auth/auth.service';
 import { PageService } from '../services/page.service';
+import { EmailService } from '../services/email.service';
 
 @Component({
   selector: 'app-profile',
@@ -16,7 +17,8 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     public authService: AuthService,
-    private pageService: PageService
+    private pageService: PageService,
+    private emailService: EmailService
   ) { }
 
   ngOnInit() {
@@ -35,6 +37,15 @@ export class ProfileComponent implements OnInit {
           })
       });
     }
+  }
+
+  onDelete(): void {
+    this.emailService.deleteProfile(this.profile)
+      .then(res => console.log('yep fired', res))
+  }
+  onUpdate(): void {
+    this.emailService.putProfile(this.profile)
+      .then(res => console.log('yep fired', res))
   }
 
 }

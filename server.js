@@ -190,7 +190,6 @@ app.post('/activities', (req, res) => {
 app.get('/dashboard/:email', (req, res) => {
   // Also get activities for that user
   const userEmail = req.params.email;
-  console.log(userEmail)
   // const userEmail = req.body.profile.email;
   // Gets user information based on email
   User.getUser(userEmail, (err, userInfo) => {
@@ -238,18 +237,18 @@ app.get('/photos', (req, res) => {
     }
   });
 });
-
+// Not needed using the petdashboard with the requested email of the other user
 // Gets the information to load another user's profile
-app.get('/userProfile', (req, res) => {
-  const userEmail = req.headers.email;
-  User.getUser(userEmail, (err, user) => {
-    if (err) {
-      res.status(404).send(err);
-    } else {
-      res.status(200).send(user);
-    }
-  });
-});
+// app.get('/userProfile', (req, res) => {
+//   const userEmail = req.headers.email;
+//   User.getUser(userEmail, (err, user) => {
+//     if (err) {
+//       res.status(404).send(err);
+//     } else {
+//       res.status(200).send(user);
+//     }
+//   });
+// });
 
 // Open our connection
 app.listen(port, () => {

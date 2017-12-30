@@ -28,6 +28,7 @@
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" [routerLink]="['/profile']">Profile</button>
       <button class="btn btn-outline-danger my-2 my-sm-0" type="submit" (click)="authService.logout()">Log Out</button>
     </form>
   </div>
@@ -35,30 +36,28 @@
 
 
 <div id='schedule'>
-<div class="col-md-6">
-  <form>
-    <div class="form-group">
-      <label for="pet-kind">When do you want to play with a pet?</label>
-      <div class="form-group row">
-        <label for="example-datetime-local-input">Date and time</label>
-        <div class="col-10">
-          <input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="example-datetime-local-input" [(ngModel)]="time"
-            name="time">
+  <div class="col-md-6">
+    <form>
+      <div class="form-group">
+        <label for="pet-kind">When do you want to play with a pet?</label>
+        <div class="form-group row">
+          <label for="example-datetime-local-input">Date and time</label>
+          <div class="col-10">
+            <input class="form-control" type="datetime-local" value="2011-08-19T13:45:00" id="example-datetime-local-input" [(ngModel)]="time"
+              name="time">
+          </div>
         </div>
       </div>
-    </div>
-    <button type="submit" class="btn btn-primary" (click)="onSelect()">Go!</button>
-  </form>
+      <button type="submit" class="btn btn-primary" (click)="onSelect()">Go!</button>
+    </form>
+  </div>
+  <div *ngIf='activities'>
+    <ul *ngFor="let activity of activities">
+      <div id='schedule-box' (click)="onSelectActivity(activity)">
+        <p>Location: {{activity.location}}</p>
+        <p>Time: {{activity.time}}</p>
+        <p>Email of the person: {{activity.email_user}}</p>
+      </div>
+    </ul>
+  </div>
 </div>
-<div *ngIf='activities'>
-  <ul *ngFor="let activity of activities">
-    <div id='schedule-box' (click)="onSelectActivity(activity)">
-      <p>Location: {{activity.location}}</p>
-      <p>Time: {{activity.time}}</p>
-      <p>Email of the person: {{activity.email_user}}</p>
-    </div>
-  </ul>
-</div>
-</div>
-
-
