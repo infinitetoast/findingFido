@@ -13,6 +13,8 @@ const jwks = require('jwks-rsa');
 
 const cors = require('cors');
 
+const axios = require('axios');
+
 // Local files
 const Message = require('./models/Message');
 
@@ -25,6 +27,8 @@ const Photo = require('./models/Photo');
 const Activity = require('./models/Activity');
 
 const Review = require('./models/Review');
+
+const key = require('./config/googlemaps.api');
 
 const app = express();
 
@@ -238,18 +242,22 @@ app.get('/photos', (req, res) => {
     }
   });
 });
-// Not needed using the petdashboard with the requested email of the other user
-// Gets the information to load another user's profile
-// app.get('/userProfile', (req, res) => {
-//   const userEmail = req.headers.email;
-//   User.getUser(userEmail, (err, user) => {
-//     if (err) {
-//       res.status(404).send(err);
-//     } else {
-//       res.status(200).send(user);
-//     }
-//   });
-// });
+
+// Gets the lat/long location for the map
+app.post('/map', (req, res) => {
+  res.send('hit the map route');
+//   const { location } = req.body;
+//   axios({
+//     url: `https://maps.googleapis.com/maps/api/geocode/json?address=${location},+New+Orleans,+LA&key=${key.token}`,
+//     type: 'GET',
+//     dataType: 'JSONP',
+//     headers: {
+//       'Access-Control-Allow-Origin': 'true',
+//     },
+//   })
+//     .then(response => res.status(200).send(response));
+  // 'https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyBfz7Y7C-7emBWPSEi925MBpeXLRcL-Jzw'
+});
 
 // Open our connection
 app.listen(port, () => {

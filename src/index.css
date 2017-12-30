@@ -69,6 +69,22 @@ body {
 .person-done-button {
   float: right;
 }
+
+.review {
+  color: white;
+  margin-left: 1em;
+}
+
+#friendliness,
+#punctuality,
+#overall {
+  width: 3em;
+}
+
+#comments {
+  width: 30em;
+  height: 5em;
+}
 /* Lili adding style */
 #schedule #profile {
   color: white;
