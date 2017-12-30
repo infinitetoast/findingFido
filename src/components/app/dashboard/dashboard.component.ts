@@ -63,7 +63,7 @@ export class DashboardComponent implements OnInit {
     this.makeFileRequest("http://localhost:9000/photos", [], this.filesToUpload).then((result) => {
       console.log(result);
     }, (error) => {
-      console.error(error);
+      console.log(error);
     });
   }
   fileChangeEvent(fileInput: any) {

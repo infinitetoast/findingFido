@@ -219,16 +219,22 @@ app.get('/dashboard/:email', (req, res) => {
 
 // Recieves a file upload, adds it to cloudinary, then adds to the database
 app.post('/photos', (req, res) => {
-  console.log(req.files);
   const newPhoto = req.files['uploads[]'].data.toString('base64');
+  const type = req.files['uploads[]'].mimetype;
+
   // Uploads to cloudinary
-  cloudinary.v2.uploader.upload(`data:image/png;base64,${newPhoto}`, (err, result) => {
+  cloudinary.v2.uploader.upload(`data:${type};base64,${newPhoto}`, (err, photo) => {
     if (err) {
-      console.error(err);
+      res.status(400).send(err);
     } else {
-      console.log(result);
+      Photo.addPhoto(photo.url, 'prestonwinstead@me.com', (error, response) => {
+        if (error) {
+          res.status(500).send(error);
+        } else {
+          res.status(201).send(response);
+        }
+      });
     }
-    res.status(201).send(result);
   });
 });
 

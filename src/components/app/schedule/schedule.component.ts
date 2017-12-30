@@ -43,12 +43,16 @@ export class ScheduleComponent {
       })
   }
   onHover(activity): void {
-    // let location = activity.location;
     this.pageService.postMap(activity)
       .then(gps => {
-        console.log(gps)
+        this.lat = gps.lat;
+        this.lng = gps.lng;
       });
+  }
+  buildGoogleSrc(): string {
+    return `https://www.google.com/maps/embed/v1/place?key=AIzaSyBfz7Y7C-7emBWPSEi925MBpeXLRcL-Jzw&${this.lat},${this.lng}` 
   }
 }
 
+"https://www.google.com/maps/embed/v1/place?key=AIzaSyBfz7Y7C-7emBWPSEi925MBpeXLRcL-Jzw&q=Bean+Gallery,NewOrleans+LA" 
 

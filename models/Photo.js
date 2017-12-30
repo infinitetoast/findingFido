@@ -20,7 +20,7 @@ const Photo = sequelize.define('photo', {
 });
 
 module.exports.addPhoto = (url, userEmail, cb) => {
-  Photo.sync({ force: true }).then(() =>
+  Photo.sync().then(() =>
     Photo.create({
       url,
       email_user: userEmail,
