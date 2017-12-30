@@ -4,3 +4,4 @@ docker-compose.yml
 config/cloudinary.api.js
 config/googlemaps.api.js
 config.js
+.env
