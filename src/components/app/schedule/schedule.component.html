@@ -54,7 +54,7 @@
       <ul *ngFor="let activity of activities">
         <div id='schedule-box' (click)="onSelectActivity(activity)" (mouseenter)="onHover(activity)">
           <p>Location: {{activity.location}}</p>
-          <p>Time: {{activity.time}}</p>
+          <p>Time: {{cleanDate(activity.time)}}</p>
           <p>Email of the person: {{activity.email_user}}</p>
         </div>
       </ul>

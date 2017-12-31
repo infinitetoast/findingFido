@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from './../auth/auth.service';
 import { Router } from '@angular/router';
 import { PageService } from '../services/page.service';
-
+const moment = require('moment');
 
 
 @Component({
@@ -60,6 +60,9 @@ export class DashboardComponent implements OnInit {
   }
   onSelectPet(): void {
     this.pet = true;
+  }
+  cleanDate(date): void {
+    return moment(date).format('MMMM Do YYYY, h:mm:ss a');
   }
   onSelect(): void {
     this.personNeeded = true;
