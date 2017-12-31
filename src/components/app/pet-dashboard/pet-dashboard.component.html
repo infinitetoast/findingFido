@@ -33,40 +33,74 @@
     </form>
   </div>
 </nav>
-<div class="row">
+
+<div class="row" id='petDashboard'>
   <div class="col-sm-4">
-  <ul *ngFor="let photo of photos">
-    <div style='padding-bottom:10px; padding-top:10px'>
-      <img src={{photo.url}}>
-      <p>id: {{photo.id}}</p>
-    </div>
-  </ul>
-  </div>
-  <div class="col-sm-4" style='color:white'>
-    <h3>Pet Information</h3>
-    <div *ngIf="pet">
-      <h4>Name: {{pet.name}}</h4>
-      <h4>Kind: {{pet.kind}}</h4>
-      <h4>Characteristics: {{pet.characteristics}}</h4>
-    </div>
-      <button type="submit" class="btn btn-outline-success btn-lg" (click)="onPictures()">See Pictures and More!</button>
-        <div class="panel-body" *ngIf='activities'>
-          <h3>I am available at the following times!</h3>
-          <ul *ngFor="let activity of activities">
-            <div style='padding-bottom:10px; padding-top:10px'>
-              <p>Location: {{activity.location}}</p>
-              <p>Time: {{activity.time}}</p>
-              <p>Email of the person: {{activity.email_user}}</p>
-              <button class="btn btn-outline-success my-2 my-sm-0" (click)="onTaking()">Take it!</button>
-            </div>
-          </ul>
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" *ngIf='photos'>
+      <div class="carousel-inner" role="listbox" >
+        <div class="carousel-item active">
+          <img class="d-block img-fluid" src={{photos[0].url}} alt="First slide">
+        </div>
+        <div class="carousel-item">
+          <img class="d-block img-fluid" src={{photos[1].url}} alt="Second slide">
+        </div>
+        <div class="carousel-item">
+          <img class="d-block img-fluid" src={{photos[2].url}} alt="Third slide">
         </div>
       </div>
-      <div class="col-sm-4">
-        <h3>Ratings</h3>
-        <p>Pet Rating</p>
-        <p>User Rating</p>
-        <button type="submit" class="btn btn-primary" (click)="onSelect()">Request to Connect</button>
-        <button type="submit" class="btn btn-info" (click)="goBack()">Go Back</button>
-      </div>
+      <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
     </div>
+    <div>
+    </div>
+    <!-- <ul *ngFor="let photo of photos" *ngIf='photos'>
+      <div style='padding-bottom:10px; padding-top:10px'>
+        <img src={{photo.url}}>
+        <p>id: {{photo.id}}</p>
+      </div>
+    </ul> -->
+  </div>
+  <div class="col-sm-5">
+    <h1>Pet Information:</h1>
+    <div *ngIf="pet" class='pad'>
+      <h4>My name is {{pet.name}}</h4>
+      <h4>I am a {{pet.kind}}</h4>
+      <h4>This is how I rule: {{pet.characteristics}}</h4>
+    </div>
+    <button type="submit" class="btn btn-outline-success btn-lg" (click)="onPictures()">See Pictures and More!</button>
+    <div class="panel-body" *ngIf='activities'  class='pad'>
+      <h3>I am {{pet.name}} and I am available at the following times!</h3>
+      <ul *ngFor="let activity of activities">
+        <div class='pad' id='request'>
+          <p>Location: {{activity.location}}</p>
+          <p>Time: {{activity.time}}</p>
+          <p>Email of the person: {{activity.email_user}}</p>
+          <button class="btn btn-outline-success my-2 my-sm-0" (click)="onTaking(activity)">Take it!</button>
+        </div>
+      </ul>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <h3>Ratings</h3>
+    <p>User Rating: 9/10</p>
+    <p>Pet Rating: 10/10</p>
+    <div id='row'>
+      <p><span class="glyphicon glyphicon-star"></span></p>
+      <span class="glyphicon glyphicon-star-empty"></span>
+      <span class="glyphicon glyphicon-star-empty"></span>
+      <span class="glyphicon glyphicon-star-empty"></span>
+      <span class="glyphicon glyphicon-star-empty"></span>
+      <span class="glyphicon glyphicon-save" style="color:rgb(230, 121, 172);"></span>
+
+    </div>
+    <button type="submit" class="btn btn-primary" (click)="onSelect()">Request to Connect</button>
+    <p></p>
+    <button type="submit" class="btn btn-info" (click)="goBack()">Go Back</button>
+  </div>
+</div>
