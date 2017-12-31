@@ -14,6 +14,7 @@ export class ProfileComponent implements OnInit {
   userInfo: any;
   petInfo: any;
   activities: any;
+  photos: any;
 
   constructor(
     public authService: AuthService,
@@ -28,13 +29,13 @@ export class ProfileComponent implements OnInit {
       this.authService.getProfile((err, profile) => {
         this.profile = profile;
         console.log(profile.email)
-        this.pageService.getDashboard(profile.email)
-          .then(information => {
-            this.userInfo = information.userInfo;
-            this.petInfo = information.petInfo;
-            this.activities = information.activities;
-            console.log('yep fired', information)
-          })
+        this.pageService.getUserProfile(profile.email)
+        .then(information => {
+          this.userInfo = information.userInfo;
+          this.petInfo = information.petInfo;
+          this.photos = information.photos;
+          console.log('yep fired', information)
+        })
       });
     }
   }

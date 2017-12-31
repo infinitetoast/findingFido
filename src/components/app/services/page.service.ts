@@ -1,19 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { AuthHttp } from 'angular2-jwt';
-
+import 'rxjs/add/operator/map';
+import 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class PageService {
 
   private headers = new Headers({ 'Content-Type': 'application/json' });
+  private photoHeaders = new Headers({'Accept': 'application/json' });
+
   private reviewUrl = 'http://localhost:9000/review';  
   private chatUrl = 'http://localhost:9000/chat'
   private activitiesUrl = 'http://localhost:9000/activities'
   private dashboardUrl = 'http://localhost:9000/dashboard'
+  private petDashboardUrl = 'http://localhost:9000/petDashboard'
   private photosUrl = 'http://localhost:9000/photos'
   private userProfileUrl = 'http://localhost:9000/userProfile'
+  private personDashboardUrl = 'http://localhost:9000/PersonDashboard'
   private mapUrl = 'http://localhost:9000/map'
 
   constructor(
@@ -35,23 +41,32 @@ export class PageService {
       .then(res => res.json())
       .catch(this.handleError);
   }
-  postPhotos(photos: any): Promise<any> {
+  postPhoto(photo: any, formData: FormData): Promise<any> {
+    console.log(photo);
     return this.authHttp
-      .post(this.photosUrl, JSON.stringify(photos), { headers: this.headers })
+      //.post(this.photosUrl, JSON.stringify(photo), { headers: this.headers })
+      .post(this.photosUrl, formData, { headers: this.photoHeaders })
       .toPromise()
       .then(res => res.json())
       .catch(this.handleError);
   }
-  getPhotos(photos: any): Promise<any> {
+  getPhotos(email: any): Promise<any> {
     return this.authHttp
-      .get(this.photosUrl, { headers: this.headers })
+      .get(`${this.photosUrl}/${email}`, { headers: this.headers })
       .toPromise()
       .then(res => res.json())
       .catch(this.handleError);
   }
-  getUserProfile(userProfile: any): Promise<any> {
+  getUserProfile(email: any): Promise<any> {
     return this.authHttp
-      .get(this.userProfileUrl, { headers: this.headers })
+      .get(`${this.userProfileUrl}/${email}`, { headers: this.headers })
+      .toPromise()
+      .then(res => res.json())
+      .catch(this.handleError);
+  }
+  getPersonDashboard(email: any): Promise<any> {
+    return this.authHttp
+      .get(`${this.personDashboardUrl}/${email}`, { headers: this.headers })
       .toPromise()
       .then(res => res.json())
       .catch(this.handleError);
@@ -80,6 +95,15 @@ export class PageService {
   getActivities(time: any): Promise<any> {
     return this.authHttp
       .get(`${this.activitiesUrl}/${time}`, { headers: this.headers })
+      .toPromise()
+      .then(res => res.json())
+      .catch(this.handleError);
+  }
+  getPet(id: any): Promise<any> {
+    console.log('thisFired')
+    console.log(id)
+    return this.authHttp
+      .get(`${this.petDashboardUrl}/${id}`, { headers: this.headers })
       .toPromise()
       .then(res => res.json())
       .catch(this.handleError);

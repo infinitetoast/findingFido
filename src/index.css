@@ -95,6 +95,10 @@ body {
   color: white;
   font-size: medium 
 }
+  #PersonDashboard {
+  color: white;
+  font-size: medium 
+}
 #schedule-box {
   background-color: rgb(190, 153, 201);
   width: 300px;
