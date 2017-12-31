@@ -97,7 +97,7 @@ body {
 }
 #PersonDashboard {
   color: white;
-  font-size: medium 
+  font-size: 13px;
 }
 #petDashboard {
   color: white;
@@ -121,7 +121,7 @@ body {
 }
 
 #schedule-box:hover {
-  background-color: rgb(201, 137, 10);
+  background-color: rgb(90, 129, 212);
 }
 
 #example-datetime-local-input {

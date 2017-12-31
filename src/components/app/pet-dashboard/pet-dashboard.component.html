@@ -66,7 +66,7 @@
       </div>
     </ul> -->
   </div>
-  <div class="col-sm-6">
+  <div class="col-sm-5">
     <h1>Pet Information:</h1>
     <div *ngIf="pet" class='pad'>
       <h4>My name is {{pet.name}}</h4>
@@ -86,10 +86,19 @@
       </ul>
     </div>
   </div>
-  <div class="col-sm-2">
+  <div class="col-sm-3">
     <h3>Ratings</h3>
-    <p>Pet Rating</p>
-    <p>User Rating</p>
+    <p>User Rating: 9/10</p>
+    <p>Pet Rating: 10/10</p>
+    <div id='row'>
+      <p><span class="glyphicon glyphicon-star"></span></p>
+      <span class="glyphicon glyphicon-star-empty"></span>
+      <span class="glyphicon glyphicon-star-empty"></span>
+      <span class="glyphicon glyphicon-star-empty"></span>
+      <span class="glyphicon glyphicon-star-empty"></span>
+      <span class="glyphicon glyphicon-save" style="color:rgb(230, 121, 172);"></span>
+
+    </div>
     <button type="submit" class="btn btn-primary" (click)="onSelect()">Request to Connect</button>
     <p></p>
     <button type="submit" class="btn btn-info" (click)="goBack()">Go Back</button>
