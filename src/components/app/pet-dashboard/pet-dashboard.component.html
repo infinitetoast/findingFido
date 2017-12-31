@@ -35,11 +35,12 @@
 </nav>
 <div class="row">
   <div class="col-sm-4">
-    <div class="row">
-      <img src="http://thepetwiki.com/wp-content/uploads/300px-Dalmation.jpg" alt="profile-person" style="width:100px;height:100px;">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Patriotic_Pampered_Pocket_Pooch_Posing_Proudly.jpg/300px-Patriotic_Pampered_Pocket_Pooch_Posing_Proudly.jpg"
-        alt="profile-pet" style="width:100px;height:100px;">
+  <ul *ngFor="let photo of photos">
+    <div style='padding-bottom:10px; padding-top:10px'>
+      <img src={{photo.url}}>
+      <p>id: {{photo.id}}</p>
     </div>
+  </ul>
   </div>
   <div class="col-sm-4" style='color:white'>
     <h3>Pet Information</h3>
@@ -48,6 +49,18 @@
       <h4>Kind: {{pet.kind}}</h4>
       <h4>Characteristics: {{pet.characteristics}}</h4>
     </div>
+      <button type="submit" class="btn btn-outline-success btn-lg" (click)="onPictures()">See Pictures and More!</button>
+        <div class="panel-body" *ngIf='activities'>
+          <h3>I am available at the following times!</h3>
+          <ul *ngFor="let activity of activities">
+            <div style='padding-bottom:10px; padding-top:10px'>
+              <p>Location: {{activity.location}}</p>
+              <p>Time: {{activity.time}}</p>
+              <p>Email of the person: {{activity.email_user}}</p>
+              <button class="btn btn-outline-success my-2 my-sm-0" (click)="onTaking()">Take it!</button>
+            </div>
+          </ul>
+        </div>
       </div>
       <div class="col-sm-4">
         <h3>Ratings</h3>

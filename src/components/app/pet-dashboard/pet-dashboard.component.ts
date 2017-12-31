@@ -16,6 +16,8 @@ import 'rxjs/add/operator/switchMap';
 export class PetDashboardComponent {
   name: string;
   pet: any;
+  photos: any;
+  activities: any;
 
 
   constructor(
@@ -29,8 +31,20 @@ export class PetDashboardComponent {
   ngOnInit(): void {
     this.route.paramMap
       .switchMap((params: ParamMap) => this.pageService.getPet(+params.get('id')))
-      .subscribe(pet => this.pet = pet);
+      .subscribe(pet => {
+        this.pet = pet;
+        console.log(pet);
+      });
   }
+
+  onPictures(): void {
+    this.pageService.getPhotos(this.pet.email_user)
+      .then(info => {
+        this.photos = info.photos;
+        this.activities = info.activities
+        console.log(info)
+      })
+  }    
 
   goBack(): void {
     this.location.back();

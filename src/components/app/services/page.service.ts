@@ -19,6 +19,7 @@ export class PageService {
   private petDashboardUrl = 'http://localhost:9000/petDashboard'
   private photosUrl = 'http://localhost:9000/photos'
   private userProfileUrl = 'http://localhost:9000/userProfile'
+  private personDashboardUrl = 'http://localhost:9000/PersonDashboard'
   private mapUrl = 'http://localhost:9000/map'
 
   constructor(
@@ -59,6 +60,13 @@ export class PageService {
   getUserProfile(email: any): Promise<any> {
     return this.authHttp
       .get(`${this.userProfileUrl}/${email}`, { headers: this.headers })
+      .toPromise()
+      .then(res => res.json())
+      .catch(this.handleError);
+  }
+  getPersonDashboard(email: any): Promise<any> {
+    return this.authHttp
+      .get(`${this.personDashboardUrl}/${email}`, { headers: this.headers })
       .toPromise()
       .then(res => res.json())
       .catch(this.handleError);

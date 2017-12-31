@@ -15,9 +15,11 @@ export class DashboardComponent implements OnInit {
   time: Date;
   date: Date;
   location: string;
+  photos: any;
   activities: any;
   profile: any;
   comingactivities: any;
+  user: any;
   filesToUpload: Array<File>;
 
 
@@ -33,9 +35,11 @@ export class DashboardComponent implements OnInit {
     } else {
       this.authService.getProfile((err, profile) => {
         this.profile = profile;
-        this.pageService.getDashboard(profile.email)
+        this.pageService.getPersonDashboard(profile.email)
           .then(information => {
             this.comingactivities = information.activities;
+            this.photos = information.photos;
+            this.user = information.userInfo;
           })
       });
     }
