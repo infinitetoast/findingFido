@@ -79,7 +79,7 @@
       <ul *ngFor="let activity of activities">
         <div class='pad' id='request'>
           <p>Location: {{activity.location}}</p>
-          <p>Time: {{activity.time}}</p>
+          <p>Time: {{cleanDate(activity.time)}}</p>
           <p>Email of the person: {{activity.email_user}}</p>
           <button class="btn btn-outline-success my-2 my-sm-0" (click)="onTaking(activity)">Take it!</button>
         </div>
@@ -96,7 +96,6 @@
       <span class="glyphicon glyphicon-star-empty"></span>
       <span class="glyphicon glyphicon-star-empty"></span>
       <span class="glyphicon glyphicon-star-empty"></span>
-      <span class="glyphicon glyphicon-save" style="color:rgb(230, 121, 172);"></span>
 
     </div>
     <button type="submit" class="btn btn-primary" (click)="onSelect()">Request to Connect</button>

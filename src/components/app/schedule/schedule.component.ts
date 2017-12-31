@@ -4,6 +4,8 @@ import { PageService } from '../services/page.service';
 import { Router } from '@angular/router';
 import { AgmCoreModule } from '@agm/core';
 import { DomSanitizer } from '@angular/platform-browser';
+const moment = require('moment');
+
 
 @Component({
   templateUrl: 'schedule.component.html',
@@ -31,6 +33,11 @@ export class ScheduleComponent {
         this.activities = activities;
       })
   }
+
+  cleanDate(date): void {
+    return moment(date).format('MMMM Do YYYY, h:mm:ss a');
+  }
+  
   onSelectActivity(activity): void {
     const email = activity.email_user;
     console.log(email);

@@ -5,6 +5,7 @@ import { PageService } from '../services/page.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
 import 'rxjs/add/operator/switchMap';
+const moment = require('moment');
 
 
 
@@ -62,6 +63,10 @@ export class PetDashboardComponent {
 
   onSelect(): void {
     this.router.navigate(['/chat']);
+  }
+  
+  cleanDate(date): void {
+    return moment(date).format('MMMM Do YYYY, h:mm:ss a');
   }
 
   onTaking(activity): void {
