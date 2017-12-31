@@ -218,16 +218,16 @@ app.get('/dashboard/:email', (req, res) => {
 });
 
 // Recieves a file upload, adds it to cloudinary, then adds to the database
-app.post('/photos', (req, res) => {
+app.post('/photos*', (req, res) => {
   const newPhoto = req.files['uploads[]'].data.toString('base64');
   const type = req.files['uploads[]'].mimetype;
-
+  const userEmail = req.params[0];
   // Uploads to cloudinary
   cloudinary.v2.uploader.upload(`data:${type};base64,${newPhoto}`, (err, photo) => {
     if (err) {
       res.status(400).send(err);
     } else {
-      Photo.addPhoto(photo.url, 'prestonwinstead@me.com', (error, response) => {
+      Photo.addPhoto(photo.url, userEmail, (error, response) => {
         if (error) {
           res.status(500).send(error);
         } else {
