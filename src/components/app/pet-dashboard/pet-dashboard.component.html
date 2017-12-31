@@ -71,19 +71,19 @@
   <div class="col-sm-4" style='color:white'>
     <h3>Pet Information</h3>
     <div *ngIf="pet">
-      <h4>Name: {{pet.name}}</h4>
-      <h4>Kind: {{pet.kind}}</h4>
-      <h4>Characteristics: {{pet.characteristics}}</h4>
+      <h4>My name is {{pet.name}}</h4>
+      <h4>I am a {{pet.kind}}</h4>
+      <h4>This is how I rule: {{pet.characteristics}}</h4>
     </div>
       <button type="submit" class="btn btn-outline-success btn-lg" (click)="onPictures()">See Pictures and More!</button>
         <div class="panel-body" *ngIf='activities'>
-          <h3>I am available at the following times!</h3>
+          <h3>I , {{pet.name}}, am available at the following times!</h3>
           <ul *ngFor="let activity of activities">
             <div style='padding-bottom:10px; padding-top:10px'>
               <p>Location: {{activity.location}}</p>
               <p>Time: {{activity.time}}</p>
               <p>Email of the person: {{activity.email_user}}</p>
-              <button class="btn btn-outline-success my-2 my-sm-0" (click)="onTaking()">Take it!</button>
+              <button class="btn btn-outline-success my-2 my-sm-0" (click)="onTaking(activity)">Take it!</button>
             </div>
           </ul>
         </div>

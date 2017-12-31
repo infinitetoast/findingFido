@@ -20,6 +20,7 @@ export class PageService {
   private photosUrl = 'http://localhost:9000/photos'
   private userProfileUrl = 'http://localhost:9000/userProfile'
   private personDashboardUrl = 'http://localhost:9000/PersonDashboard'
+  private toDoListUrl = 'http://localhost:9000/todo'
   private mapUrl = 'http://localhost:9000/map'
 
   constructor(
@@ -95,6 +96,13 @@ export class PageService {
   getActivities(time: any): Promise<any> {
     return this.authHttp
       .get(`${this.activitiesUrl}/${time}`, { headers: this.headers })
+      .toPromise()
+      .then(res => res.json())
+      .catch(this.handleError);
+  }
+  postToDo(todo: any): Promise<any> {
+    return this.authHttp
+      .post(this.toDoListUrl, JSON.stringify(todo), { headers: this.headers })
       .toPromise()
       .then(res => res.json())
       .catch(this.handleError);

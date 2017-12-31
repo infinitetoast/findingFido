@@ -40,6 +40,7 @@ export class DashboardComponent implements OnInit {
             this.comingactivities = information.activities;
             this.photos = information.photos;
             this.user = information.userInfo;
+            console.log(information);
           })
       });
     }
@@ -61,7 +62,7 @@ export class DashboardComponent implements OnInit {
       profile: this.profile,
     }
     this.pageService.postActivities(activities)
-      .then(activities => console.log(''))
+      .then(activities => console.log(activities))
   }
   upload() {
     this.makeFileRequest("http://localhost:9000/photos", [this.profile.name], this.filesToUpload).then((result) => {
