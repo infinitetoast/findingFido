@@ -41,13 +41,19 @@
         alt="profile-pet" style="width:100px;height:100px;">
     </div>
   </div>
-  <div class="col-sm-4">
-    <h3>Dog Information</h3>
-  </div>
-  <div class="col-sm-4">
-    <h3>Ratings</h3>
-    <p>Pet Rating</p>
-    <p>User Rating</p>
-    <button type="submit" class="btn btn-primary" (click)="onSelect()">Request to Connect</button>
-  </div>
-</div>
+  <div class="col-sm-4" style='color:white'>
+    <h3>Pet Information</h3>
+    <div *ngIf="pet">
+      <h4>Name: {{pet.name}}</h4>
+      <h4>Kind: {{pet.kind}}</h4>
+      <h4>Characteristics: {{pet.characteristics}}</h4>
+    </div>
+      </div>
+      <div class="col-sm-4">
+        <h3>Ratings</h3>
+        <p>Pet Rating</p>
+        <p>User Rating</p>
+        <button type="submit" class="btn btn-primary" (click)="onSelect()">Request to Connect</button>
+        <button type="submit" class="btn btn-info" (click)="goBack()">Go Back</button>
+      </div>
+    </div>

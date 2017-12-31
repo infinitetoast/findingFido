@@ -208,12 +208,44 @@ app.get('/dashboard/:email', (req, res) => {
       if (error) console.error(error);
       // Gets activities for that user
       Activity.getUserActivities(userEmail, (er, activities) => {
-        // Puts them in object and sends to user
         if (er) console.error(er);
+
+        // Puts them in object and sends to user
         const result = { userInfo, petInfo, activities };
         res.status(200).send(result);
       });
     });
+  });
+});
+app.get('/userProfile/:email', (req, res) => {
+  // Also get activities for that user
+  const userEmail = req.params.email;
+  // const userEmail = req.body.profile.email;
+  // Gets user information based on email
+  User.getUser(userEmail, (err, userInfo) => {
+    if (err) console.error(err);
+    // Gets pet information based on returned user id
+    Pet.getPet(userEmail, (error, petInfo) => {
+      if (error) console.error(error);
+      // Gets activities for that user
+      Photo.findUserPhotos(userEmail, (er, photos) => {
+        if (er) console.error(er);
+
+        // Puts them in object and sends to user
+        const result = { userInfo, petInfo, photos };
+        res.status(200).send(result);
+      });
+    });
+  });
+});
+app.get('/petDashboard/:id', (req, res) => {
+  const petId = req.params.id;
+  Pet.getPetId(petId, (err, pet) => {
+    if (err) {
+      res.status(404).send(err);
+    } else {
+      res.status(200).send(pet);
+    }
   });
 });
 
@@ -239,8 +271,8 @@ app.post('/photos*', (req, res) => {
 });
 
 // Gets user photos for their profile page
-app.get('/photos', (req, res) => {
-  const userEmail = req.headers.email;
+app.get('/photos/:email', (req, res) => {
+  const userEmail = req.params.email;
   Photo.findUserPhotos(userEmail, (err, photos) => {
     if (err) {
       res.status(404).send(photos);

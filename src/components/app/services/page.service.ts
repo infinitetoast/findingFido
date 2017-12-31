@@ -16,6 +16,7 @@ export class PageService {
   private chatUrl = 'http://localhost:9000/chat'
   private activitiesUrl = 'http://localhost:9000/activities'
   private dashboardUrl = 'http://localhost:9000/dashboard'
+  private petDashboardUrl = 'http://localhost:9000/petDashboard'
   private photosUrl = 'http://localhost:9000/photos'
   private userProfileUrl = 'http://localhost:9000/userProfile'
   private mapUrl = 'http://localhost:9000/map'
@@ -48,28 +49,16 @@ export class PageService {
       .then(res => res.json())
       .catch(this.handleError);
   }
-  // postPhoto(photo: any, formData: FormData) {
-  //   console.log(photo);
-  //   return this.http
-  //     //.post(this.photosUrl, JSON.stringify(photo), { headers: this.headers })
-  //     .post(this.photosUrl, formData, { headers: this.photoHeaders })
-  //     .map(res => res.json())
-  //     .catch(error => Observable.throw(error))
-  //     .subscribe(
-  //     data => console.log('success'),
-  //     error => console.log(error)
-  //     )
-  // }
-  getPhotos(photos: any): Promise<any> {
+  getPhotos(email: any): Promise<any> {
     return this.authHttp
-      .get(this.photosUrl, { headers: this.headers })
+      .get(`${this.photosUrl}/${email}`, { headers: this.headers })
       .toPromise()
       .then(res => res.json())
       .catch(this.handleError);
   }
-  getUserProfile(userProfile: any): Promise<any> {
+  getUserProfile(email: any): Promise<any> {
     return this.authHttp
-      .get(this.userProfileUrl, { headers: this.headers })
+      .get(`${this.userProfileUrl}/${email}`, { headers: this.headers })
       .toPromise()
       .then(res => res.json())
       .catch(this.handleError);
@@ -98,6 +87,15 @@ export class PageService {
   getActivities(time: any): Promise<any> {
     return this.authHttp
       .get(`${this.activitiesUrl}/${time}`, { headers: this.headers })
+      .toPromise()
+      .then(res => res.json())
+      .catch(this.handleError);
+  }
+  getPet(id: any): Promise<any> {
+    console.log('thisFired')
+    console.log(id)
+    return this.authHttp
+      .get(`${this.petDashboardUrl}/${id}`, { headers: this.headers })
       .toPromise()
       .then(res => res.json())
       .catch(this.handleError);

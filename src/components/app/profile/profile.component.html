@@ -44,4 +44,14 @@
       </div>
     </ul>
   </div>
+
+  <div class="panel-body" *ngIf='photos'>
+    <h3>Photos</h3>
+    <ul *ngFor="let photo of photos">
+      <div style='padding-bottom:10px; padding-top:10px'>
+        <img src={{photo.url}}>
+        <p>id: {{photo.id}}</p>
+      </div>
+    </ul>
+  </div>
 </div>
