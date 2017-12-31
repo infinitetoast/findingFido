@@ -26,6 +26,8 @@ const Photo = require('./models/Photo');
 
 const Activity = require('./models/Activity');
 
+const ToDoList = require('./models/ToDoList');
+
 const Review = require('./models/Review');
 
 const key = require('./config/googlemaps.api');
@@ -177,7 +179,7 @@ app.get('/activities/:date', (req, res) => {
   });
 });
 
-// Adds an activity to the database from the dashboard component
+// Adds an activity to the database
 app.post('/activities', (req, res) => {
   // Update this one a lot
   const userEmail = req.body.profile.email;
@@ -195,6 +197,36 @@ app.post('/activities', (req, res) => {
   });
 });
 
+// Adds a to do  to the database
+app.post('/todo', (req, res) => {
+  console.log(req.body);
+  // Update this one a lot
+  const userEmail = req.body.profile.email;
+  const {
+    location,
+    time,
+    date,
+    emailPerson,
+  } = req.body;
+  ToDoList.createToDoList(userEmail, location, time, date, emailPerson, (err, result) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(201).send(result);
+    }
+  });
+});
+
+app.get('/todo/:id', (req, res) => {
+  const email = req.params.id;
+  ToDoList.getUserToDoList(email, (err, todolist) => {
+    if (err) {
+      res.status(404).send(err);
+    } else {
+      res.status(200).send(todolist);
+    }
+  });
+});
 // Sends information to fill out the individual dashboard person dashboard and pet dashboard
 app.get('/dashboard/:email', (req, res) => {
   const userEmail = req.params.email;
@@ -215,38 +247,33 @@ app.get('/dashboard/:email', (req, res) => {
     });
   });
 });
+
+// Populate the person dashboard
 app.get('/PersonDashboard/:email', (req, res) => {
-  // Also get activities for that user
   const userEmail = req.params.email;
-  // const userEmail = req.body.profile.email;
-  // Gets user information based on email
   User.getUser(userEmail, (err, userInfo) => {
     if (err) console.error(err);
-    // Gets pet information based on returned user id
-    Photo.findUserPhotos(userEmail, (er, photos) => {
+    ToDoList.getUserToDoList(userEmail, (er, todolist) => {
       if (er) console.error(er);
-      // Gets activities for that user
       Activity.getUserActivities(userEmail, (error, activities) => {
         if (error) console.error(error);
-
-        // Puts them in object and sends to user
-        const result = { userInfo, photos, activities };
+        const result = { userInfo, todolist, activities };
         res.status(200).send(result);
       });
     });
   });
 });
+
+// Populate the user profile page
 app.get('/userProfile/:email', (req, res) => {
-  // Also get activities for that user
   const userEmail = req.params.email;
-  // const userEmail = req.body.profile.email;
   // Gets user information based on email
   User.getUser(userEmail, (err, userInfo) => {
     if (err) console.error(err);
     // Gets pet information based on returned user id
     Pet.getPet(userEmail, (error, petInfo) => {
       if (error) console.error(error);
-      // Gets activities for that user
+      // Gets photos for that user
       Photo.findUserPhotos(userEmail, (er, photos) => {
         if (er) console.error(er);
 
@@ -257,20 +284,8 @@ app.get('/userProfile/:email', (req, res) => {
     });
   });
 });
-// app.get('/petDashboard/:id', (req, res) => {
-//   const userEmail = req.params.id;
-//   Pet.getPet(userEmail, (error, petInfo) => {
-//     if (error) console.error(error);
-//     // Gets activities for that user
-//     Photo.findUserPhotos(userEmail, (er, photos) => {
-//       if (er) console.error(er);
 
-//       // Puts them in object and sends to user
-//       const result = { petInfo, photos };
-//       res.status(200).send(result);
-//     });
-//   });
-// });
+// Populate the pet dashboard
 app.get('/petDashboard/:id', (req, res) => {
   const petId = req.params.id;
   Pet.getPetId(petId, (err, pet) => {

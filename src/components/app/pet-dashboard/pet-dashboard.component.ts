@@ -18,7 +18,8 @@ export class PetDashboardComponent {
   pet: any;
   photos: any;
   activities: any;
-
+  activity: any;
+  profile: any;
 
   constructor(
     private router: Router,
@@ -35,6 +36,15 @@ export class PetDashboardComponent {
         this.pet = pet;
         console.log(pet);
       });
+    
+    if (this.authService.userProfile) {
+      this.profile = this.authService.userProfile;
+    } else {
+      this.authService.getProfile((err, profile) => {
+        this.profile = profile;
+        console.log(this.profile);
+      });
+    }
   }
 
   onPictures(): void {
@@ -52,6 +62,19 @@ export class PetDashboardComponent {
 
   onSelect(): void {
     this.router.navigate(['/chat']);
+  }
+
+  onTaking(activity): void {
+
+    const todo = {
+      time: activity.time,
+      date: activity.date,
+      location: activity.location,
+      emailPerson: activity.email_user,
+      profile: this.profile,
+    }
+    this.pageService.postToDo(todo)
+      .then(todo => console.log(todo))
   }
 }
 
