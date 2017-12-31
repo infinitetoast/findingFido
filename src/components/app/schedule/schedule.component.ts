@@ -40,6 +40,8 @@ export class ScheduleComponent {
         this.petProfile = information.petInfo;
         console.log(this.userProfile);
         console.log(this.petProfile);
+        this.router.navigate(['/pet-dashboard', this.petProfile.id]);
+
       })
   }
   onHover(activity): void {

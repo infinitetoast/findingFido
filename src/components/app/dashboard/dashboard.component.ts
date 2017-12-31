@@ -15,9 +15,11 @@ export class DashboardComponent implements OnInit {
   time: Date;
   date: Date;
   location: string;
+  photos: any;
   activities: any;
   profile: any;
   comingactivities: any;
+  user: any;
   filesToUpload: Array<File>;
 
 
@@ -33,9 +35,11 @@ export class DashboardComponent implements OnInit {
     } else {
       this.authService.getProfile((err, profile) => {
         this.profile = profile;
-        this.pageService.getDashboard(profile.email)
+        this.pageService.getPersonDashboard(profile.email)
           .then(information => {
             this.comingactivities = information.activities;
+            this.photos = information.photos;
+            this.user = information.userInfo;
           })
       });
     }
@@ -92,12 +96,4 @@ export class DashboardComponent implements OnInit {
       xhr.send(formData);
     });
   }
- }
-
-
-
-
-// Every Angular application requires at least one component called a root component.
-// All other components will reside in this primary root component.
-// An application may only have one root component.
-//app.component.ts is the standard file name for root components.
+}

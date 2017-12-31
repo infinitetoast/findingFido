@@ -43,6 +43,11 @@ module.exports.getPet = (userEmail, cb) => {
     .then(pet => cb(null, pet))
     .catch(err => cb(err));
 };
+module.exports.getPetId = (id, cb) => {
+  Pet.findOne({ where: { id } })
+    .then(pet => cb(null, pet))
+    .catch(err => cb(err));
+};
 
 module.exports.updatePet = (userEmail, updateKey, updateValue, cb) => {
   Pet.findOne({ where: { email_user: userEmail } })

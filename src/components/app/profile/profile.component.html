@@ -41,6 +41,18 @@
         <p>Location: {{activity.location}}</p>
         <p>Time: {{activity.time}}</p>
         <p>Email of the person: {{activity.email_user}}</p>
+        <button class="btn btn-outline-success my-2 my-sm-0" (click)="onTaking()">Take it!</button>
+
+      </div>
+    </ul>
+  </div>
+
+  <div class="panel-body" *ngIf='photos'>
+    <h3>Photos</h3>
+    <ul *ngFor="let photo of photos">
+      <div style='padding-bottom:10px; padding-top:10px'>
+        <img src={{photo.url}}>
+        <p>id: {{photo.id}}</p>
       </div>
     </ul>
   </div>
