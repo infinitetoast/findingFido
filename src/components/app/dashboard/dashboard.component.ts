@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from './../auth/auth.service';
 import { Router } from '@angular/router';
 import { PageService } from '../services/page.service';
-import { FormGroup  } from '@angular/forms';
 
 
 
@@ -19,7 +18,6 @@ export class DashboardComponent implements OnInit {
   activities: any;
   profile: any;
   comingactivities: any;
-  files: FileList;
   filesToUpload: Array<File>;
 
 
@@ -62,7 +60,7 @@ export class DashboardComponent implements OnInit {
       .then(activities => console.log(''))
   }
   upload() {
-    this.makeFileRequest("http://localhost:9000/photos", [], this.filesToUpload).then((result) => {
+    this.makeFileRequest("http://localhost:9000/photos", [this.profile.name], this.filesToUpload).then((result) => {
       console.log(result);
     }, (error) => {
       console.log(error);
@@ -87,40 +85,11 @@ export class DashboardComponent implements OnInit {
           }
         }
       }
+      if (params && params[0]) {
+        url += params;
+      }
       xhr.open("POST", url, true);
       xhr.send(formData);
     });
   }
-
-  // onChange(files: FileList) {
-  //   this.files = files;
-  //   console.log(this.files.length);
-  //   if (this.files.length > 0) {
-  //     let file: File = this.files[0];
-  //     let formData: FormData = new FormData();
-  //     //formData.append('userpic', 'chris');
-  //     formData.append('pic', file, file.name);
-  //     console.log(file);
-  //     this.pageService.postPhoto(file, formData)
-  //       .then(res => console.log('fired', res))
-  //   }
-  // }  
-
-  // onSend(): void {
-  //   if (this.files.length > 0) {
-  //     let file: File = this.files[0];
-  //     let formData: FormData = new FormData();
-  //     //formData.append('userpic', 'chris');
-  //     formData.append('userpic', file, file.name);
-  //     console.log(file);
-  //     console.log(JSON.stringify(file));
-  //     this.pageService.postPhoto(file, formData)
-  //     .then(res=>console.log('fired', res))
- //}
-
-
-
-  //   }
-  // }
-} 
-
+}
