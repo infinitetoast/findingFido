@@ -104,11 +104,11 @@ body {
   font-size: medium 
 }
 #schedule-box {
-  background-color: rgb(190, 153, 201);
-  width: 300px;
-  border: 10px solid rgb(226, 229, 233);
+  width: 600px;
+  border: 5px solid rgb(226, 229, 233);
   padding: 25px;
   margin: 25px;
+  color: white;
 }
 #request {
   width: 800px;
@@ -117,11 +117,11 @@ body {
   margin: 25px;
 }
 #request:hover {
-  background-color: rgb(22, 8, 22);
+  background-color: rgb(53, 28, 53);
 }
 
 #schedule-box:hover {
-  background-color: rgb(90, 129, 212);
+  background-color: rgb(70, 46, 66);
 }
 
 #example-datetime-local-input {
