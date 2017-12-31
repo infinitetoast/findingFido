@@ -217,6 +217,16 @@ app.post('/todo', (req, res) => {
   });
 });
 
+app.get('/todo/:id', (req, res) => {
+  const email = req.params.id;
+  ToDoList.getUserToDoList(email, (err, todolist) => {
+    if (err) {
+      res.status(404).send(err);
+    } else {
+      res.status(200).send(todolist);
+    }
+  });
+});
 // Sends information to fill out the individual dashboard person dashboard and pet dashboard
 app.get('/dashboard/:email', (req, res) => {
   // Also get activities for that user
@@ -245,11 +255,11 @@ app.get('/PersonDashboard/:email', (req, res) => {
   const userEmail = req.params.email;
   User.getUser(userEmail, (err, userInfo) => {
     if (err) console.error(err);
-    Photo.findUserPhotos(userEmail, (er, photos) => {
+    ToDoList.getUserToDoList(userEmail, (er, todolist) => {
       if (er) console.error(er);
       Activity.getUserActivities(userEmail, (error, activities) => {
         if (error) console.error(error);
-        const result = { userInfo, photos, activities };
+        const result = { userInfo, todolist, activities };
         res.status(200).send(result);
       });
     });

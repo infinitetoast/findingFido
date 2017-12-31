@@ -10,7 +10,7 @@ const sequelize = new Sequelize('postgres://bvjcwjye:YkiJ4pvf6lTtuJDyp8v23KqGQoe
   },
 });
 
-const ToDoList = sequelize.define('ToDoList', {
+const ToDoList = sequelize.define('todolist', {
   location: {
     type: Sequelize.STRING,
   },

@@ -95,7 +95,11 @@ body {
   color: white;
   font-size: medium 
 }
-  #PersonDashboard {
+#PersonDashboard {
+  color: white;
+  font-size: medium 
+}
+#petDashboard {
   color: white;
   font-size: medium 
 }
@@ -112,6 +116,9 @@ body {
   padding: 25px;
   margin: 25px;
 }
+#request:hover {
+  background-color: rgb(22, 8, 22);
+}
 
 #schedule-box:hover {
   background-color: rgb(201, 137, 10);
@@ -124,3 +131,8 @@ body {
 .schedule {
   margin-left: 20px;
 }
+.pad{
+  padding-bottom: 20px;
+  padding-top: 20px
+}
+

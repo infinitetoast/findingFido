@@ -18,7 +18,7 @@ export class DashboardComponent implements OnInit {
   photos: any;
   activities: any;
   profile: any;
-  comingactivities: any;
+  requests: any;
   user: any;
   filesToUpload: Array<File>;
 
@@ -37,8 +37,8 @@ export class DashboardComponent implements OnInit {
         this.profile = profile;
         this.pageService.getPersonDashboard(profile.email)
           .then(information => {
-            this.comingactivities = information.activities;
-            this.photos = information.photos;
+            this.requests = information.activities;
+            this.activities = information.todolist;
             this.user = information.userInfo;
             console.log(information);
           })
@@ -46,6 +46,14 @@ export class DashboardComponent implements OnInit {
     }
     this.filesToUpload = [];
   }
+
+  onPictures(): void {
+    this.pageService.getPhotos(this.profile.email)
+      .then(info => {
+        this.photos = info.photos;
+        console.log(info)
+      })
+  }  
 
   onSelectFriend(): void {
     this.router.navigate(['/schedule']);

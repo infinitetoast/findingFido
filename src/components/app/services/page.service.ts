@@ -107,6 +107,13 @@ export class PageService {
       .then(res => res.json())
       .catch(this.handleError);
   }
+  getToDo(email: any): Promise<any> {
+    return this.authHttp
+      .get(`${this.toDoListUrl}/${email}`, { headers: this.headers })
+      .toPromise()
+      .then(res => res.json())
+      .catch(this.handleError);
+  }
   getPet(id: any): Promise<any> {
     console.log('thisFired')
     console.log(id)
