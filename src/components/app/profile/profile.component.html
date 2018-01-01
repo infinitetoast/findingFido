@@ -36,24 +36,10 @@
 
 <div class="panel panel-default profile-area" id='profile'>
   <div class="panel-heading">
-    <h3>Profile</h3>
-    <button class="btn btn-outline-warning my-2 my-sm-0" *ngIf="authService.isAuthenticated" (click)="authService.logout()">
-      Log Out
-    </button>
-    <button class="btn btn-outline-danger my-2 my-sm-0" *ngIf="authService.isAuthenticated" (click)="onDelete()">
-      Delete Profile
-    </button>
-    <button class="btn btn-outline-info my-2 my-sm-0" *ngIf="authService.isAuthenticated" (click)="onUpdate()">
-      Update Profile
-    </button>
+    <h2>Your Information</h2>
   </div>
-
-  <div class="panel-body">
-    <pre class="full-profile">{{ profile | json }}</pre>
-  </div>
-
   <div class="panel-body" *ngIf='userInfo'>
-    <h3>User Information</h3>
+    <h4>User Information</h4>
     <p>Name: {{userInfo.name}}</p>
     <p>Email: {{userInfo.email}}</p>
     <p>Address: {{userInfo.address}}</p>
@@ -63,7 +49,7 @@
   </div>
 
   <div class="panel-body" *ngIf='petInfo'>
-    <h3>Pet Information</h3>
+    <h4>Pet Information</h4>
     <p>Pet's Name: {{petInfo.name}}</p>
     <p>Kind: {{petInfo.kind}}</p>
     <p>Characteristics: {{petInfo.characteristics}}</p>
@@ -119,4 +105,13 @@
         </a>
       </div>
       </div>
+      <button class="btn btn-outline-warning my-2 my-sm-0" *ngIf="authService.isAuthenticated" (click)="authService.logout()">
+        Log Out
+      </button>
+      <button class="btn btn-outline-danger my-2 my-sm-0" *ngIf="authService.isAuthenticated" (click)="onDelete()">
+        Delete Profile
+      </button>
+      <button class="btn btn-outline-info my-2 my-sm-0" *ngIf="authService.isAuthenticated" (click)="onUpdate()">
+        Update Profile
+      </button>
 </div>
