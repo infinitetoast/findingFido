@@ -43,7 +43,7 @@ const port = process.env.NODE_ENV === 'development' ? 9000 : 80;
 app.use(express.static(`${__dirname}/dist`));
 
 // Need this to serve the logo picture
-app.use(express.static(`${__dirname}/client/assets`));
+// app.use(express.static(`${__dirname}/client/assets`));
 
 app.use(bodyParser.json());
 
@@ -66,7 +66,7 @@ const authCheck = jwt({
     jwksRequestsPerMinute: 5,
     jwksUri: 'https://findo.auth0.com/.well-known/jwks.json',
   }),
-  audience: 'http://localhost:9000',
+  audience: 'http://localhost:80',
   issuer: 'https://findo.auth0.com/',
   algorithms: ['RS256'],
 });
