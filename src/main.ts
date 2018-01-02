@@ -4,9 +4,6 @@
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import '../polyfills';
 import { AppModule } from './components/app/app.module';
-import { enableProdMode } from '@angular/core';
-// To be called in production mode
-// enableProdMode();
 require("./index.css");
 
 platformBrowserDynamic().bootstrapModule(AppModule);
